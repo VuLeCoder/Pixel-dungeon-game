@@ -17,6 +17,7 @@ add_executable(SHATTERED_PIXEL_DUNGEON
     src/engine/asset_manager.cpp
 
     src/scenes/start_scene.cpp
+    src/scenes/hero_select_scene.cpp
 )
 # link raylib
 target_link_libraries(SHATTERED_PIXEL_DUNGEON raylib)
