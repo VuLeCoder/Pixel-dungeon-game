@@ -1,3 +1,4 @@
+#include "../engine/scene_manager.h"
 #include "../engine/asset_manager.h"
 
 #include "start_scene.h"
@@ -18,7 +19,7 @@ void StartScene::Update() {
     }
 
     if (CheckCollisionPointRec(mouse, stairsRect)) {
-        // to hero select scene
+        SceneManager::ChangeScene(new HeroSelectScene());
     }
 }
 
