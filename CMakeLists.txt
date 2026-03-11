@@ -6,8 +6,17 @@ set(CMAKE_CXX_STANDARD 17)
 # add raylib
 add_subdirectory(external/raylib)
 
-# game source
-add_executable(SHATTERED_PIXEL_DUNGEON src/main.cpp)
+# asset
+file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
+# game source
+add_executable(SHATTERED_PIXEL_DUNGEON
+    src/main.cpp
+
+    src/engine/scene_manager.cpp
+    src/engine/asset_manager.cpp
+
+    src/scenes/start_scene.cpp
+)
 # link raylib
 target_link_libraries(SHATTERED_PIXEL_DUNGEON raylib)
