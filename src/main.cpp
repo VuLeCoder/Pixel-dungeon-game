@@ -1,16 +1,34 @@
 #include "raylib.h"
 
-int main()
-{
-    InitWindow(800, 600, "raylib + cmake");
+#include "engine/asset_manager.h"
+#include "engine/scene_manager.h"
 
-    while (!WindowShouldClose())
-    {
+#include "scenes/start_scene.h"
+
+const int WINDOW_WIDTH = 1200;
+const int WINDOW_HEIGHT = 700;
+
+int main() {
+
+    InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Pixel Dungeon");
+    AssetManager::Load();
+
+    SetTargetFPS(60);
+
+    SceneManager::Init(new StartScene());
+
+    while (!WindowShouldClose()) {
+
+        SceneManager::Update();
+
         BeginDrawing();
-        ClearBackground(RAYWHITE);
-        DrawText("Hello CMake!", 300, 280, 20, BLACK);
+        ClearBackground(BLACK);
+
+        SceneManager::Draw();
+
         EndDrawing();
     }
 
+    AssetManager::Unload();
     CloseWindow();
 }
