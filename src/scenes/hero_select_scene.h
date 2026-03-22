@@ -1,7 +1,7 @@
 #ifndef HERO_SELECT_SCENE_H
 #define HERO_SELECT_SCENE_H
 
-#include"../entities/hero.h"
+#include "../world/entity/hero_type.h"
 
 #include "scene.h"
 #include <string>
