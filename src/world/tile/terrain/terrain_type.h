@@ -4,10 +4,11 @@ enum class TerrainType {
     FLOOR,
     WALL,
     WATER,
-    STAIRS_DOWN,
-    STAIRS_UP,
+    STAIR_DOWN,
+    STAIR_UP,
     CHASM,
-    GRASS
+    GRASS,
+    CRUSHED_GRASS
 };
 
 struct TerrainInfo {
