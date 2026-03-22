@@ -1,55 +1,22 @@
 #pragma once
 
-enum class DoorState {
-    HIDDEN,
-    CLOSED,
-    LOCKED,
-    OPEN
-};
+#include "door_state.h"
 
 class Door {
 private:
     DoorState state;
 
 public:
-    Door(bool locked = false, bool hidden = false) {
-        if(hidden) state = DoorState::HIDDEN;
-        else if(locked) state = DoorState::LOCKED;
-        else state = DoorState::CLOSED;
-    }
+    Door(bool locked = false, bool hidden = false);
+    DoorState getState() const;
     
-    bool isPassable() const {
-        return state == DoorState::OPEN ||
-                state == DoorState::CLOSED;
-    }
+    bool isPassable() const;
+    bool isBlockVision() const;
+    bool isHidden() const;
+    bool isLocked() const;
 
-    bool isBlockVision() const {
-        return state != DoorState::OPEN;
-    }
-
-    bool isHidden() const {
-        return state == DoorState::HIDDEN;
-    }
-
-    bool isLocked() const {
-        return state == DoorState::LOCKED;
-    }
-    
-    void reveal() {
-        if(state == DoorState::HIDDEN) {
-            state = DoorState::CLOSED;
-        }
-    }
-
-    void unlock() {
-        state = DoorState::CLOSED;
-    }
-
-    void open() {
-        state = DoorState::OPEN;
-    }
-
-    void close() {
-        state = DoorState::CLOSED;
-    }
+    void reveal();
+    void unlock();
+    void open();
+    void close();
 };
