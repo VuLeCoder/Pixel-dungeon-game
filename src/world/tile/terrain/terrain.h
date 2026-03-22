@@ -1,29 +1,21 @@
 #pragma once
 
 #include "terrain_type.h"
-#include "../../entity/entity.h"
-#include "../../world.h"
+
+class World;
+class Entity;
 
 class Terrain {
 private:
     TerrainType type;
 
 public:
-    void setTerrainType(TerrainType type) {
-        this->type = type;
-    }
+    void setTerrainType(TerrainType type);
+    TerrainType getType() const;
 
-    bool isPassable() const {
-        return terrainTable[static_cast<int>(type)].passable;
-    }
-    
-    bool isBlockVision() const {
-        return terrainTable[static_cast<int>(type)].blockVision;
-    }
-
-    bool isDanger() const {
-        return terrainTable[static_cast<int>(type)].danger;
-    }
+    bool isPassable() const;
+    bool isBlockVision() const;
+    bool isDanger() const;
     
     void onEnter(Entity* entity, World& world);
 };
