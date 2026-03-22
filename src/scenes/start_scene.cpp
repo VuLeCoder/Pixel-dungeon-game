@@ -7,6 +7,7 @@
 #include "raylib.h"
 
 void StartScene::Init() {
+    SetWindowSize(1200, 700);
     startPng = AssetManager::GetTexture(SCENE_START_NAME);
     stairsRect = {446, 312, 75, 75};
 }

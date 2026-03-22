@@ -3,6 +3,7 @@
 
 #include "start_scene.h"
 #include "hero_select_scene.h"
+#include "game_scene.h"
 
 #include "raylib.h"
 
@@ -42,7 +43,7 @@ void HeroSelectScene::Update() {
         return;
     }
     if(CheckCollisionPointRec(mouse, startBtnRect)) {
-        
+        SceneManager::ChangeScene(new GameScene(ht));
     }
 }
 
