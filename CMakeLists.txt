@@ -18,6 +18,14 @@ add_executable(SHATTERED_PIXEL_DUNGEON
 
     src/scenes/start_scene.cpp
     src/scenes/hero_select_scene.cpp
+    src/scenes/game_scene.cpp
+
+    src/world/world.cpp
+    src/world/level/level.cpp
+    src/world/tile/tile.cpp
+    src/world/tile/tile_index.cpp
+    src/world/tile/terrain/terrain.cpp
+    src/world/tile/door/door.cpp
 )
 # link raylib
 target_link_libraries(SHATTERED_PIXEL_DUNGEON raylib)
