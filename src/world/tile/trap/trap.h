@@ -1,9 +1,8 @@
 #pragma once
-#include "../../entity/entity.h"
-#include "../../world.h"
+#include "trap_type.h"
 
-class Entity;
 class World;
+class Entity;
 
 class Trap {
 protected:
@@ -18,6 +17,7 @@ protected:
 public:
     virtual ~Trap() {}
 
+    virtual TrapType getTrapType() = 0;
     virtual void trigger(Entity* entity, World& world) = 0;
 
     bool isArmed() const { return armed; }
