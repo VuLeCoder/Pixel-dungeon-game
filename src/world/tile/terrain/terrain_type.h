@@ -25,4 +25,5 @@ const TerrainInfo terrainTable[] = {
     {true, false, false},  // STAIRS_UP
     {true, false, true},  // CHASM
     {true, true, false},   // GRASS
+    {true, false, false},   // CRUSHED_GRASS
 };
