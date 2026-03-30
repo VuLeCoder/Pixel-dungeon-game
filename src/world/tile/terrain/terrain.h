@@ -17,5 +17,5 @@ public:
     bool isBlockVision() const;
     bool isDanger() const;
     
-    void onEnter(Entity* entity, World& world);
+    void onEnter(Entity* entity, World* world);
 };

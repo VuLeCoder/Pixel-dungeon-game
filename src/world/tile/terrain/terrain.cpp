@@ -20,7 +20,7 @@ bool Terrain::isDanger() const {
     return terrainTable[static_cast<int>(type)].danger;
 }
 
-void Terrain::onEnter(Entity* entity, World& world) {
+void Terrain::onEnter(Entity* entity, World* world) {
     if(!entity) return;
 
     switch(type) {
@@ -29,7 +29,7 @@ void Terrain::onEnter(Entity* entity, World& world) {
             break;
 
         case TerrainType::GRASS:
-            setTerrainType(TerrainType::FLOOR);
+            setTerrainType(TerrainType::CRUSHED_GRASS);
             break;
 
         case TerrainType::STAIR_DOWN:
