@@ -1,6 +1,72 @@
 #include "tile.h"
+#include "../../engine/asset_manager.h"
 
+#include "tile_index.h"
+#include "terrain/terrain.h"
+#include "door/door.h"
+
+#include "trap/alarm_trap.h"
+#include "trap/explode_trap.h"
+#include "trap/spawn_trap.h"
+#include "trap/spike_trap.h"
+#include "trap/teleport_trap.h"
+
+// Private:
 const std::string Tile::TILE_NAME = "tiles";
+
+Vector2 Tile::tileImagePosition(int tileId) {
+    if(tileId == -1) {
+        return {0, 0};
+    }
+
+    int x = tileId % 8;
+    int y = tileId / 8;
+    return {x * TILE_SIZE, y * TILE_SIZE};
+}
+
+TerrainType Tile::determineTileType(int tileId) {
+    if(tileId < 0 || tileId >= std::size(tileTypeMap)) {
+        return TerrainType::CHASM;
+    }
+    return tileTypeMap[tileId];
+}
+
+Trap* Tile::createTrap(int tileId) {
+    switch(tileId) {
+        case ID_TRAP_ALARM:     return new AlarmTrap();
+        case ID_TRAP_EXPLODE:   return new ExplosionTrap();
+        case ID_TRAP_SPAWN:     return new SpawnTrap();
+        case ID_TRAP_SPIKE:     return new SpikeTrap();
+        case ID_TRAP_TELEPORT:  return new TeleportTrap();
+        default: return nullptr;
+    }
+}
+
+
+// Public:
+void Tile::setTerrainType(int tileId) {
+    tilePos = tileImagePosition(tileId);
+    terrain.setTerrainType(determineTileType(tileId));
+}
+
+void Tile::setDoorTile(bool isLocked, bool isHidden) {
+    door = new Door(isLocked, isHidden);
+}
+
+void Tile::setTrapTile(int trapId, bool isHidden) {
+    trap = createTrap(trapId);
+    if(!isHidden) {
+        trap->reveal();
+    }
+}
+
+void Tile::discoverTile() {
+    discovered = true;
+}
+
+bool Tile::isDiscovered() const {
+    return discovered;
+}
 
 bool Tile::isPassable() const {
     if(door && !door->isPassable())
@@ -22,13 +88,23 @@ bool Tile::isDanger() const {
     return terrain.isDanger();
 }
 
-void Tile::onEnter(Entity* entity, World& world) {
+void Tile::onEnter(Entity* entity, World* world) {
+    if(door && !door->isHidden()) {
+        door->open();
+    }
+
     if(trap && trap->isArmed()) {
         trap->trigger(entity, world);
         return;
     }
 
     terrain.onEnter(entity, world);
+}
+
+void Tile::onLeft() {
+    if(door) {
+        door->close();
+    }
 }
 
 void Tile::update() {
