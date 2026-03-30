@@ -10,7 +10,7 @@ public:
         return TrapType::TRAP_SPIKE;
     }
 
-    void trigger(Entity* entity, World& world) override {
+    void trigger(Entity* entity, World* world) override {
         if (!entity) return;
         // entity->takeDamage(damage);
         afterTrigger();

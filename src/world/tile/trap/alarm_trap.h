@@ -7,7 +7,7 @@ public:
         return TrapType::TRAP_ALARM;
     }
 
-    void trigger(Entity* entity, World& world) override {
+    void trigger(Entity* entity, World* world) override {
         // world.wakeUpAllMonsters();
         afterTrigger();
     }

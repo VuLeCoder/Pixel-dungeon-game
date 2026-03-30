@@ -18,7 +18,7 @@ public:
     virtual ~Trap() {}
 
     virtual TrapType getTrapType() = 0;
-    virtual void trigger(Entity* entity, World& world) = 0;
+    virtual void trigger(Entity* entity, World* world) = 0;
 
     bool isArmed() const { return armed; }
     bool isRevealed() const { return revealed; }

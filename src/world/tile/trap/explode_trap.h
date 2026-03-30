@@ -10,7 +10,7 @@ public:
         return TrapType::TRAP_EXPLODE;
     }
 
-    void trigger(Entity* entity, World& world) override {
+    void trigger(Entity* entity, World* world) override {
         if(!entity) return;
 
         // Position pos = entity->getPosition();

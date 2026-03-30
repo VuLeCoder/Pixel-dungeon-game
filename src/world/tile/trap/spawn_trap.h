@@ -7,7 +7,7 @@ public:
         return TrapType::TRAP_SPAWN;
     }
 
-    void trigger(Entity* entity, World& world) override {
+    void trigger(Entity* entity, World* world) override {
         if(!entity) return;
         // world.spawnMonsterNear(entity->getPosition());
         afterTrigger();
