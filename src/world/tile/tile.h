@@ -2,6 +2,16 @@
 #include "raylib.h"
 #include <string>
 
+#include "tile_index.h"
+#include "terrain/terrain.h"
+#include "door/door.h"
+
+#include "trap/alarm_trap.h"
+#include "trap/explode_trap.h"
+#include "trap/spawn_trap.h"
+#include "trap/spike_trap.h"
+#include "trap/teleport_trap.h"
+
 class Tile {
 private:
     static const std::string TILE_NAME;

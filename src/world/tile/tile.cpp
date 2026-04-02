@@ -1,16 +1,6 @@
 #include "tile.h"
 #include "../../engine/asset_manager.h"
 
-#include "tile_index.h"
-#include "terrain/terrain.h"
-#include "door/door.h"
-
-#include "trap/alarm_trap.h"
-#include "trap/explode_trap.h"
-#include "trap/spawn_trap.h"
-#include "trap/spike_trap.h"
-#include "trap/teleport_trap.h"
-
 // Private:
 const std::string Tile::TILE_NAME = "tiles";
 
