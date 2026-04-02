@@ -1,0 +1,14 @@
+3
+assets/entity/creature/warrior/warrior.png
+
+atk_0_NoArmor
+128 0 16 16
+0.15
+
+atk_1_NoArmor
+144 0 16 16
+0.15
+
+atk_2_NoArmor
+160 0 16 16
+0.15

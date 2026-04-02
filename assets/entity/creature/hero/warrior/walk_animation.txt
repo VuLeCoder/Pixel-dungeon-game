@@ -1,0 +1,26 @@
+6
+assets/entity/creature/hero/warrior/warrior.png
+
+walk_0_NoArmor
+32 0 16 16
+0.05
+
+walk_1_NoArmor
+48 0 16 16
+0.05
+
+walk_2_NoArmor
+64 0 16 16
+0.05
+
+walk_3_NoArmor
+80 0 16 16
+0.05
+
+walk_4_NoArmor
+96 0 16 16
+0.05
+
+walk_5_NoArmor
+112 0 16 16
+0.05

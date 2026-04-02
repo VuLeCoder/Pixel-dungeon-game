@@ -1,0 +1,10 @@
+2
+assets/entity/creature/hero/warrior/warrior.png
+
+idle_0_NoArmor
+0 0 16 16
+2.5
+
+idle_1_NoArmor
+16 0 16 16
+2

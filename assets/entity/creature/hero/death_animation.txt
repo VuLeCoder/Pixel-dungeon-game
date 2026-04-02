@@ -1,0 +1,26 @@
+6
+assets/entity/creature/hero/death.png
+
+death_0
+0 0 16 16
+0.1
+
+death_1
+16 0 16 16
+0.095
+
+death_2
+32 0 16 16
+0.09
+
+death_3
+48 0 16 16
+0.08
+
+death_4
+64 0 16 16
+0.1
+
+death_5
+48 0 16 16
+100

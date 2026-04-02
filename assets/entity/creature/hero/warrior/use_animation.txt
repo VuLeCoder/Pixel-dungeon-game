@@ -1,0 +1,10 @@
+2
+assets/entity/creature/hero/warrior/warrior.png
+
+use_0_NoArmor
+176 0 16 16
+0.15
+
+use_1_NoArmor
+192 0 16 16
+0.15
