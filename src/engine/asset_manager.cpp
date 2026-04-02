@@ -17,10 +17,10 @@ void AssetManager::LoadAllTexture() {
     };
 
     TextureEntry entries[] = {
-        {START_SCENE, "assets/start_scene.png"},
-        {HERO_SCENE, "assets/hero_select_scene.png"},
-        {START_BUTTON, "assets/start_button.png"},
-        {TILE, "assets/tiles.png"}
+        {START_SCENE, "assets/scenes/start_scene.png"},
+        {HERO_SCENE, "assets/scenes/hero_select_scene.png"},
+        {START_BUTTON, "assets/scenes/start_button.png"},
+        {TILE, "assets/level/tiles.png"}
     };
 
     for (auto& e : entries) {
