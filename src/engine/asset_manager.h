@@ -26,4 +26,25 @@ public:
     static Texture2D& GetTexture(std::string_view name);
     static std::vector<std::vector<int>>& GetMap(std::string_view name);
     static Animation& GetAnimation(std::string_view name);
+
+public:
+    static constexpr std::string_view START_SCENE = "start_scene";
+    static constexpr std::string_view HERO_SCENE = "hero_select_scene";
+    static constexpr std::string_view START_BUTTON = "start_button";
+    static constexpr std::string_view TILE = "tiles";
+
+    static constexpr std::string_view LEVEL = "level";
+    static constexpr std::string_view TERRAIN = "Terrain";
+    static constexpr std::string_view DOOR = "Door";
+    static constexpr std::string_view TRAP = "Trap";
+
+    static constexpr std::string_view IDLE = "idle";
+    static constexpr std::string_view WALK = "walk";
+    static constexpr std::string_view ATK = "attack";
+    static constexpr std::string_view DEATH = "death";
+    static constexpr std::string_view USE = "use";
+    static constexpr std::string_view USE_SCROLL = "use_scroll";
+
+    static constexpr std::string_view WARRIOR = "warrior";
+    static constexpr std::string_view MAGE = "mage";
 };

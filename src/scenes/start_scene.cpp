@@ -8,7 +8,7 @@
 
 void StartScene::Init() {
     SetWindowSize(1200, 700);
-    startPng = AssetManager::GetTexture(SCENE_START_NAME);
+    startPng = AssetManager::GetTexture(AssetManager::START_SCENE);
     stairsRect = {446, 312, 75, 75};
 }
 
@@ -26,5 +26,4 @@ void StartScene::Update() {
 
 void StartScene::Draw() {
     DrawTexture(startPng, 0, 0, WHITE);
-    // DrawRectangleRec(stairsRect, RED);
 }

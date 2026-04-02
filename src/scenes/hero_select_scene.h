@@ -8,9 +8,6 @@
 
 class HeroSelectScene : public Scene {
 private:
-    const std::string SCENE_HERO_SELECT_NAME = "hero_select_scene";
-    const std::string START_BUTTON_NAME = "start_button";
-    
     Scene* next = nullptr;
     
     Texture2D selectPng, btnPng;

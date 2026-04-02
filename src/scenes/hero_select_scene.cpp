@@ -8,8 +8,8 @@
 #include "raylib.h"
 
 void HeroSelectScene::Init() {
-    selectPng = AssetManager::GetTexture(SCENE_HERO_SELECT_NAME);
-    btnPng = AssetManager::GetTexture(START_BUTTON_NAME);
+    selectPng = AssetManager::GetTexture(AssetManager::HERO_SCENE);
+    btnPng = AssetManager::GetTexture(AssetManager::START_BUTTON);
 
     exitBtnRect = {1125, 16, 45, 36};
     startBtnRect = {355, 430, 512, 96};
