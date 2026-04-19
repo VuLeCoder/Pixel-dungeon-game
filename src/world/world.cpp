@@ -11,7 +11,7 @@ void World::init() {
     currLevel = 0;
     
     Level* l1 = new Level(this);
-    l1->generateMap(2);
+    l1->generateMap(1);
     levels.push_back(l1);
 }
 
