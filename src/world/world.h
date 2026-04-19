@@ -1,24 +1,29 @@
 #pragma once
 
 #include <vector>
-#include "level/level.h"
-// #include "camera/camera.h"
+// #include "level/level.h"
+#include "camera/camera.h"
 #include "entity/creature/player.h"
+
+class Level;
+class Player;
 
 class World {
 private:
     int currLevel;
-    std::vector<Level> levels;
+    std::vector<Level*> levels;
 
-    Player player;
-    // Camera camera;
+    Player* player;
+    MyCamera camera;
 
     void LoadLevel();
 
 public:
-    void init(HeroType type);
+    World(HeroType heroType);
 
-    Player getPlayer();
+    void init();
+
+    Player* getPlayer();
 
     void update();
     void render();
@@ -26,8 +31,13 @@ public:
     void goToNextLevel();
     void goToPreviousLevel();
 
-    Entity* getEntityAt(Position pos);
-    void spawnMonsterNear(Position pos);
+    Entity* getEntityAt(Vector2 pos);
+    void spawnMonsterNear(Vector2 pos);
     void wakeUpAllMonsters();
-    Position getRandomFreeTile();
+    Vector2 getRandomFreeTile();
+
+
+    bool isPassable(int x, int y);
+    void onEnter(Entity* e, int x, int y);
+    void onLeft(int x, int y);
 };

@@ -1,17 +1,64 @@
 #include "world.h"
+#include "./level/level.h"
 
-void World::init(HeroType type) {
+
+World::World(HeroType heroType) : camera(1200, 700, 33 * 16, 33 * 16) {
+    init();
+    player = new Player(16*9, 1+16* 9, this, heroType, Direction::LEFT, 100);
+}
+
+void World::init() {
     currLevel = 0;
-
-    Level l1;
-    l1.generateMap(1);
+    
+    Level* l1 = new Level(this);
+    l1->generateMap(2);
     levels.push_back(l1);
 }
 
 void World::update() {
-    levels[currLevel].update();
+    float dt = GetFrameTime();
+
+    levels[currLevel]->update();
+
+    player->handleInput();
+    player->update(dt);
+
+    // camera.handleDrag();
+    float wheel = GetMouseWheelMove();
+    if (wheel != 0) {
+        camera.updateZoom(wheel * 0.1f);
+    }
+    camera.followSmooth(player->getPosition(), GetFrameTime());
 }
 
 void World::render() {
-    levels[currLevel].render();
+    BeginScissorMode(0, 0, 1200, 700);
+    camera.begin();
+
+    levels[currLevel]->render();
+    player->render();
+
+    camera.end();
+    EndScissorMode();
 }
+
+
+
+
+bool World::isPassable(int x, int y) {
+    return levels[currLevel]->isPassable(x, y);
+}
+
+void World::onEnter(Entity* e, int x, int y) {
+    levels[currLevel]->onStep(e, y, x);
+}
+
+void World::onLeft(int x, int y) {
+    levels[currLevel]->onLeft(y, x);
+}
+
+Vector2 World::getRandomFreeTile() {
+    return levels[currLevel]->getRandomFreeTile();
+}
+
+
