@@ -1,6 +1,5 @@
 #pragma once
 #include "trap.h"
-#include "../../../utils/position.h"
 
 class ExplosionTrap : public Trap {
     int damage = 20;
