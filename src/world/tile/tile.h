@@ -29,6 +29,8 @@ private:
     Trap* createTrap(int tileId);
 
 public:
+    Tile();
+
     void setTerrainType(int tileId);
     void setDoorTile(bool isLocked, bool isHidden);
     void setTrapTile(int trapId, bool isHidden);

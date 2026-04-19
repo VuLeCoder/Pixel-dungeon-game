@@ -6,7 +6,7 @@ const std::string Tile::TILE_NAME = "tiles";
 
 Vector2 Tile::tileImagePosition(int tileId) {
     if(tileId == -1) {
-        return {0, 0};
+        return {0, 0}; //FLOOR
     }
 
     int x = tileId % 8;
@@ -34,6 +34,11 @@ Trap* Tile::createTrap(int tileId) {
 
 
 // Public:
+Tile::Tile() {
+    tilePos = tileImagePosition(ID_FLOOR);
+    terrain.setTerrainType(TerrainType::FLOOR);
+}
+
 void Tile::setTerrainType(int tileId) {
     tilePos = tileImagePosition(tileId);
     terrain.setTerrainType(determineTileType(tileId));
@@ -59,9 +64,7 @@ bool Tile::isDiscovered() const {
 }
 
 bool Tile::isPassable() const {
-    if(door && !door->isPassable())
-        return false;
-
+    if(door) return door->isPassable();
     return terrain.isPassable();
 }
 

@@ -3,8 +3,6 @@
 
 void GameScene::Init() {
     SetWindowSize(1700, 700);
-
-    world.init(hero);
     // ui.init(world.getPlayer());
 }
 

@@ -13,7 +13,7 @@ private:
     PLayerUI ui;
 
 public:
-    GameScene(HeroType hero) : hero(hero) {}
+    GameScene(HeroType hero) : hero(hero), world(hero) {}
     void Init();
     void Update();
     void Draw();
