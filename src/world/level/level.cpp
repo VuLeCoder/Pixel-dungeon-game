@@ -42,9 +42,6 @@ Tile Level::buildTile(int x, int y, const MapData& data) {
 //public:
 Level::Level(World* world) : world(world) {}
 
-World* Level::getWorld() { return world; }
-
-
 void Level::generateMap(int depth) {
     MapData data = loadMapData(depth);
 
@@ -73,22 +70,17 @@ void Level::render() {
     }
 }
 
-
 bool Level::isBlockVision(int x, int y) const {
     return tiles[x][y].isBlockVision();
 }
-#include <iostream>
+
 bool Level::isPassable(int x, int y) const {
-    if(x == 14 && y == 15) {
-        std::cout << tiles[x][y].isPassable() <<std::endl;
-    }
     return tiles[x][y].isPassable();
 }
 
 bool Level::isDanger(int x, int y) const {
     return tiles[x][y].isDanger();
 }
-
 
 void Level::onStep(Entity* e, int x, int y) {
     tiles[x][y].onEnter(e, getWorld());
@@ -99,5 +91,42 @@ void Level::onLeft(int x, int y) {
 }
 
 Vector2 Level::getRandomFreeTile() {
-    
+    std::vector<Vector2> freeTiles;
+    for (int y = 0; y < MAP_SIZE; ++y) {
+        for (int x = 0; x < MAP_SIZE; ++x) {
+            if (!isPassable(x, y)) continue;
+            if (isDanger(x, y)) continue;
+            // if (getEntityAt({(float)x, (float)y}) != nullptr) continue;
+
+            freeTiles.push_back({(float)x, (float)y});
+        }
+    }
+
+    if (freeTiles.empty()) {
+        return {-1, -1};
+    }
+
+    int index = GetRandomValue(0, freeTiles.size() - 1);
+    freeTiles[index].x *= TILE_SIZE;
+    freeTiles[index].y *= TILE_SIZE;
+    return {freeTiles[index].y, freeTiles[index].x};
+}
+
+Entity* Level::getEntityAt(Vector2 pos) {
+    Vector2 tmpPos;
+    for(Entity* e : enemies) {
+        tmpPos = e->getPosition();
+        if(tmpPos.x == pos.x && tmpPos.y == pos.y) {
+            return e;
+        }
+    }
+
+    for(Entity* i : items) {
+        tmpPos = i->getPosition();
+        if(tmpPos.x == pos.x && tmpPos.y == pos.y) {
+            return i;
+        }
+    }
+
+    return nullptr;
 }

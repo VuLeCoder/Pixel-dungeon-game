@@ -30,13 +30,12 @@ private:
 public:
     Level(World* world);
 
-    World* getWorld();
+    World* getWorld() { return world; }
+    std::vector<Monster*>& getMonsters() { return enemies; }
 
     void generateMap(int depth);
     void update();
     void render();
-
-    bool isInside(int x, int y) const;
 
     bool isBlockVision(int x, int y) const;
     bool isPassable(int x, int y) const;
@@ -47,7 +46,7 @@ public:
 
     // void addEntity(Entity* e);
     // void removeEntity(Entity* e);
-    // Entity* getEntityAt(Vector2 pos);
+    Entity* getEntityAt(Vector2 pos);
 
     // void wakeUpAllMonsters();
     // void spawnMonsterNear(Vector2 pos);
