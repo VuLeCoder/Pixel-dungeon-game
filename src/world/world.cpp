@@ -1,10 +1,16 @@
 #include "world.h"
 #include "./level/level.h"
+#include "./system/turn_system/turn_system.h"
+
+//private:
 
 
+
+//public:
 World::World(HeroType heroType) : camera(1200, 700, 33 * 16, 33 * 16) {
     init();
-    player = new Player(16*9, 1+16* 9, this, heroType, Direction::LEFT, 100);
+    player = new Player(16*9, 1+16*9, this, heroType, Direction::LEFT, 100);
+    turnSystem = new TurnSystem(this);
 }
 
 void World::init() {
@@ -20,7 +26,12 @@ void World::update() {
 
     levels[currLevel]->update();
 
-    player->handleInput();
+    Action action;
+    bool input = player->getAction(action);
+    if(input) {
+        turnSystem->processTurn(action);
+    }
+
     player->update(dt);
 
     // camera.handleDrag();
@@ -42,9 +53,14 @@ void World::render() {
     EndScissorMode();
 }
 
+// =========== getter ===========
+std::vector<Monster*>& World::getMonsters() {
+    return levels[currLevel]->getMonsters();
+}
 
 
 
+// =========== level function ===========
 bool World::isPassable(int x, int y) {
     return levels[currLevel]->isPassable(x, y);
 }
@@ -61,4 +77,9 @@ Vector2 World::getRandomFreeTile() {
     return levels[currLevel]->getRandomFreeTile();
 }
 
+Entity* World::getEntityAt(Vector2 pos) {
+    levels[currLevel]->getEntityAt(pos);
+}
 
+void World::spawnMonsterNear(Vector2 pos) {}
+void World::wakeUpAllMonsters() {}

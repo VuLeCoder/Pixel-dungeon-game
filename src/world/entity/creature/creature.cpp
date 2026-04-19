@@ -1,4 +1,35 @@
 #include "creature.h"
+#include "../../world.h"
+
+// public:
+bool Creature::tryMove(int dx, int dy) {
+    Vector2 pos = getPosition();
+    targetPos = {
+        pos.x + TILE_SIZE * dx,
+        pos.y + TILE_SIZE * dy
+    };
+    int nx = targetPos.x / TILE_SIZE;
+    int ny = targetPos.y / TILE_SIZE;
+
+    // Entity* target = getWorld()->getEntityAt({(float)nx, (float)ny});
+    // if (target && target->isBlocking()) {
+    //     attack(target);
+
+    //     if (dx > 0) dir = Direction::RIGHT;
+    //     else if (dx < 0) dir = Direction::LEFT;
+    //     return false;
+    // }
+
+    if(!getWorld()->isPassable(ny, nx)) return false;
+    
+    setState(State::ACTION_STATE);
+    getWorld()->onLeft(pos.x / TILE_SIZE, pos.y / TILE_SIZE);
+    getWorld()->onEnter(this, nx, ny);
+
+    if (dx > 0) dir = Direction::RIGHT;
+    else if (dx < 0) dir = Direction::LEFT;
+    return true;
+}
 
 void Creature::takeDamage(int damage) {
     hp -= damage;
@@ -12,6 +43,45 @@ void Creature::setAnimation(AnimType type) {
         currAnim = next;
         currAnim->reset();
     }
+}
+
+void Creature::update(float dt) {
+    switch(state) {
+        case State::IDLE_STATE:
+            setAnimation(AnimType::IDLE);
+            break;
+
+        case State::ACTION_STATE:
+        {
+            setAnimation(AnimType::WALK);
+
+            if(targetPos.x > pos.x) {
+                pos.x += SPEED * dt;
+                if(pos.x > targetPos.x) pos.x = targetPos.x;
+            } else if(targetPos.x < pos.x) {
+                pos.x -= SPEED  * dt;
+                if(pos.x < targetPos.x) pos.x = targetPos.x;
+            }
+
+            if(targetPos.y > pos.y) {
+                pos.y += SPEED * dt;
+                if(pos.y > targetPos.y) pos.y = targetPos.y;
+            } else if(targetPos.y < pos.y) {
+                pos.y -= SPEED * dt;
+                if(pos.y < targetPos.y) pos.y = targetPos.y;
+            }
+
+            if(pos.x == targetPos.x && pos.y == targetPos.y) {
+                state = State::IDLE_STATE;
+            }
+
+            break;
+        }
+
+        default:
+            break;
+    }
+    currAnim->update(dt);
 }
 
 void Creature::render() {

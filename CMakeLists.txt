@@ -15,6 +15,8 @@ add_executable(SHATTERED_PIXEL_DUNGEON
 
     src/engine/scene_manager.cpp
     src/engine/asset_manager.cpp
+    src/engine/effect/frame_image.cpp
+    src/engine/effect/animation.cpp
 
     src/scenes/start_scene.cpp
     src/scenes/hero_select_scene.cpp
@@ -26,6 +28,13 @@ add_executable(SHATTERED_PIXEL_DUNGEON
     src/world/tile/tile_index.cpp
     src/world/tile/terrain/terrain.cpp
     src/world/tile/door/door.cpp
+
+    src/world/entity/creature/creature.cpp
+    src/world/entity/creature/player.cpp
+
+    src/world/camera/camera.cpp
+
+    src/world/system/turn_system/turn_system.cpp
 )
 # link raylib
 target_link_libraries(SHATTERED_PIXEL_DUNGEON raylib)

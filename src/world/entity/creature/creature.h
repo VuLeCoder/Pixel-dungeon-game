@@ -29,6 +29,9 @@ enum State {
 };
 
 class Creature : public Entity {
+private:
+    static constexpr float SPEED = 16.0f / 0.3f;
+
 protected:
     std::array<Animation, NUM_TYPE> anims;
     Animation* currAnim = nullptr;
@@ -36,16 +39,22 @@ protected:
     int hp;
     State state = State::IDLE_STATE;
     Direction dir;
-    Vector2 nextPos, targetPos;
+    Vector2 targetPos;
 
 public:
     Creature(float x, float y, World* world, Direction dir, int hp)
         : Entity(x, y, world), dir(dir), hp(hp) {}
 
     bool isBlocking() const override { return true; }
-    void takeDamage(int damage) override;
     
+    void setTargetPos(float nx, float ny) { targetPos = {nx, ny}; }
+    void setState(State state) { this->state = state; }
     void setAnimation(AnimType type);
-
+    void update(float dt) override;
     void render() override;
+    
+    bool tryMove(int dx, int dy);
+    virtual void attack(Entity* target) = 0;
+    void takeDamage(int damage) override;
+    virtual void takeTurn() = 0;
 };

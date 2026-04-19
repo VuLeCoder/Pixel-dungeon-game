@@ -1,7 +1,9 @@
 #include "player.h"
 #include "../../../engine/asset_manager.h"
 #include "../../world.h"
+#include "../../system/turn_system/turn_system.h"
 
+#include <iostream>
 #include <string>
 #include <cmath>
 
@@ -19,51 +21,8 @@ Player::Player(float x, float y, World* world, HeroType hero, Direction dir, int
     setAnimation(AnimType::IDLE);
 }
 
-void Player::fall() {
-
-}
-
-void Player::update(float dt) {
-    switch(state) {
-        case State::IDLE_STATE:
-            setAnimation(AnimType::IDLE);
-            break;
-
-        case State::ACTION_STATE:
-        {
-            setAnimation(AnimType::WALK);
-
-            if(targetPos.x > pos.x) {
-                pos.x += SPEED * dt;
-                if(pos.x > targetPos.x) pos.x = targetPos.x;
-            } else if(targetPos.x < pos.x) {
-                pos.x -= SPEED  * dt;
-                if(pos.x < targetPos.x) pos.x = targetPos.x;
-            }
-
-            if(targetPos.y > pos.y) {
-                pos.y += SPEED * dt;
-                if(pos.y > targetPos.y) pos.y = targetPos.y;
-            } else if(targetPos.y < pos.y) {
-                pos.y -= SPEED * dt;
-                if(pos.y < targetPos.y) pos.y = targetPos.y;
-            }
-
-            if(pos.x == targetPos.x && pos.y == targetPos.y) {
-                state = State::IDLE_STATE;
-            }
-
-            break;
-        }
-
-        default:
-            break;
-    }
-    currAnim->update(dt);
-}
-
-void Player::handleInput() {
-    if (state != State::IDLE_STATE) return;
+bool Player::getAction(Action& action) {
+    if (state != State::IDLE_STATE) return false;
 
     int dx = 0;
     int dy = 0;
@@ -83,23 +42,26 @@ void Player::handleInput() {
     if (IsKeyPressed(KEY_X)) { dx =  0; dy =  1; keyCount++; }
     if (IsKeyPressed(KEY_C)) { dx =  1; dy =  1; keyCount++; }
 
-    if (keyCount != 1) return;
+    if (keyCount == 1) {
+        action.type = ActionType::MOVE;
+        action.dx = dx;
+        action.dy = dy;
+        return true;
+    }
 
-    targetPos = {
-        pos.x + TILE_SIZE * dx,
-        pos.y + TILE_SIZE * dy
-    };
+    // 👉 WAIT (rất quan trọng cho roguelike)
+    if (IsKeyPressed(KEY_SPACE)) {
+        action.type = ActionType::WAIT;
+        return true;
+    }
 
-    int x = targetPos.x / TILE_SIZE;
-    int y = targetPos.y / TILE_SIZE;
-    if (!getWorld()->isPassable(y, x)) return;
-
-    state = State::ACTION_STATE;
-    getWorld()->onLeft(pos.x / TILE_SIZE, pos.y / TILE_SIZE);
-    getWorld()->onEnter(this, x, y);
-
-    // hướng nhìn
-    if (dx > 0) dir = Direction::RIGHT;
-    else if (dx < 0) dir = Direction::LEFT;
+    return false;
 }
 
+void Player::attack(Entity* target) {}
+void Player::fall() {}
+void Player::takeTurn() {}
+
+void Player::update(float dt) {
+    Creature::update(dt);
+}
