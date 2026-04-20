@@ -189,7 +189,7 @@ void Level::spawnMonsterNear(Vector2 pos) {
     enemies.push_back(m);
 }
 
-void Level::removeDeadEntity() {
+void Level::removeDeadEntities() {
     auto it = std::remove_if(enemies.begin(), enemies.end(),
         [](Monster* e) {
             if (!e->isAlive()) {

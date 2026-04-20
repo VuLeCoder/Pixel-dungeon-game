@@ -50,6 +50,7 @@ public:
     void onStep(Entity* e, int x, int y);
     void onLeft(int x, int y);
 
+    void removeDeadEntities();
     // void addEntity(Entity* e);
     // void removeEntity(Entity* e);
     Entity* getEntityAtTile(int x, int y);

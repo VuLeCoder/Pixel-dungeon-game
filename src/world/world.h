@@ -43,4 +43,5 @@ public:
     bool isPassable(int x, int y);
     void onEnter(Entity* e, int x, int y);
     void onLeft(int x, int y);
+    void removeDeadEntities();
 };

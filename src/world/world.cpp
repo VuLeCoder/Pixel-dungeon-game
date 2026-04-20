@@ -111,4 +111,8 @@ void World::spawnMonsterNear(Vector2 pos) {
     getCurrLevel()->spawnMonsterNear(pos); 
 }
 
+void World::removeDeadEntities() {
+    getCurrLevel()->removeDeadEntities();
+}
+
 void World::wakeUpAllMonsters() {}
