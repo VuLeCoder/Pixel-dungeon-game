@@ -18,15 +18,15 @@ MapData Level::loadMapData(int depth) {
 
 Tile Level::buildTile(int x, int y, const MapData& data) {
     Tile tile;
-    int terrain = data.terrain[x][y];
+    int terrain = data.terrain[y][x];
 
-    int trap = data.trap[x][y];
+    int trap = data.trap[y][x];
     if(trap != NONE) {
         tile.setTrapTile(terrain, trap == TRAP_HIDDEN);
         return tile;
     }
 
-    int door = data.door[x][y];
+    int door = data.door[y][x];
     if(door != NONE) {
         tile.setDoorTile(
             door == DOOR_LOCKED,
@@ -46,10 +46,17 @@ void Level::generateMap(int depth) {
     MapData data = loadMapData(depth);
 
     tiles = std::vector<std::vector<Tile>>(MAP_SIZE, std::vector<Tile>(MAP_SIZE));
+    for(int y=0; y<MAP_SIZE; ++y) {
+        for(int x=0; x<MAP_SIZE; ++x) {
+            tiles[y][x] = buildTile(x, y, data);
 
-    for(int x=0; x<MAP_SIZE; ++x) {
-        for(int y=0; y<MAP_SIZE; ++y) {
-            tiles[x][y] = buildTile(x, y, data);            
+            if(tiles[y][x].isStairUp()) {
+                stairUpPos = {(float)x * TILE_SIZE, (float)y * TILE_SIZE};
+            }
+
+            if(tiles[y][x].isStairDown()) {
+                stairDownPos = {(float)x * TILE_SIZE, (float)y * TILE_SIZE};
+            }
         }
     }
 }
@@ -57,7 +64,7 @@ void Level::generateMap(int depth) {
 void Level::update() {
     for(int x=0; x<MAP_SIZE; ++x) {
         for(int y=0; y<MAP_SIZE; ++y) {
-            tiles[x][y].update();
+            tiles[y][x].update();
         }
     }
 }
@@ -65,29 +72,29 @@ void Level::update() {
 void Level::render() {
     for(int x=0; x<MAP_SIZE; ++x) {
         for(int y=0; y<MAP_SIZE; ++y) {
-            tiles[x][y].render(y, x);
+            tiles[y][x].render(x, y);
         }
     }
 }
 
 bool Level::isBlockVision(int x, int y) const {
-    return tiles[x][y].isBlockVision();
+    return tiles[y][x].isBlockVision();
 }
 
 bool Level::isPassable(int x, int y) const {
-    return tiles[x][y].isPassable();
+    return tiles[y][x].isPassable();
 }
 
 bool Level::isDanger(int x, int y) const {
-    return tiles[x][y].isDanger();
+    return tiles[y][x].isDanger();
 }
 
 void Level::onStep(Entity* e, int x, int y) {
-    tiles[x][y].onEnter(e, getWorld());
+    tiles[y][x].onEnter(e, getWorld());
 }
 
 void Level::onLeft(int x, int y) {
-    tiles[x][y].onLeft();
+    tiles[y][x].onLeft();
 }
 
 Vector2 Level::getRandomFreeTile() {
@@ -109,7 +116,7 @@ Vector2 Level::getRandomFreeTile() {
     int index = GetRandomValue(0, freeTiles.size() - 1);
     freeTiles[index].x *= TILE_SIZE;
     freeTiles[index].y *= TILE_SIZE;
-    return {freeTiles[index].y, freeTiles[index].x};
+    return {freeTiles[index].x, freeTiles[index].y};
 }
 
 Entity* Level::getEntityAt(Vector2 pos) {

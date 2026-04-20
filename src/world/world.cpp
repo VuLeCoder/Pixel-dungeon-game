@@ -9,7 +9,9 @@
 //public:
 World::World(HeroType heroType) : camera(1200, 700, 33 * 16, 33 * 16) {
     init();
-    player = new Player(16*9, 1+16*9, this, heroType, Direction::LEFT, 100);
+
+    Vector2 stairUpPos = levels[currLevel]->getStairUpPos();
+    player = new Player(stairUpPos.x, stairUpPos.y + 1, this, heroType, Direction::LEFT, 100);
     turnSystem = new TurnSystem(this);
 }
 
@@ -39,7 +41,7 @@ void World::update() {
     if (wheel != 0) {
         camera.updateZoom(wheel * 0.1f);
     }
-    camera.followSmooth(player->getPosition(), GetFrameTime());
+    camera.followSmooth(player->getPosition(), dt);
 }
 
 void World::render() {
@@ -59,18 +61,17 @@ std::vector<Monster*>& World::getMonsters() {
 }
 
 
-
 // =========== level function ===========
 bool World::isPassable(int x, int y) {
     return levels[currLevel]->isPassable(x, y);
 }
 
 void World::onEnter(Entity* e, int x, int y) {
-    levels[currLevel]->onStep(e, y, x);
+    levels[currLevel]->onStep(e, x, y);
 }
 
 void World::onLeft(int x, int y) {
-    levels[currLevel]->onLeft(y, x);
+    levels[currLevel]->onLeft(x, y);
 }
 
 Vector2 World::getRandomFreeTile() {
@@ -78,7 +79,7 @@ Vector2 World::getRandomFreeTile() {
 }
 
 Entity* World::getEntityAt(Vector2 pos) {
-    levels[currLevel]->getEntityAt(pos);
+    return levels[currLevel]->getEntityAt(pos);
 }
 
 void World::spawnMonsterNear(Vector2 pos) {}

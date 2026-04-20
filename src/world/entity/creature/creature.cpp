@@ -20,7 +20,7 @@ bool Creature::tryMove(int dx, int dy) {
     //     return false;
     // }
 
-    if(!getWorld()->isPassable(ny, nx)) return false;
+    if(!getWorld()->isPassable(nx, ny)) return false;
     
     setState(State::ACTION_STATE);
     getWorld()->onLeft(pos.x / TILE_SIZE, pos.y / TILE_SIZE);
