@@ -37,6 +37,9 @@ void FOVSystem::castLight(
             if(std::max(std::abs(dx), std::abs(dy)) <= radius) {
                 visible[ax][ay] = true;
             }
+            // if(dx*dx + dy*dy <= radius * radius) {
+            //     visible[ax][ay] = true;
+            // }
 
             bool isWall = level->isBlockVision(ax, ay);
             if(blocked) {
