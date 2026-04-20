@@ -14,7 +14,7 @@ public:
     virtual ~Entity() {}
 
     bool isAlive() const { return alive; }
-    void destroy() { alive = false; }
+    virtual void destroy() { alive = false; }
 
     Vector2 getPosition() const { return pos; }
     void setPos(float nx, float ny) { pos = {nx, ny}; }

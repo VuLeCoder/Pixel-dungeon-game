@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <string>
+#include <algorithm>
 
 //helper
 void drawBlack(int x, int y) {
@@ -178,12 +179,25 @@ Entity* Level::getEntityAtTile(int x, int y) {
 }
 
 void Level::spawnMonsterNear(Vector2 pos) {
-    Vector2 pos1 = getRandomFreeTile();
-    if (pos1.x < 0 || pos1.y < 0) {
-        std::cout << "No free tile to spawn monster!\n";
-        return;
-    }
+    // Vector2 pos1 = getRandomFreeTile();
+    // if (pos1.x < 0 || pos1.y < 0) {
+    //     std::cout << "No free tile to spawn monster!\n";
+    //     return;
+    // }
 
-    Monster* m = new Monster(pos1.x, pos1.y + 1, getWorld(), Direction::LEFT, RAT);
+    Monster* m = new Monster(getStairUpPos().x, getStairUpPos().y + 16, getWorld(), Direction::LEFT, GNOLL);
     enemies.push_back(m);
+}
+
+void Level::removeDeadEntity() {
+    auto it = std::remove_if(enemies.begin(), enemies.end(),
+        [](Monster* e) {
+            if (!e->isAlive()) {
+                delete e;
+                return true;
+            }
+            return false;
+        });
+
+    enemies.erase(it, enemies.end());
 }

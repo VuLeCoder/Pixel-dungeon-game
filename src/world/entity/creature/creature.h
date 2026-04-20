@@ -28,7 +28,8 @@ enum class ActionState {
     MOVING,
     ATTACKING,
     USE,
-    USE_SCROLL
+    USE_SCROLL,
+    DEATH
 };
 
 class Creature : public Entity {
@@ -41,6 +42,7 @@ private:
     void updateAttack();
     void updateUse();
     void updateUseScroll();
+    void updateDeath();
 
 protected:
     std::array<Animation, NUM_TYPE> anims;
@@ -60,7 +62,7 @@ public:
     void render() override;
 
     bool tryMove(int dx, int dy);
-
+    void destroy() override;
     virtual void attack(Entity* target) = 0;
     void takeDamage(int damage) override;
     

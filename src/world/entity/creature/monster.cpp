@@ -54,8 +54,7 @@ void Monster::takeTurn() {
     int index = GetRandomValue(0, 7);
     tryMove((int)directions[index].x, (int)directions[index].y);
 }
-#include <iostream>
+
 void Monster::update(float dt) {
     Creature::update(dt);
-    std::cout << getPosition().x << " " << getPosition().y << std::endl;
 }

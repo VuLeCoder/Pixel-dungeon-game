@@ -33,6 +33,12 @@ void Creature::updateAttack() {
 void Creature::updateUse() {}
 void Creature::updateUseScroll() {}
 
+void Creature::updateDeath() {
+    if(currAnim->isFinished()) {
+        Entity::destroy();
+    }
+}
+
 // public:
 void Creature::update(float dt) {
     switch(state) {
@@ -44,6 +50,10 @@ void Creature::update(float dt) {
 
         case ActionState::ATTACKING:
             updateAttack();
+            break;
+        
+        case ActionState::DEATH:
+            updateDeath();
             break;
 
         default:
@@ -68,7 +78,7 @@ void Creature::setAnimation(AnimType type) {
 }
 
 void Creature::setState(ActionState newState) {
-    if(state == newState) return;
+    if(state == newState || state == ActionState::DEATH) return;
     state = newState;
 
     switch(state) {
@@ -87,9 +97,16 @@ void Creature::setState(ActionState newState) {
         case ActionState::USE_SCROLL:
             setAnimation(AnimType::USE_SCROLL);
             break;
+        case ActionState::DEATH:
+            setAnimation(AnimType::DEATH);
+            break;
     }
 }
 
+
+void Creature::destroy() {
+    setState(ActionState::DEATH);
+}
 
 bool Creature::tryMove(int dx, int dy) {
     Vector2 pos = getPosition();
@@ -122,11 +139,12 @@ bool Creature::tryMove(int dx, int dy) {
     else if (dx < 0) dir = Direction::LEFT;
     return true;
 }
-
+#include <iostream>
 void Creature::takeDamage(int damage) {
     damage -= GetRandomValue(getStats().minDef, getStats().maxDef);
     damage = damage > 0 ? damage : 0;
 
     currHP -= damage;
     if(currHP <= 0) destroy();
+    std::cout << currHP << std::endl;
 }
