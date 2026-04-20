@@ -32,6 +32,21 @@ Player::Player(float x, float y, World* world, HeroType hero, Direction dir)
         std::string(AssetManager::WARRIOR) + "_" + std::string(AssetManager::WALK)
     );
 
+    anims[static_cast<int>(AnimType::ATK)] = AssetManager::GetAnimation(
+        std::string(AssetManager::WARRIOR) + "_" + std::string(AssetManager::ATK)
+    );
+    anims[static_cast<int>(AnimType::ATK)].setRepeated(false);
+
+    anims[static_cast<int>(AnimType::USE)] = AssetManager::GetAnimation(
+        std::string(AssetManager::WARRIOR) + "_" + std::string(AssetManager::USE)
+    );
+    anims[static_cast<int>(AnimType::USE)].setRepeated(false);
+
+    anims[static_cast<int>(AnimType::USE_SCROLL)] = AssetManager::GetAnimation(
+        std::string(AssetManager::WARRIOR) + "_" + std::string(AssetManager::USE_SCROLL)
+    );
+    anims[static_cast<int>(AnimType::USE_SCROLL)].setRepeated(false);
+
     setAnimation(AnimType::IDLE);
 }
 
@@ -73,11 +88,13 @@ bool Player::getAction(Action& action) {
 }
 
 void Player::attack(Entity* target) {
+    setState(ActionState::ATTACKING);
     int dame = GetRandomValue(getStats().minDame, getStats().maxDame);
     target->takeDamage(dame);
 }
 
 void Player::fall() {}
+
 void Player::takeTurn() {
     updateFOV();
 }
