@@ -3,8 +3,8 @@
 #include "../../engine/asset_manager.h"
 #include "../entity/creature/monster.h"
 
-#include <string>
 #include <iostream>
+#include <string>
 
 //helper
 void drawBlack(int x, int y) {
@@ -12,7 +12,7 @@ void drawBlack(int x, int y) {
 }
 
 void drawDark(int x, int y) {
-    Color dark = {0, 0, 0, 180}; // alpha 180/255
+    Color dark = {0, 0, 0, 180};
     DrawRectangle(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, dark);
 }
 
@@ -100,6 +100,7 @@ void Level::render() {
             if(!tiles[y][x].isDiscovered()) {
                 drawBlack(x, y);
             } else if(!getWorld()->getPlayer()->visible(x, y)) {
+                tiles[y][x].render(x, y);
                 drawDark(x, y);
             }
         }
@@ -131,6 +132,8 @@ void Level::onLeft(int x, int y) {
 }
 
 Vector2 Level::getRandomFreeTile() {
+    std::cout << "random ... " << std::endl;
+
     std::vector<Vector2> freeTiles;
     for (int y = 0; y < MAP_SIZE; ++y) {
         for (int x = 0; x < MAP_SIZE; ++x) {
@@ -160,17 +163,27 @@ Entity* Level::getEntityAtTile(int x, int y) {
         return (ex == x && ey == y) ? e : nullptr;
     };
 
-    for (Entity* e : enemies)
-        if (auto r = check(e)) return r;
+    Player* p = getWorld()->getPlayer();
+    if(p)
+        if(auto r = check(p))
+            return r;
 
-    for (Entity* i : items)
-        if (auto r = check(i)) return r;
+    for(Entity* e : enemies)
+        if(auto r = check(e)) return r;
+
+    for(Entity* i : items)
+        if(auto r = check(i)) return r;
 
     return nullptr;
 }
 
 void Level::spawnMonsterNear(Vector2 pos) {
     Vector2 pos1 = getRandomFreeTile();
-    Monster* m = new Monster(pos1.x, pos1.y, getWorld(), Direction::LEFT, 60, MonsterType::C_RED);
+    if (pos1.x < 0 || pos1.y < 0) {
+        std::cout << "No free tile to spawn monster!\n";
+        return;
+    }
+
+    Monster* m = new Monster(pos1.x, pos1.y + 1, getWorld(), Direction::LEFT, RAT);
     enemies.push_back(m);
 }

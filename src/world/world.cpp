@@ -3,6 +3,8 @@
 #include "./system/turn_system/turn_system.h"
 #include "./system/FOV/fov_system.h"
 
+#include <iostream>
+
 //private:
 void World::updateLevel(float dt) {
     getCurrLevel()->update(dt);
@@ -29,17 +31,21 @@ World::World(HeroType heroType) : camera(1200, 700, 33 * 16, 33 * 16) {
     player = new Player(stairUpPos.x, stairUpPos.y + 1, this, heroType, Direction::LEFT);
     turnSystem = new TurnSystem(this);
     fovSystem = new FOVSystem();
+    std::cout << "hello World ";
 }
 
 void World::init() {
+    std::cout << "hello init 1 ";
     currLevel = 0;
     
     Level* l1 = new Level(this);
     l1->generateMap(1);
     levels.push_back(l1);
-
+    std::cout << "hello init 2 ";
+    
     spawnMonsterNear({0, 0});
     spawnMonsterNear({0, 0});
+    std::cout << "hello init 3 ";
 }
 
 void World::update() {
