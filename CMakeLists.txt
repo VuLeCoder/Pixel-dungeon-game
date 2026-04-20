@@ -31,6 +31,7 @@ add_executable(SHATTERED_PIXEL_DUNGEON
 
     src/world/entity/creature/creature.cpp
     src/world/entity/creature/player.cpp
+    src/world/entity/creature/monster.cpp
 
     src/world/camera/camera.cpp
 
