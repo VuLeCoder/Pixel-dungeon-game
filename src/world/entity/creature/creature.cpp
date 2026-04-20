@@ -18,7 +18,7 @@ bool Creature::tryMove(int dx, int dy) {
             
             if (dx > 0) dir = Direction::RIGHT;
             else if (dx < 0) dir = Direction::LEFT;
-            return false;
+            return true;
         }
     }
 
@@ -35,7 +35,7 @@ bool Creature::tryMove(int dx, int dy) {
 }
 
 void Creature::takeDamage(int damage) {
-    damage -= GetRandomValue(stats.minDef, stats.maxDef);
+    damage -= GetRandomValue(getStats().minDef, getStats().maxDef);
     damage = damage > 0 ? damage : 0;
 
     currHP -= damage;
