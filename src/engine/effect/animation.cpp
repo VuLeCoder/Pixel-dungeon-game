@@ -19,6 +19,10 @@ void Animation::update(float time) {
 void Animation::nextFrame() {
     if(currFrame >= frameImages.size() - 1) {
         if(isRepeated) currFrame = 0;
+        else {
+            finished = true;
+            return;
+        }
     } else {
         ++currFrame;
     }
@@ -37,13 +41,14 @@ bool Animation::isLastFrame() const {
     return currFrame == frameImages.size() - 1;
 }
 
+bool Animation::isFinished() const {
+    return finished;
+}
+
 void Animation::reset() {
+    finished = false;
     currFrame = 0;
     timer = 0;
-
-    for(int i=0; i<ignoreFrames.size(); ++i) {
-        ignoreFrames[i] = false;
-    }
 }
 
 void Animation::setRepeated(bool repeat) {
@@ -57,14 +62,6 @@ void Animation::setIgnoreFrame(int id, bool val) {
 
 void Animation::render(float x, float y, bool flip) {
     Texture2D texture = getCurrentFrame().getTexture();
-    // Rectangle rec = getCurrentFrame().getSource();
-
-    // if(flip) {
-    //     rec.x += rec.width;
-    //     rec.width = -rec.width;
-    // }
-
-    // DrawTextureRec(texture, rec, {x, y}, WHITE);
 
     Rectangle src = getCurrentFrame().getSource();
     Rectangle dest = { x, y, src.width, src.height };

@@ -26,7 +26,9 @@ constexpr int NUM_TYPE = 6;
 enum class ActionState {
     IDLE,
     MOVING,
-    ACTING
+    ATTACKING,
+    USE,
+    USE_SCROLL
 };
 
 class Creature : public Entity {
@@ -34,6 +36,11 @@ private:
     static constexpr float SPEED = 16.0f / 0.3f;
     Stats stats;
     int currHP;
+
+    void updateMovement(float dt);
+    void updateAttack();
+    void updateUse();
+    void updateUseScroll();
 
 protected:
     std::array<Animation, NUM_TYPE> anims;
@@ -63,7 +70,7 @@ public:
     
     void setStats(Stats newStats) { stats = newStats; currHP = stats.maxHP; }
     void setTargetPos(float nx, float ny) { targetPos = {nx, ny}; }
-    void setState(ActionState state) { this->state = state; }
+    void setState(ActionState state);
     void setAnimation(AnimType type);
     
     virtual void takeTurn() = 0;

@@ -7,6 +7,7 @@ class Animation {
 private:
     bool isRepeated = true;
     int currFrame = 0;
+    bool finished = false;
 
     std::vector<FrameImage> frameImages;
     std::vector<bool> ignoreFrames;
@@ -23,6 +24,7 @@ public:
 
     FrameImage& getCurrentFrame();
     bool isLastFrame() const;
+    bool isFinished() const;
 
     void reset();
     void setRepeated(bool repeat);

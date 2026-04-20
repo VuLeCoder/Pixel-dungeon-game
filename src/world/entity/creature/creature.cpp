@@ -1,7 +1,96 @@
 #include "creature.h"
 #include "../../world.h"
 
+//private:
+void Creature::updateMovement(float dt) {
+    if(targetPos.x > pos.x) {
+        pos.x += SPEED * dt;
+        if(pos.x > targetPos.x) pos.x = targetPos.x;
+    } else if(targetPos.x < pos.x) {
+        pos.x -= SPEED  * dt;
+        if(pos.x < targetPos.x) pos.x = targetPos.x;
+    }
+
+    if(targetPos.y > pos.y) {
+        pos.y += SPEED * dt;
+        if(pos.y > targetPos.y) pos.y = targetPos.y;
+    } else if(targetPos.y < pos.y) {
+        pos.y -= SPEED * dt;
+        if(pos.y < targetPos.y) pos.y = targetPos.y;
+    }
+
+    if(pos.x == targetPos.x && pos.y == targetPos.y) {
+        setState(ActionState::IDLE);
+    }
+}
+
+void Creature::updateAttack() {
+    if(currAnim->isFinished()) {
+        setState(ActionState::IDLE);
+    }
+}
+
+void Creature::updateUse() {}
+void Creature::updateUseScroll() {}
+
 // public:
+void Creature::update(float dt) {
+    switch(state) {
+        case ActionState::IDLE: break;
+
+        case ActionState::MOVING:
+            updateMovement(dt);
+            break;
+
+        case ActionState::ATTACKING:
+            updateAttack();
+            break;
+
+        default:
+            break;
+    }
+    currAnim->update(dt);
+}
+
+void Creature::render() {
+    bool flip = dir == Direction::LEFT;
+    currAnim->render(pos.x, pos.y, flip);
+}
+
+
+void Creature::setAnimation(AnimType type) {
+    Animation* next = &anims[static_cast<int>(type)];
+
+    if(currAnim != next) {
+        currAnim = next;
+        currAnim->reset();
+    }
+}
+
+void Creature::setState(ActionState newState) {
+    if(state == newState) return;
+    state = newState;
+
+    switch(state) {
+        case ActionState::IDLE:
+            setAnimation(AnimType::IDLE);
+            break;
+        case ActionState::MOVING:
+            setAnimation(AnimType::WALK);
+            break;
+        case ActionState::ATTACKING:
+            setAnimation(AnimType::ATK);
+            break;
+        case ActionState::USE:
+            setAnimation(AnimType::USE);
+            break;
+        case ActionState::USE_SCROLL:
+            setAnimation(AnimType::USE_SCROLL);
+            break;
+    }
+}
+
+
 bool Creature::tryMove(int dx, int dy) {
     Vector2 pos = getPosition();
     Vector2 nextPos = {
@@ -40,57 +129,4 @@ void Creature::takeDamage(int damage) {
 
     currHP -= damage;
     if(currHP <= 0) destroy();
-}
-
-void Creature::setAnimation(AnimType type) {
-    Animation* next = &anims[static_cast<int>(type)];
-
-    if(currAnim != next) {
-        currAnim = next;
-        currAnim->reset();
-    }
-}
-
-void Creature::update(float dt) {
-    switch(state) {
-        case ActionState::IDLE:
-            setAnimation(AnimType::IDLE);
-            break;
-
-        case ActionState::MOVING:
-        {
-            setAnimation(AnimType::WALK);
-
-            if(targetPos.x > pos.x) {
-                pos.x += SPEED * dt;
-                if(pos.x > targetPos.x) pos.x = targetPos.x;
-            } else if(targetPos.x < pos.x) {
-                pos.x -= SPEED  * dt;
-                if(pos.x < targetPos.x) pos.x = targetPos.x;
-            }
-
-            if(targetPos.y > pos.y) {
-                pos.y += SPEED * dt;
-                if(pos.y > targetPos.y) pos.y = targetPos.y;
-            } else if(targetPos.y < pos.y) {
-                pos.y -= SPEED * dt;
-                if(pos.y < targetPos.y) pos.y = targetPos.y;
-            }
-
-            if(pos.x == targetPos.x && pos.y == targetPos.y) {
-                state = ActionState::IDLE;
-            }
-
-            break;
-        }
-
-        default:
-            break;
-    }
-    currAnim->update(dt);
-}
-
-void Creature::render() {
-    bool flip = dir == Direction::LEFT;
-    currAnim->render(pos.x, pos.y, flip);
 }
