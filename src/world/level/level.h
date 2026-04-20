@@ -16,8 +16,10 @@ struct MapData {
 };
 
 class Level {
-private:
+public:
     static constexpr int MAP_SIZE = 33;
+    
+private:
     World* world;
     Vector2 stairUpPos, stairDownPos;
 
@@ -43,6 +45,7 @@ public:
     bool isBlockVision(int x, int y) const;
     bool isPassable(int x, int y) const;
     bool isDanger(int x, int y) const;
+    void discover(int x, int y);
 
     void onStep(Entity* e, int x, int y);
     void onLeft(int x, int y);

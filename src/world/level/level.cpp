@@ -3,9 +3,18 @@
 #include "../../engine/asset_manager.h"
 #include "../entity/creature/monster.h"
 
-
 #include <string>
 #include <iostream>
+
+//helper
+void drawBlack(int x, int y) {
+    DrawRectangle(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, BLACK);
+}
+
+void drawDark(int x, int y) {
+    Color dark = {0, 0, 0, 180}; // alpha 180/255
+    DrawRectangle(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE, dark);
+}
 
 //private:
 MapData Level::loadMapData(int depth) {
@@ -85,6 +94,16 @@ void Level::render() {
     for(Monster* m : enemies) {
         m->render();
     }
+
+    for(int x=0; x<MAP_SIZE; ++x) {
+        for(int y=0; y<MAP_SIZE; ++y) {
+            if(!tiles[y][x].isDiscovered()) {
+                drawBlack(x, y);
+            } else if(!getWorld()->getPlayer()->visible(x, y)) {
+                drawDark(x, y);
+            }
+        }
+    }
 }
 
 bool Level::isBlockVision(int x, int y) const {
@@ -97,6 +116,10 @@ bool Level::isPassable(int x, int y) const {
 
 bool Level::isDanger(int x, int y) const {
     return tiles[y][x].isDanger();
+}
+
+void Level::discover(int x, int y) {
+    tiles[y][x].discoverTile();
 }
 
 void Level::onStep(Entity* e, int x, int y) {

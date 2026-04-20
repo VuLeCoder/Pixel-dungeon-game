@@ -1,15 +1,30 @@
 #include "player.h"
 #include "../../../engine/asset_manager.h"
+#include "../../level/level.h"
 #include "../../world.h"
 #include "../../system/turn_system/turn_system.h"
+#include "../../system/FOV/fov_system.h"
 
 #include <iostream>
 #include <string>
 #include <cmath>
 
+//private:
+void Player::updateFOV() {
+    int x = getTargetPos().x / TILE_SIZE;
+    int y = getTargetPos().y / TILE_SIZE;
+    FOVSystem::computeInto(getWorld()->getCurrLevel(), x, y, getRadiusVision(), playerVisible);
+}
+
+//public:
 Player::Player(float x, float y, World* world, HeroType hero, Direction dir, int hp)
     : Creature(x, y, world, dir, hp)
 {
+    setTargetPos(getPosition().x, getPosition().y);
+    int size = world->getCurrLevel()->MAP_SIZE;
+    playerVisible.resize(size, std::vector<bool>(size, false));
+    updateFOV();
+
     anims[static_cast<int>(AnimType::IDLE)] = AssetManager::GetAnimation(
         std::string(AssetManager::WARRIOR) + "_" + std::string(AssetManager::IDLE)
     );
@@ -22,7 +37,7 @@ Player::Player(float x, float y, World* world, HeroType hero, Direction dir, int
 }
 
 bool Player::getAction(Action& action) {
-    if (state != State::IDLE_STATE) return false;
+    if (state != ActionState::IDLE) return false;
 
     int dx = 0;
     int dy = 0;
@@ -60,7 +75,9 @@ bool Player::getAction(Action& action) {
 
 void Player::attack(Entity* target) {}
 void Player::fall() {}
-void Player::takeTurn() {}
+void Player::takeTurn() {
+    updateFOV();
+}
 
 void Player::update(float dt) {
     Creature::update(dt);

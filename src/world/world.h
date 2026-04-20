@@ -8,6 +8,7 @@ class Level;
 class TurnSystem;
 class Player;
 class Monster;
+class FOVSystem;
 
 class World {
 private:
@@ -16,9 +17,11 @@ private:
 
     TurnSystem* turnSystem;
     Player* player;
+    FOVSystem* fovSystem;
     MyCamera camera;
 
     void LoadLevel();
+    void updateLevel(float dt);
 
 public:
     World(HeroType heroType);
@@ -28,8 +31,9 @@ public:
     void goToNextLevel();
     void goToPreviousLevel();
 
-    TurnSystem* getTurnSystem() {return turnSystem; }
-    Player* getPlayer() { return player; }
+    Level* getCurrLevel() const { return levels[currLevel]; }
+    TurnSystem* getTurnSystem() const  { return turnSystem; }
+    Player* getPlayer() const  { return player; }
     std::vector<Monster*>& getMonsters();
 
     Entity* getEntityAtTile(int x, int y);

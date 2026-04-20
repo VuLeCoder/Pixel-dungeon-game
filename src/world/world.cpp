@@ -1,18 +1,34 @@
 #include "world.h"
 #include "./level/level.h"
 #include "./system/turn_system/turn_system.h"
+#include "./system/FOV/fov_system.h"
 
 //private:
+void World::updateLevel(float dt) {
+    getCurrLevel()->update(dt);
+    
+    int px = player->getPosition().x / TILE_SIZE;
+    int py = player->getPosition().y / TILE_SIZE;
+    auto fov = FOVSystem::compute(getCurrLevel(), px, py, player->getRadiusVision());
 
+    for(int x=0; x<Level::MAP_SIZE; ++x) {
+        for(int y=0; y<Level::MAP_SIZE; ++y) {
+            if(fov.visible[x][y]) {
+                getCurrLevel()->discover(x, y);
+            }
+        }
+    }
+}
 
 
 //public:
 World::World(HeroType heroType) : camera(1200, 700, 33 * 16, 33 * 16) {
     init();
 
-    Vector2 stairUpPos = levels[currLevel]->getStairUpPos();
+    Vector2 stairUpPos = getCurrLevel()->getStairUpPos();
     player = new Player(stairUpPos.x, stairUpPos.y + 1, this, heroType, Direction::LEFT, 100);
     turnSystem = new TurnSystem(this);
+    fovSystem = new FOVSystem();
 }
 
 void World::init() {
@@ -29,7 +45,7 @@ void World::init() {
 void World::update() {
     float dt = GetFrameTime();
 
-    levels[currLevel]->update(dt);
+    updateLevel(dt);
 
     Action action;
     bool input = player->getAction(action);
@@ -51,7 +67,7 @@ void World::render() {
     BeginScissorMode(0, 0, 1200, 700);
     camera.begin();
 
-    levels[currLevel]->render();
+    getCurrLevel()->render();
     player->render();
 
     camera.end();
@@ -60,33 +76,33 @@ void World::render() {
 
 // =========== getter ===========
 std::vector<Monster*>& World::getMonsters() {
-    return levels[currLevel]->getMonsters();
+    return getCurrLevel()->getMonsters();
 }
 
 
 // =========== level function ===========
 bool World::isPassable(int x, int y) {
-    return levels[currLevel]->isPassable(x, y);
+    return getCurrLevel()->isPassable(x, y);
 }
 
 void World::onEnter(Entity* e, int x, int y) {
-    levels[currLevel]->onStep(e, x, y);
+    getCurrLevel()->onStep(e, x, y);
 }
 
 void World::onLeft(int x, int y) {
-    levels[currLevel]->onLeft(x, y);
+    getCurrLevel()->onLeft(x, y);
 }
 
 Vector2 World::getRandomFreeTile() {
-    return levels[currLevel]->getRandomFreeTile();
+    return getCurrLevel()->getRandomFreeTile();
 }
 
 Entity* World::getEntityAtTile(int x, int y) {
-    return levels[currLevel]->getEntityAtTile(x, y);
+    return getCurrLevel()->getEntityAtTile(x, y);
 }
 
 void World::spawnMonsterNear(Vector2 pos) {
-    levels[currLevel]->spawnMonsterNear(pos); 
+    getCurrLevel()->spawnMonsterNear(pos); 
 }
 
 void World::wakeUpAllMonsters() {}

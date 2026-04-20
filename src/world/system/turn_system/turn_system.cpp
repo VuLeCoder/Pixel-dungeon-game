@@ -34,6 +34,7 @@ void TurnSystem::processTurn(const Action& action) {
             handleUseItem(player, action);
             break;
     }
+    player->takeTurn();
 
     if (!player->isAlive()) {
         processing = false;
