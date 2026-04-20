@@ -11,7 +11,7 @@ private:
     static std::vector<Vector2> directions;
 
 public:
-    Monster(float x, float y, World* world, Direction dir, const MonsterInfo& type);
+    Monster(float x, float y, World* world, Direction dir, const MonsterInfo type);
     
     bool isPlayer() const override { return false; }
 

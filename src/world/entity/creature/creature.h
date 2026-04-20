@@ -59,6 +59,7 @@ public:
     
     bool isBlocking() const override { return true; }
     Vector2 getTargetPos() { return targetPos; }
+    Stats getStats() const { return stats; }
     
     void setStats(Stats newStats) { stats = newStats; currHP = stats.maxHP; }
     void setTargetPos(float nx, float ny) { targetPos = {nx, ny}; }

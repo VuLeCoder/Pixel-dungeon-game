@@ -3,7 +3,6 @@
 #include "../../world.h"
 #include "../../system/turn_system/turn_system.h"
 
-#include <iostream>
 //private:
 std::vector<Vector2> Monster::directions = {
     { 0, -1 }, // UP
@@ -17,7 +16,7 @@ std::vector<Vector2> Monster::directions = {
 };
 
 //public:
-Monster::Monster(float x, float y, World* world, Direction dir, const MonsterInfo& type)
+Monster::Monster(float x, float y, World* world, Direction dir, const MonsterInfo type)
     : Creature(x, y, world, dir, type.stats)
 {
     // anims[(int)AnimType::IDLE] = AssetManager::GetAnimation("rat_idle");
@@ -29,7 +28,7 @@ Monster::Monster(float x, float y, World* world, Direction dir, const MonsterInf
 void Monster::fall() {}
 
 void Monster::attack(Entity* target) {
-    int dame = GetRandomValue(type.stats.minDame, type.stats.maxDame);
+    int dame = GetRandomValue(getStats().minDame, getStats().minDame);
     target->takeDamage(dame);
 }
 
@@ -76,4 +75,15 @@ void Monster::update(float dt) {
     }
 }
 
-void Monster::render() {}
+void Monster::render() {
+    if(!isAlive()) return;
+    Vector2 pos = getPosition();
+
+    DrawRectangle(
+        (int)pos.x,
+        (int)pos.y,
+        10,   // width
+        14,   // height
+        RED
+    );
+}

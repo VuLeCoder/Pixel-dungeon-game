@@ -5,7 +5,6 @@
 #include "../../system/turn_system/turn_system.h"
 #include "../../system/FOV/fov_system.h"
 
-#include <iostream>
 #include <string>
 #include <cmath>
 
@@ -73,7 +72,11 @@ bool Player::getAction(Action& action) {
     return false;
 }
 
-void Player::attack(Entity* target) {}
+void Player::attack(Entity* target) {
+    int dame = GetRandomValue(getStats().minDame, getStats().maxDame);
+    target->takeDamage(dame);
+}
+
 void Player::fall() {}
 void Player::takeTurn() {
     updateFOV();

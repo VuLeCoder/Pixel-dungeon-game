@@ -10,6 +10,6 @@ enum class HeroType {
 static constexpr Stats heroStats {
     25,
     1, 3,
-    1, 1,
+    0, 1,
     6
 };
