@@ -47,4 +47,7 @@ public:
 
     static constexpr std::string_view WARRIOR = "warrior";
     static constexpr std::string_view MAGE = "mage";
+
+    static constexpr std::string_view RAT = "rat";
+    static constexpr std::string_view GNOLL = "gnoll";
 };

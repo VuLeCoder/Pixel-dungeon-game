@@ -114,7 +114,12 @@ void AssetManager::LoadAllAnimation() {
         {WARRIOR, ATK,          "assets/entity/creature/hero/warrior/attack_animation.txt"},
         {WARRIOR, USE,          "assets/entity/creature/hero/warrior/use_animation.txt"},
         {WARRIOR, USE_SCROLL,   "assets/entity/creature/hero/warrior/use_scroll_animation.txt"},
-        {WARRIOR, DEATH,        "assets/entity/creature/hero/death_animation.txt"}
+        {WARRIOR, DEATH,        "assets/entity/creature/hero/death_animation.txt"},
+
+        {GNOLL, IDLE,         "assets/entity/creature/monster/gnoll/idle_animation.txt"},
+        {GNOLL, WALK,         "assets/entity/creature/monster/gnoll/walk_animation.txt"},
+        {GNOLL, ATK,          "assets/entity/creature/monster/gnoll/attack_animation.txt"},
+        {GNOLL, DEATH,        "assets/entity/creature/monster/gnoll/death_animation.txt"}
     };
 
     for (auto& e : entries) {

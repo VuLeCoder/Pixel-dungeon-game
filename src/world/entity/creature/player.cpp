@@ -47,6 +47,11 @@ Player::Player(float x, float y, World* world, HeroType hero, Direction dir)
     );
     anims[static_cast<int>(AnimType::USE_SCROLL)].setRepeated(false);
 
+    anims[static_cast<int>(AnimType::DEATH)] = AssetManager::GetAnimation(
+        std::string(AssetManager::WARRIOR) + "_" + std::string(AssetManager::DEATH)
+    );
+    anims[static_cast<int>(AnimType::DEATH)].setRepeated(false);
+
     setAnimation(AnimType::IDLE);
 }
 
