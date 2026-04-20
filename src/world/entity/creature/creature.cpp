@@ -25,7 +25,7 @@ bool Creature::tryMove(int dx, int dy) {
 
     if(!getWorld()->isPassable(nx, ny)) return false;
     
-    setState(State::ACTION_STATE);
+    setState(ActionState::MOVING);
     getWorld()->onLeft(pos.x / TILE_SIZE, pos.y / TILE_SIZE);
     getWorld()->onEnter(this, nx, ny);
 
@@ -50,11 +50,11 @@ void Creature::setAnimation(AnimType type) {
 
 void Creature::update(float dt) {
     switch(state) {
-        case State::IDLE_STATE:
+        case ActionState::IDLE:
             setAnimation(AnimType::IDLE);
             break;
 
-        case State::ACTION_STATE:
+        case ActionState::MOVING:
         {
             setAnimation(AnimType::WALK);
 
@@ -75,7 +75,7 @@ void Creature::update(float dt) {
             }
 
             if(pos.x == targetPos.x && pos.y == targetPos.y) {
-                state = State::IDLE_STATE;
+                state = ActionState::IDLE;
             }
 
             break;

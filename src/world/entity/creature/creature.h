@@ -13,7 +13,6 @@ enum Direction {
 };
 
 enum AnimType {
-    SLEEP,
     IDLE,
     WALK,
     ATK,
@@ -21,11 +20,12 @@ enum AnimType {
     USE_SCROLL,
     DEATH
 };
-constexpr int NUM_TYPE = 7;
+constexpr int NUM_TYPE = 6;
 
-enum State {
-    IDLE_STATE,
-    ACTION_STATE
+enum class ActionState {
+    IDLE,
+    MOVING,
+    ACTING
 };
 
 class Creature : public Entity {
@@ -37,24 +37,28 @@ protected:
     Animation* currAnim = nullptr;
 
     int hp;
-    State state = State::IDLE_STATE;
+    ActionState state = ActionState::IDLE;
     Direction dir;
     Vector2 targetPos;
 
 public:
     Creature(float x, float y, World* world, Direction dir, int hp)
         : Entity(x, y, world), dir(dir), hp(hp) {}
-
-    bool isBlocking() const override { return true; }
-    
-    void setTargetPos(float nx, float ny) { targetPos = {nx, ny}; }
-    void setState(State state) { this->state = state; }
-    void setAnimation(AnimType type);
+        
     void update(float dt) override;
     void render() override;
-    
+
     bool tryMove(int dx, int dy);
+
     virtual void attack(Entity* target) = 0;
     void takeDamage(int damage) override;
+
+    bool isBlocking() const override { return true; }
+    Vector2 getTargetPos() { return targetPos; }
+    
+    void setTargetPos(float nx, float ny) { targetPos = {nx, ny}; }
+    void setState(ActionState state) { this->state = state; }
+    void setAnimation(AnimType type);
+    
     virtual void takeTurn() = 0;
 };
