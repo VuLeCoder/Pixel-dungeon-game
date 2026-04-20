@@ -51,6 +51,8 @@ void Monster::attack(Entity* target) {
 }
 
 void Monster::takeTurn() {
+    if(state == ActionState::DEATH) return;
+    
     int index = GetRandomValue(0, 7);
     tryMove((int)directions[index].x, (int)directions[index].y);
 }
