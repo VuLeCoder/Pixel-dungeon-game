@@ -44,7 +44,7 @@ void World::init() {
     std::cout << "hello init 2 ";
     
     spawnMonsterNear({0, 0});
-    spawnMonsterNear({0, 0});
+    // spawnMonsterNear({0, 0});
     std::cout << "hello init 3 ";
 }
 
