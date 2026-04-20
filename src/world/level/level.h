@@ -19,6 +19,7 @@ class Level {
 private:
     static constexpr int MAP_SIZE = 33;
     World* world;
+    Vector2 stairUpPos, stairDownPos;
 
     std::vector<std::vector<Tile>> tiles;
     std::vector<Monster*> enemies;
@@ -32,6 +33,8 @@ public:
 
     World* getWorld() { return world; }
     std::vector<Monster*>& getMonsters() { return enemies; }
+    Vector2 getStairUpPos() { return stairUpPos; }
+    Vector2 getStairDownPos() { return stairUpPos; }
 
     void generateMap(int depth);
     void update();

@@ -31,6 +31,9 @@ private:
 public:
     Tile();
 
+    bool isStairUp();
+    bool isStairDown();
+
     void setTerrainType(int tileId);
     void setDoorTile(bool isLocked, bool isHidden);
     void setTrapTile(int trapId, bool isHidden);

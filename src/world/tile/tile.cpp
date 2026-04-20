@@ -39,6 +39,14 @@ Tile::Tile() {
     terrain.setTerrainType(TerrainType::FLOOR);
 }
 
+bool Tile::isStairUp() {
+    return terrain.getType() == TerrainType::STAIR_UP;
+}
+
+bool Tile::isStairDown() {
+    return terrain.getType() == TerrainType::STAIR_DOWN;
+}
+
 void Tile::setTerrainType(int tileId) {
     tilePos = tileImagePosition(tileId);
     terrain.setTerrainType(determineTileType(tileId));
