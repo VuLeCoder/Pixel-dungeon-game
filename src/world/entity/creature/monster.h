@@ -7,15 +7,15 @@
 
 class Monster : public Creature{
 private:
-    MonsterType type;
+    MonsterInfo type;
     static std::vector<Vector2> directions;
 
-    void attack(Entity* target) override;
-
 public:
-    Monster(float x, float y, World* world, Direction dir, int hp, MonsterType type);
+    Monster(float x, float y, World* world, Direction dir, const MonsterInfo& type);
     
     bool isPlayer() const override { return false; }
+
+    void attack(Entity* target) override;
     
     void fall() override;
     void takeTurn() override;

@@ -35,8 +35,11 @@ bool Creature::tryMove(int dx, int dy) {
 }
 
 void Creature::takeDamage(int damage) {
-    hp -= damage;
-    if(hp <= 0) destroy();
+    damage -= GetRandomValue(stats.minDef, stats.maxDef);
+    damage = damage > 0 ? damage : 0;
+
+    currHP -= damage;
+    if(currHP <= 0) destroy();
 }
 
 void Creature::setAnimation(AnimType type) {

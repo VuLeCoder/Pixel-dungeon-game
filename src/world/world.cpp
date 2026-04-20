@@ -9,7 +9,7 @@ void World::updateLevel(float dt) {
     
     int px = player->getPosition().x / TILE_SIZE;
     int py = player->getPosition().y / TILE_SIZE;
-    auto fov = FOVSystem::compute(getCurrLevel(), px, py, player->getRadiusVision());
+    auto fov = FOVSystem::compute(getCurrLevel(), px, py, player->getVisionRange());
 
     for(int x=0; x<Level::MAP_SIZE; ++x) {
         for(int y=0; y<Level::MAP_SIZE; ++y) {
@@ -26,7 +26,7 @@ World::World(HeroType heroType) : camera(1200, 700, 33 * 16, 33 * 16) {
     init();
 
     Vector2 stairUpPos = getCurrLevel()->getStairUpPos();
-    player = new Player(stairUpPos.x, stairUpPos.y + 1, this, heroType, Direction::LEFT, 100);
+    player = new Player(stairUpPos.x, stairUpPos.y + 1, this, heroType, Direction::LEFT);
     turnSystem = new TurnSystem(this);
     fovSystem = new FOVSystem();
 }

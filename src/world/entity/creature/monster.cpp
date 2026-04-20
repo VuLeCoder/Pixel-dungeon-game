@@ -5,10 +5,6 @@
 
 #include <iostream>
 //private:
-void Monster::attack(Entity* target) {
-    std::cout << "Monster attack" << std::endl;
-}
-
 std::vector<Vector2> Monster::directions = {
     { 0, -1 }, // UP
     { 1, -1 }, // UP-RIGHT
@@ -21,8 +17,8 @@ std::vector<Vector2> Monster::directions = {
 };
 
 //public:
-Monster::Monster(float x, float y, World* world, Direction dir, int hp, MonsterType type)
-    : Creature(x, y, world, dir, hp), type(type)
+Monster::Monster(float x, float y, World* world, Direction dir, const MonsterInfo& type)
+    : Creature(x, y, world, dir, type.stats)
 {
     // anims[(int)AnimType::IDLE] = AssetManager::GetAnimation("rat_idle");
     // anims[(int)AnimType::WALK] = AssetManager::GetAnimation("rat_walk");
@@ -32,6 +28,11 @@ Monster::Monster(float x, float y, World* world, Direction dir, int hp, MonsterT
 
 void Monster::fall() {}
 
+void Monster::attack(Entity* target) {
+    int dame = GetRandomValue(type.stats.minDame, type.stats.maxDame);
+    target->takeDamage(dame);
+}
+
 void Monster::takeTurn() {
     int index = GetRandomValue(0, 7);
     tryMove((int)directions[index].x, (int)directions[index].y);
@@ -40,14 +41,13 @@ void Monster::takeTurn() {
 void Monster::update(float dt) {
     const int SPEED = 16.0f / 0.3f;
     switch(state) {
-        case State::IDLE_STATE:
+        case ActionState::IDLE:
             // setAnimation(AnimType::IDLE);
             break;
 
-        case State::ACTION_STATE:
+        case ActionState::MOVING:
         {
             // setAnimation(AnimType::WALK);
-
             if(targetPos.x > pos.x) {
                 pos.x += SPEED * dt;
                 if(pos.x > targetPos.x) pos.x = targetPos.x;
@@ -65,7 +65,7 @@ void Monster::update(float dt) {
             }
 
             if(pos.x == targetPos.x && pos.y == targetPos.y) {
-                state = State::IDLE_STATE;
+                state = ActionState::IDLE;
             }
 
             break;
@@ -76,24 +76,4 @@ void Monster::update(float dt) {
     }
 }
 
-void Monster::render() {
-    int px = getPosition().x;
-    int py = getPosition().y;
-
-    Color color = GREEN;
-    if (type == MonsterType::C_RED) {
-        color = RED;
-    }
-
-    // căn giữa trong tile 16x16
-    int offsetX = (TILE_SIZE - 10) / 2;
-    int offsetY = (TILE_SIZE - 14) / 2;
-
-    DrawRectangle(
-        px + offsetX,
-        py + offsetY,
-        10,
-        14,
-        color
-    );
-}
+void Monster::render() {}

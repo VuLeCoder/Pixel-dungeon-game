@@ -2,6 +2,7 @@
 
 #include "../entity.h"
 #include "../../../engine/effect/animation.h"
+#include "stats.h"
 
 #include <array>
 
@@ -31,19 +32,22 @@ enum class ActionState {
 class Creature : public Entity {
 private:
     static constexpr float SPEED = 16.0f / 0.3f;
+    Stats stats;
+    int currHP;
 
 protected:
     std::array<Animation, NUM_TYPE> anims;
     Animation* currAnim = nullptr;
 
-    int hp;
     ActionState state = ActionState::IDLE;
     Direction dir;
     Vector2 targetPos;
 
 public:
-    Creature(float x, float y, World* world, Direction dir, int hp)
-        : Entity(x, y, world), dir(dir), hp(hp) {}
+    Creature(float x, float y, World* world, Direction dir, Stats stats)
+        : Entity(x, y, world), dir(dir), stats(stats) {
+            currHP = stats.maxHP;
+        }
         
     void update(float dt) override;
     void render() override;
@@ -52,10 +56,11 @@ public:
 
     virtual void attack(Entity* target) = 0;
     void takeDamage(int damage) override;
-
+    
     bool isBlocking() const override { return true; }
     Vector2 getTargetPos() { return targetPos; }
     
+    void setStats(Stats newStats) { stats = newStats; currHP = stats.maxHP; }
     void setTargetPos(float nx, float ny) { targetPos = {nx, ny}; }
     void setState(ActionState state) { this->state = state; }
     void setAnimation(AnimType type);

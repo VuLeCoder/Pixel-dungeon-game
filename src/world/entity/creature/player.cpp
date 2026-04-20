@@ -13,12 +13,12 @@
 void Player::updateFOV() {
     int x = getTargetPos().x / TILE_SIZE;
     int y = getTargetPos().y / TILE_SIZE;
-    FOVSystem::computeInto(getWorld()->getCurrLevel(), x, y, getRadiusVision(), playerVisible);
+    FOVSystem::computeInto(getWorld()->getCurrLevel(), x, y, getVisionRange(), playerVisible);
 }
 
 //public:
-Player::Player(float x, float y, World* world, HeroType hero, Direction dir, int hp)
-    : Creature(x, y, world, dir, hp)
+Player::Player(float x, float y, World* world, HeroType hero, Direction dir)
+    : Creature(x, y, world, dir, heroStats)
 {
     setTargetPos(getPosition().x, getPosition().y);
     int size = world->getCurrLevel()->MAP_SIZE;
