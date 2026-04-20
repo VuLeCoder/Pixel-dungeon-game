@@ -20,7 +20,7 @@ public:
         //         int nx = pos.x + dx;
         //         int ny = pos.y + dy;
 
-        //         Entity* e = world.getEntityAt({nx, ny});
+        //         Entity* e = world.getEntityAtTile(nx, ny);
         //         if (e) {
         //             e->takeDamage(damage);
         //         }

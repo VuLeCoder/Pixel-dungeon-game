@@ -21,12 +21,15 @@ void World::init() {
     Level* l1 = new Level(this);
     l1->generateMap(1);
     levels.push_back(l1);
+
+    spawnMonsterNear({0, 0});
+    spawnMonsterNear({0, 0});
 }
 
 void World::update() {
     float dt = GetFrameTime();
 
-    levels[currLevel]->update();
+    levels[currLevel]->update(dt);
 
     Action action;
     bool input = player->getAction(action);
@@ -78,9 +81,12 @@ Vector2 World::getRandomFreeTile() {
     return levels[currLevel]->getRandomFreeTile();
 }
 
-Entity* World::getEntityAt(Vector2 pos) {
-    return levels[currLevel]->getEntityAt(pos);
+Entity* World::getEntityAtTile(int x, int y) {
+    return levels[currLevel]->getEntityAtTile(x, y);
 }
 
-void World::spawnMonsterNear(Vector2 pos) {}
+void World::spawnMonsterNear(Vector2 pos) {
+    levels[currLevel]->spawnMonsterNear(pos); 
+}
+
 void World::wakeUpAllMonsters() {}

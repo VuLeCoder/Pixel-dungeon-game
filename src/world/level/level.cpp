@@ -1,6 +1,8 @@
 #include "level.h"
 #include "tile_rule.h"
 #include "../../engine/asset_manager.h"
+#include "../entity/creature/monster.h"
+
 
 #include <string>
 #include <iostream>
@@ -61,11 +63,15 @@ void Level::generateMap(int depth) {
     }
 }
 
-void Level::update() {
+void Level::update(float dt) {
     for(int x=0; x<MAP_SIZE; ++x) {
         for(int y=0; y<MAP_SIZE; ++y) {
             tiles[y][x].update();
         }
+    }
+
+    for(Monster* m : enemies) {
+        m->update(dt);
     }
 }
 
@@ -74,6 +80,10 @@ void Level::render() {
         for(int y=0; y<MAP_SIZE; ++y) {
             tiles[y][x].render(x, y);
         }
+    }
+
+    for(Monster* m : enemies) {
+        m->render();
     }
 }
 
@@ -103,7 +113,7 @@ Vector2 Level::getRandomFreeTile() {
         for (int x = 0; x < MAP_SIZE; ++x) {
             if (!isPassable(x, y)) continue;
             if (isDanger(x, y)) continue;
-            // if (getEntityAt({(float)x, (float)y}) != nullptr) continue;
+            if (getEntityAtTile(x, y) != nullptr) continue;
 
             freeTiles.push_back({(float)x, (float)y});
         }
@@ -119,21 +129,25 @@ Vector2 Level::getRandomFreeTile() {
     return {freeTiles[index].x, freeTiles[index].y};
 }
 
-Entity* Level::getEntityAt(Vector2 pos) {
-    Vector2 tmpPos;
-    for(Entity* e : enemies) {
-        tmpPos = e->getPosition();
-        if(tmpPos.x == pos.x && tmpPos.y == pos.y) {
-            return e;
-        }
-    }
+Entity* Level::getEntityAtTile(int x, int y) {
+    auto check = [&](Entity* e) -> Entity* {
+        Vector2 p = e->getPosition();
+        int ex = (int)p.x / TILE_SIZE;
+        int ey = (int)p.y / TILE_SIZE;
+        return (ex == x && ey == y) ? e : nullptr;
+    };
 
-    for(Entity* i : items) {
-        tmpPos = i->getPosition();
-        if(tmpPos.x == pos.x && tmpPos.y == pos.y) {
-            return i;
-        }
-    }
+    for (Entity* e : enemies)
+        if (auto r = check(e)) return r;
+
+    for (Entity* i : items)
+        if (auto r = check(i)) return r;
 
     return nullptr;
+}
+
+void Level::spawnMonsterNear(Vector2 pos) {
+    Vector2 pos1 = getRandomFreeTile();
+    Monster* m = new Monster(pos1.x, pos1.y, getWorld(), Direction::LEFT, 60, MonsterType::C_RED);
+    enemies.push_back(m);
 }

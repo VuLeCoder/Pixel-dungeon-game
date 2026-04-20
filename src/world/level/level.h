@@ -4,10 +4,10 @@
 #include <unordered_map>
 
 #include "../tile/tile.h"
-#include "../entity/creature/monster.h"
 #include "../entity/item/item.h"
 
 class World;
+class Monster;
 
 struct MapData {
     std::vector<std::vector<int>> terrain;
@@ -37,7 +37,7 @@ public:
     Vector2 getStairDownPos() { return stairUpPos; }
 
     void generateMap(int depth);
-    void update();
+    void update(float dt);
     void render();
 
     bool isBlockVision(int x, int y) const;
@@ -49,9 +49,9 @@ public:
 
     // void addEntity(Entity* e);
     // void removeEntity(Entity* e);
-    Entity* getEntityAt(Vector2 pos);
+    Entity* getEntityAtTile(int x, int y);
 
     // void wakeUpAllMonsters();
-    // void spawnMonsterNear(Vector2 pos);
+    void spawnMonsterNear(Vector2 pos);
     Vector2 getRandomFreeTile();
 };

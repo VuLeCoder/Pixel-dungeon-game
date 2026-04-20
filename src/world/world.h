@@ -32,7 +32,7 @@ public:
     Player* getPlayer() { return player; }
     std::vector<Monster*>& getMonsters();
 
-    Entity* getEntityAt(Vector2 pos);
+    Entity* getEntityAtTile(int x, int y);
     void spawnMonsterNear(Vector2 pos);
     void wakeUpAllMonsters();
     Vector2 getRandomFreeTile();

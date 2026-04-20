@@ -11,14 +11,17 @@ bool Creature::tryMove(int dx, int dy) {
     int nx = targetPos.x / TILE_SIZE;
     int ny = targetPos.y / TILE_SIZE;
 
-    // Entity* target = getWorld()->getEntityAt({(float)nx, (float)ny});
-    // if (target && target->isBlocking()) {
-    //     attack(target);
-
-    //     if (dx > 0) dir = Direction::RIGHT;
-    //     else if (dx < 0) dir = Direction::LEFT;
-    //     return false;
-    // }
+    Entity* target = getWorld()->getEntityAtTile(nx, ny);
+    if(target) {
+        if(target->isBlocking()) {
+            attack(target);
+            targetPos = pos;
+            
+            if (dx > 0) dir = Direction::RIGHT;
+            else if (dx < 0) dir = Direction::LEFT;
+            return false;
+        }
+    }
 
     if(!getWorld()->isPassable(nx, ny)) return false;
     
