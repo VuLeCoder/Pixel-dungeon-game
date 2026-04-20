@@ -1,0 +1,10 @@
+2
+assets/entity/creature/monster/gnoll/gnoll.png
+
+atk_0_Gnoll
+32 0 16 16
+0.05
+
+atk_1_Gnoll
+48 0 16 16
+0.05

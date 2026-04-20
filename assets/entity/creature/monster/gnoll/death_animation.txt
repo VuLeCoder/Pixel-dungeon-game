@@ -1,0 +1,14 @@
+3
+assets/entity/creature/monster/gnoll/gnoll.png
+
+death_0
+128 0 16 16
+0.1
+
+death_1
+144 0 16 16
+0.095
+
+death_2
+160 0 16 16
+1
