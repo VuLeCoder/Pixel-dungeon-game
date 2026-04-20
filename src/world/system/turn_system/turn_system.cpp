@@ -4,6 +4,8 @@
 #include "../../entity/creature/player.h"
 #include "../../entity/creature/monster.h"
 
+#include <iostream>
+
 TurnSystem::TurnSystem(World* world)
     : world(world) {}
 
@@ -17,22 +19,28 @@ void TurnSystem::processTurn(const Action& action) {
 
     Player* player = getWorld()->getPlayer();
     if (!player || !player->isAlive()) {
+        std::cout << "ban da thua " << std::endl;
         processing = false;
         return;
     }
 // ========================= 1. Player action =========================
+    bool success = false;
     switch(action.type) {
         case ActionType::MOVE:
-            handleMove(player, action);
+            success = handleMove(player, action);
             break;
 
         case ActionType::WAIT:
-            handleWait(player);
+            success = handleWait(player);
             break;
 
         case ActionType::USE_ITEM:
-            handleUseItem(player, action);
+            success = handleUseItem(player, action);
             break;
+    }
+    if(!success) {
+        processing = false;
+        return;
     }
     player->takeTurn();
 
@@ -57,14 +65,14 @@ void TurnSystem::processTurn(const Action& action) {
     processing = false;
 }
 
-void TurnSystem::handleMove(Player* player, const Action& action) {
-    player->tryMove(action.dx, action.dy);
+bool TurnSystem::handleMove(Player* player, const Action& action) {
+    return player->tryMove(action.dx, action.dy);
 }
 
-void TurnSystem::handleWait(Player* player) {
-    // intentionally empty
+bool TurnSystem::handleWait(Player* player) {
+    return true;
 }
 
-void TurnSystem::handleUseItem(Player* player, const Action& action) {
+bool TurnSystem::handleUseItem(Player* player, const Action& action) {
     // player->useItem(action.itemId);
 }

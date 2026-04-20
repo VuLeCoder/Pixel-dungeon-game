@@ -17,7 +17,7 @@ public:
     bool isProcessing() const;
     void processTurn(const Action& action);
 
-    void handleMove(Player* player, const Action& action);
-    void handleWait(Player* player);
-    void handleUseItem(Player* player, const Action& action);
+    bool handleMove(Player* player, const Action& action);
+    bool handleWait(Player* player);
+    bool handleUseItem(Player* player, const Action& action);
 };
