@@ -29,6 +29,7 @@ add_executable(SHATTERED_PIXEL_DUNGEON
     src/world/tile/tile_index.cpp
     src/world/tile/terrain/terrain.cpp
     src/world/tile/door/door.cpp
+    src/world/tile/trap/trap.cpp
 
     src/world/entity/creature/creature.cpp
     src/world/entity/creature/player.cpp

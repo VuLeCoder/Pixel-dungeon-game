@@ -37,6 +37,12 @@ AIResult MonsterAI::decideNextState() {
         return res;
     }
 
+    if(getAIState() == AIState::INVESTIGATE) {
+        lastSeenPlayerPos = {-1, -1};
+        res.pos = monster->getTargetPos();
+        return res;
+    }
+
     if(lastSeenPlayerPos.x >= 0) {
         res.pos = lastSeenPlayerPos;
 
@@ -107,6 +113,7 @@ void MonsterAI::takeTurn() {
             moveRandom();
             break;
 
+        case AIState::INVESTIGATE:
         case AIState::CHASE:
             moveAlongPathTo(res);
             std::cout << "Met vcl " << std::endl;

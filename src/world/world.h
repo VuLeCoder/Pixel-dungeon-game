@@ -38,9 +38,10 @@ public:
 
     Entity* getEntityAtTile(int x, int y);
     void spawnMonsterNear(Vector2 pos);
-    void wakeUpAllMonsters();
+    void wakeUpAllMonsters(Vector2 pos, int alarmRange);
     Vector2 getRandomFreeTile();
-    bool isPassable(int x, int y);
+
+    bool isPassable(int x, int y) const;
     void onEnter(Entity* e, int x, int y);
     void onLeft(int x, int y);
     void removeDeadEntities();

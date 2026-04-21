@@ -197,3 +197,9 @@ void Level::removeDeadEntities() {
 
     enemies.erase(it, enemies.end());
 }
+
+void Level::wakeUpAllMonsters(Vector2 pos, int alarmRange) {
+    for(Monster* m : enemies) {
+        m->alarm(pos, alarmRange);
+    }
+}

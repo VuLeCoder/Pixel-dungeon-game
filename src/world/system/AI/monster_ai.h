@@ -23,7 +23,6 @@ private:
     PathFinder* pathFinder;
     
     AIState getAIState() const;
-    void setAIState(AIState state);
 
     AIResult decideNextState();
     void moveRandom();
@@ -32,7 +31,8 @@ private:
 
 public:
     MonsterAI(Monster* m);
-
     ~MonsterAI();
+    
     void takeTurn();
+    void setAIState(AIState state);
 };

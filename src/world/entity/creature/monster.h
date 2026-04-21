@@ -22,6 +22,7 @@ public:
     void update(float dt) override;
     bool isPlayer() const override { return false; }
 
+    void alarm(Vector2 pos, int alarmRange);
     void attack(Entity* target) override;
     Vector2 canSeePlayer() const;
     void fall() override;

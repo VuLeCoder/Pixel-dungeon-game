@@ -55,7 +55,7 @@ public:
     // void removeEntity(Entity* e);
     Entity* getEntityAtTile(int x, int y);
 
-    // void wakeUpAllMonsters();
+    void wakeUpAllMonsters(Vector2 pos, int alarmRange);
     void spawnMonsterNear(Vector2 pos);
     Vector2 getRandomFreeTile();
 };

@@ -4,6 +4,7 @@
 #include "../../system/turn_system/turn_system.h"
 #include "./../../system/AI/monster_ai.h"
 #include "./../../system/FOV/fov_system.h"
+#include "./../../../utils/helper.h"
 
 #include <iostream>
 
@@ -46,6 +47,13 @@ void Monster::update(float dt) {
     Creature::update(dt);
 }
 
+
+void Monster::alarm(Vector2 pos, int alarmRange) {
+    int d = distance(getPosition(), pos);
+    if(d >= alarmRange) return;
+
+    ai->setAIState(AIState::INVESTIGATE);
+}
 
 void Monster::fall() {}
 

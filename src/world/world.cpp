@@ -86,7 +86,7 @@ std::vector<Monster*>& World::getMonsters() {
 
 
 // =========== level function ===========
-bool World::isPassable(int x, int y) {
+bool World::isPassable(int x, int y) const {
     return getCurrLevel()->isPassable(x, y);
 }
 
@@ -114,4 +114,6 @@ void World::removeDeadEntities() {
     getCurrLevel()->removeDeadEntities();
 }
 
-void World::wakeUpAllMonsters() {}
+void World::wakeUpAllMonsters(Vector2 pos, int alarmRange) {
+    getCurrLevel()->wakeUpAllMonsters(pos, alarmRange);
+}
