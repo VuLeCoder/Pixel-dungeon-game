@@ -62,10 +62,10 @@ Vector2 Monster::canSeePlayer() const {
         return {-1, -1};
     }
     
-    if(!FOVSystem::hasLineOfSight(getWorld()->getCurrLevel(), currPos, playerPos)) {
+    if(!FOVSystem::MonsterHasLineOfSight(getWorld()->getCurrLevel(), currPos)) {
         return {-1, -1};
     }
-
+    
     return playerPos;
 }
 

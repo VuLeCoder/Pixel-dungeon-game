@@ -23,7 +23,7 @@ public:
         std::vector<std::vector<bool>>& visible
     );
 
-    static bool hasLineOfSight(Level* level, Vector2 a, Vector2 b);
+    static bool MonsterHasLineOfSight(Level* level, Vector2 monsterPos);
 
 private:
     static void castLight(
