@@ -26,48 +26,32 @@ AIResult MonsterAI::decideNextState() {
     }
 
     Vector2 playerPos = monster->canSeePlayer();
-    if(playerPos.x < 0) {
-        if(lastSeenPlayerPos.x < 0) {
-            setAIState(AIState::WANDER);
-            return res;
-        }
-
+    if(playerPos.x >= 0) {
+        lastSeenPlayerPos = playerPos;
         res.pos = lastSeenPlayerPos;
-        switch(getAIState()) {
-            case AIState::ATTACK:
-            case AIState::WANDER:
-                break;
+        res.target = monster->getWorld()->getPlayer();
 
-            case AIState::CHASE:
-                if(distance(monster->getPosition(), lastSeenPlayerPos) == 0) {
-                    setAIState(AIState::WANDER);
-                }
-                return res;
-
-            case AIState::FLEE:
-                if(distance(monster->getPosition(), lastSeenPlayerPos) >= 10) {
-                    setAIState(AIState::WANDER);
-                }
-                return res;
-            
-            default:
-                break;
-        }
+        setAIState(
+            (monster->getCurrHP() <= 2) ? AIState::FLEE : AIState::CHASE
+        );
         return res;
     }
 
-    lastSeenPlayerPos = playerPos;
-    res.pos = lastSeenPlayerPos;
-    res.target = monster->getWorld()->getPlayer();
+    if(lastSeenPlayerPos.x >= 0) {
+        res.pos = lastSeenPlayerPos;
 
-    setAIState(
-        (monster->getCurrHP() <= 2) ? AIState::FLEE : AIState::CHASE
-    );
+        float d = distance(monster->getPosition(), lastSeenPlayerPos);
+        std::cout << "last seen:" << d << std::endl;
 
-    // if(distance(monster->getPosition(), lastSeenPlayerPos) <= 1) {
-    //     setAIState(AIState::ATTACK);
-    // }
-
+        if(d == 0) {
+            lastSeenPlayerPos = {-1, -1};
+            setAIState(AIState::WANDER);
+        } else {
+            setAIState(AIState::CHASE);
+        }
+        return res;
+    }
+    setAIState(AIState::WANDER);
     return res;
 }
 
