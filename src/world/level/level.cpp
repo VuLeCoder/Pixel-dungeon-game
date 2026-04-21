@@ -80,6 +80,7 @@ void Level::update(float dt) {
         }
     }
 
+    removeDeadEntities();
     for(Monster* m : enemies) {
         m->update(dt);
     }

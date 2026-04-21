@@ -60,8 +60,6 @@ void TurnSystem::processTurn(const Action& action) {
         return;
     }
 // ========================= ========================= =========================
-    getWorld()->removeDeadEntities();
-
     processing = false;
 }
 
