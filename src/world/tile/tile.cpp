@@ -11,7 +11,10 @@ Vector2 Tile::tileImagePosition(int tileId) {
 
     int x = tileId % 8;
     int y = tileId / 8;
-    return {x * TILE_SIZE, y * TILE_SIZE};
+    return {
+        static_cast<float>(x * TILE_SIZE), 
+        static_cast<float>(y * TILE_SIZE)
+    };
 }
 
 TerrainType Tile::determineTileType(int tileId) {

@@ -20,7 +20,7 @@ public:
         if(entity->isBlocking()) {
             if (entity->isPlayer()) {
                 Player* player = static_cast<Player*>(entity);
-                player->setTargetPos(pos.x, 1+pos.y);
+                player->setTargetPos(pos.x, pos.y + 1);
             } else {
                 Monster* monster = static_cast<Monster*>(entity);
                 monster->setTargetPos(pos.x, pos.y);

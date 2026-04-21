@@ -73,7 +73,7 @@ public:
     void takeDamage(int damage) override;
     
     bool isBlocking() const override { return true; }
-    Vector2 getTargetPos() const override { return targetPos; }
+    Vector2 getTargetPos() const { return targetPos; }
     Stats getStats() const { return stats; }
     int getCurrHP() const { return currHP; }
     
