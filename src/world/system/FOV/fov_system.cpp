@@ -116,3 +116,37 @@ void FOVSystem::computeInto(
     }
 }
 
+bool FOVSystem::hasLineOfSight(Level* level, Vector2 a, Vector2 b) {
+    int x0 = a.x / TILE_SIZE;
+    int y0 = a.y / TILE_SIZE;
+    int x1 = b.x / TILE_SIZE;
+    int y1 = b.y / TILE_SIZE;
+
+    int dx = abs(x1 - x0);
+    int dy = abs(y1 - y0);
+
+    int sx = (x0 < x1) ? 1 : -1;
+    int sy = (y0 < y1) ? 1 : -1;
+
+    int err = dx - dy;
+
+    while (true) {
+        if (level->isBlockVision(x0, y0))
+            return false;
+
+        if (x0 == x1 && y0 == y1)
+            return true;
+
+        int e2 = 2 * err;
+
+        if (e2 > -dy) {
+            err -= dy;
+            x0 += sx;
+        }
+
+        if (e2 < dx) {
+            err += dx;
+            y0 += sy;
+        }
+    }
+}

@@ -1,5 +1,5 @@
 #pragma once
-
+#include "raylib.h"
 #include <vector>
 
 class Level;
@@ -22,6 +22,8 @@ public:
         int radius,
         std::vector<std::vector<bool>>& visible
     );
+
+    static bool hasLineOfSight(Level* level, Vector2 a, Vector2 b);
 
 private:
     static void castLight(
