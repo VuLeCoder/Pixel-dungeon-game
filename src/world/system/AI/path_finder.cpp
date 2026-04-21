@@ -1,9 +1,9 @@
 #include "path_finder.h"
 #include "./../../world.h"
 #include "./../../Level/level.h"
+#include "./../../../utils/helper.h"
 
 #include <iostream>
-#include <queue>
 
 //private:
 const int MAX_ATTEMPT = 10;
@@ -41,21 +41,66 @@ int PathFinder::randomPath(int x, int y, Level* level) const {
     return 0;
 }
 
-std::vector<int> PathFinder::findPath (
+int PathFinder::findPath (
     Vector2 start, Vector2 goal, World* world
 ) {
+    int cx = start.x / TILE_SIZE, cy = start.y / TILE_SIZE;
+    int gx = goal.x / TILE_SIZE, gy = goal.y / TILE_SIZE;
+    Vector2 tmp;
+
     std::cout << "Dang duoi" << std::endl;
-    std::vector<int> bestPath;
+    int bestMove = 0;
+    int bestScore = distance(start, goal);
 
-    // std::priority_queue
+    for(int i=1; i<directions.size(); ++i) {
+        if(!isPassable(
+            cx + directions[i].x, 
+            cy + directions[i].y, 
+            world->getCurrLevel()
+        )) continue;
 
-
-
-    return bestPath;
+        tmp = {
+            static_cast<float>(cx + directions[i].x) * TILE_SIZE,
+            static_cast<float>(cy + directions[i].y) * TILE_SIZE
+        };
+        int score = distance(tmp, goal);
+        
+        if(score < bestScore) {
+            bestMove = i;
+            bestScore = score;
+        }
+    }
+    return bestMove;
 }
 
-std::vector<int> PathFinder::runAway (
+int PathFinder::runAway (
     Vector2 start, Vector2 threat, World* world
 ) {
-    return {};
+    int cx = start.x / TILE_SIZE, cy = start.y / TILE_SIZE;
+    int gx = threat.x / TILE_SIZE, gy = threat.y / TILE_SIZE;
+    Vector2 tmp;
+
+    std::cout << "Dang chay" << std::endl;
+    int bestMove = 0;
+    int bestScore = distance(start, threat);
+
+    for(int i=1; i<directions.size(); ++i) {
+        if(!isPassable(
+            cx + directions[i].x, 
+            cy + directions[i].y, 
+            world->getCurrLevel()
+        )) continue;
+
+        tmp = {
+            static_cast<float>(cx + directions[i].x) * TILE_SIZE,
+            static_cast<float>(cy + directions[i].y) * TILE_SIZE
+        };
+        int score = distance(tmp, threat);
+        
+        if(score > bestScore) {
+            bestMove = i;
+            bestScore = score;
+        }
+    }
+    return bestMove;
 }

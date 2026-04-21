@@ -2,16 +2,9 @@
 #include "./../../world.h"
 #include "./../../entity/creature/monster.h"
 #include "./path_finder.h"
+#include "./../../../utils/helper.h"
 
-#include <cmath>
 #include <iostream>
-
-//helper
-int distance(const Vector2& pos1, const Vector2& pos2) {
-    float dx = (pos1.x - pos2.x) / TILE_SIZE;
-    float dy = (pos1.y - pos2.y) / TILE_SIZE;
-    return static_cast<int>(std::sqrt(dx * dx + dy * dy));
-}
 
 //private:
 AIState MonsterAI::getAIState() const {
@@ -93,11 +86,15 @@ void MonsterAI::moveRandom() {
 
 void MonsterAI::moveAlongPathTo(const AIResult& res) {
     Vector2 targetPos = res.pos;
-    pathFinder->findPath(
+    int index = pathFinder->findPath(
         monster->getPosition(),
         targetPos,
         monster->getWorld()
     );
+
+    int x = PathFinder::directions[index].x;
+    int y = PathFinder::directions[index].y;
+    monster->tryMove(x, y);
 }
 
 void MonsterAI::moveAwayFrom(const AIResult& res) {

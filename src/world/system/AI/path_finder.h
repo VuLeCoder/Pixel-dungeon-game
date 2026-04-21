@@ -14,13 +14,13 @@ public:
 
     int randomPath(int x, int y, Level* level) const;
 
-    std::vector<int> findPath (
+    int findPath (
         Vector2 start,
         Vector2 goal,
         World* world
     );
 
-    std::vector<int> runAway (
+    int runAway (
         Vector2 start,
         Vector2 threat,
         World* world
