@@ -2,19 +2,9 @@
 #include "../../../engine/asset_manager.h"
 #include "../../world.h"
 #include "../../system/turn_system/turn_system.h"
+#include "./../../system/AI/monster_ai.h"
 
 //private:
-std::vector<Vector2> Monster::directions = {
-    { 0, -1 }, // UP
-    { 1, -1 }, // UP-RIGHT
-    { 1,  0 }, // RIGHT
-    { 1,  1 }, // DOWN-RIGHT
-    { 0,  1 }, // DOWN
-    {-1,  1 }, // DOWN-LEFT
-    {-1,  0 }, // LEFT
-    {-1, -1 }  // UP-LEFT
-};
-
 void Monster::setTypeMonsterAnimation(const std::string& name) {
     anims[static_cast<int>(AnimType::IDLE)] = AssetManager::GetAnimation(
         std::string(name) + "_" + std::string(AssetManager::IDLE)
@@ -39,8 +29,14 @@ void Monster::setTypeMonsterAnimation(const std::string& name) {
 Monster::Monster(float x, float y, World* world, Direction dir, const MonsterInfo type)
     : Creature(x, y, world, dir, type.stats)
 {
+    ai = new MonsterAI(this);
     setTypeMonsterAnimation(type.name);
     setAnimation(AnimType::IDLE);
+}
+
+Monster::~Monster() {
+    delete ai;
+    ai = nullptr;
 }
 
 void Monster::fall() {}
@@ -52,9 +48,7 @@ void Monster::attack(Entity* target) {
 
 void Monster::takeTurn() {
     if(state == ActionState::DEATH) return;
-    
-    int index = GetRandomValue(0, 7);
-    tryMove((int)directions[index].x, (int)directions[index].y);
+    ai->takeTurn();
 }
 
 void Monster::update(float dt) {
