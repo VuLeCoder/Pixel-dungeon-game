@@ -12,6 +12,7 @@ file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 # game source
 add_executable(SHATTERED_PIXEL_DUNGEON
     src/main.cpp
+    src/utils/helper.cpp
 
     src/engine/scene_manager.cpp
     src/engine/asset_manager.cpp
