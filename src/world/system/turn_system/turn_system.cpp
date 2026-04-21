@@ -3,6 +3,7 @@
 #include "../../entity/entity.h"
 #include "../../entity/creature/player.h"
 #include "../../entity/creature/monster.h"
+#include "./../../../utils/helper.h"
 
 #include <iostream>
 
@@ -47,7 +48,7 @@ void TurnSystem::processTurn(const Action& action) {
             break;
     }
     if(!success) return;
-    player->takeTurn();
+    player->takeTurn(true);
     phase = TurnPhase::PLAYER;
 }
 
@@ -76,9 +77,14 @@ void TurnSystem::update(float dt) {
                 phase = TurnPhase::CLEAR;
                 break;
             }
-
+            
             Monster* m = enemies[monsterIndex];
-            if(!m->hasStartedTurn()) m->takeTurn();
+            bool isPlayerSeen = distance(
+                getWorld()->getPlayer()->getPosition(), 
+                m->getPosition()
+            ) <= getWorld()->getPlayer()->getVisionRange() + 2;
+
+            if(!m->hasStartedTurn()) m->takeTurn(isPlayerSeen);
             m->update(dt);
             if(m->isEndTurn()) ++monsterIndex;
 

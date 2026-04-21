@@ -39,6 +39,10 @@ private:
     int currHP;
     bool processTurn = false;
 
+    bool playerSeen = true;
+    void setPlayerSeen(bool b) { playerSeen = b; }
+    bool isPlayerSeen() const { return playerSeen; }
+
     void startTurn() { processTurn = true; }
     void endTurn() { processTurn = false; }
 
@@ -56,6 +60,7 @@ protected:
 
     virtual void updateUse();
     virtual void updateUseScroll();
+    void updateFast();
 
 public:
     Creature(float x, float y, World* world, Direction dir, Stats stats)
@@ -82,7 +87,7 @@ public:
     void setState(ActionState state);
     void setAnimation(AnimType type);
     
-    virtual void takeTurn() = 0;
+    virtual void takeTurn(bool isPlayerSeen) = 0;
     bool hasStartedTurn() const { return processTurn == true; }
     bool isEndTurn() const { return processTurn == false; }
 };

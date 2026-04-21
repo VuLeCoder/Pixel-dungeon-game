@@ -26,6 +26,6 @@ public:
     void attack(Entity* target) override;
     Vector2 canSeePlayer() const;
     void fall() override;
-    void takeTurn() override;
+    void takeTurn(bool isPlayerSeen) override;
     void takeDamage(int dame) override;
 };

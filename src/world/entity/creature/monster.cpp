@@ -84,8 +84,8 @@ void Monster::attack(Entity* target) {
     target->takeDamage(dame);
 }
 
-void Monster::takeTurn() {
-    Creature::takeTurn();
+void Monster::takeTurn(bool isPlayerSeen) {
+    Creature::takeTurn(isPlayerSeen);
     ai->takeTurn();
 }
 

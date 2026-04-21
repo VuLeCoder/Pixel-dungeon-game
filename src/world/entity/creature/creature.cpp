@@ -9,6 +9,31 @@ void Creature::updateUseScroll() {
     endTurn();
 }
 
+void Creature::updateFast() {
+    switch(state) {
+        case ActionState::MOVING:
+            pos = targetPos;
+            setState(ActionState::IDLE);
+            endTurn();
+            break;
+
+        case ActionState::ATTACKING:
+            setState(ActionState::IDLE);
+            endTurn();
+            break;
+
+        case ActionState::DEATH:
+            Entity::destroy();
+            endTurn();
+            break;
+
+        case ActionState::IDLE:
+        default:
+            endTurn();
+            break;
+    }
+}
+
 //private:
 void Creature::updateMovement(float dt) {
     if(targetPos.x > pos.x) {
@@ -49,6 +74,11 @@ void Creature::updateDeath() {
 
 // public:
 void Creature::update(float dt) {
+    if(!isPlayerSeen()) {
+        updateFast();
+        return;
+    }
+
     switch(state) {
         case ActionState::IDLE:
             endTurn();
@@ -73,6 +103,10 @@ void Creature::update(float dt) {
 }
 
 void Creature::render() {
+    if(!isPlayerSeen()) {
+        return;
+    }
+
     bool flip = dir == Direction::LEFT;
     currAnim->render(pos.x, pos.y, flip);
 }
@@ -158,6 +192,7 @@ void Creature::takeDamage(int damage) {
     if(currHP <= 0) destroy();
 }
 
-void Creature::takeTurn() {
+void Creature::takeTurn(bool isPlayerSeen) {
+    setPlayerSeen(isPlayerSeen);
     startTurn();
 }

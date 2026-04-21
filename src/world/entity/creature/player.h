@@ -13,7 +13,7 @@ private:
     std::vector<std::vector<bool>> playerVisible;
 
     void updateFOV();
-
+    
 public:
     Player(float x, float y, World* world, HeroType hero, Direction dir);
     
@@ -27,5 +27,5 @@ public:
     int getVisionRange() const { return heroStats.visionRange; }
     void fall() override;
     void attack(Entity* target) override;
-    void takeTurn() override;
+    void takeTurn(bool isPlayerSeen) override;
 };

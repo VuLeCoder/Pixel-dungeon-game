@@ -100,8 +100,8 @@ void Player::attack(Entity* target) {
 
 void Player::fall() {}
 
-void Player::takeTurn() {
-    Creature::takeTurn();
+void Player::takeTurn(bool isPlayerSeen) {
+    Creature::takeTurn(true);
     updateFOV();
 }
 
