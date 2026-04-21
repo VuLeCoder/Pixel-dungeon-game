@@ -5,16 +5,20 @@
 
 #include <vector>
 
+class MonsterAI;
+
 class Monster : public Creature{
 private:
     MonsterInfo type;
-    static std::vector<Vector2> directions;
+
+    MonsterAI* ai;
 
     void setTypeMonsterAnimation(const std::string& name);
 
 public:
     Monster(float x, float y, World* world, Direction dir, const MonsterInfo type);
-    
+    ~Monster();
+
     bool isPlayer() const override { return false; }
 
     void attack(Entity* target) override;

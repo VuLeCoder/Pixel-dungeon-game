@@ -37,6 +37,8 @@ add_executable(SHATTERED_PIXEL_DUNGEON
 
     src/world/system/turn_system/turn_system.cpp
     src/world/system/FOV/fov_system.cpp
+    src/world/system/AI/path_finder.cpp
+    src/world/system/AI/monster_ai.cpp
 )
 # link raylib
 target_link_libraries(SHATTERED_PIXEL_DUNGEON raylib)
