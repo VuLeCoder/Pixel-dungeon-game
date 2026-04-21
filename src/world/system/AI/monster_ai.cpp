@@ -27,8 +27,13 @@ AIResult MonsterAI::decideNextState() {
 
     Vector2 playerPos = monster->canSeePlayer();
     if(playerPos.x >= 0) {
+        if(lastSeenPlayerPos.x >= 0) {
+            res.pos = lastSeenPlayerPos;
+        } else {
+            res.pos = playerPos;
+        }
+
         lastSeenPlayerPos = playerPos;
-        res.pos = lastSeenPlayerPos;
         res.target = monster->getWorld()->getPlayer();
 
         setAIState(
