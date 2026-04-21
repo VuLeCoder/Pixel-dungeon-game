@@ -53,6 +53,14 @@ void TurnSystem::processTurn(const Action& action) {
 
 void TurnSystem::update(float dt) {
     switch(phase) {
+        case TurnPhase::IDLE: {
+            getWorld()->getPlayer()->update(dt);
+            for(Monster* e : getWorld()->getMonsters()) {
+                e->update(dt);
+            }
+            break;
+        }
+
         case TurnPhase::PLAYER: {
             getWorld()->getPlayer()->update(dt);
             if(getWorld()->getPlayer()->isEndTurn()) {
