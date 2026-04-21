@@ -39,7 +39,27 @@ Monster::~Monster() {
     ai = nullptr;
 }
 
+void Monster::update(float dt) {
+    Creature::update(dt);
+}
+
+
 void Monster::fall() {}
+
+Vector2 Monster::canSeePlayer() const {
+    int visionRange = getStats().visionRange;
+    Vector2 currPos = getPosition();
+    Vector2 playerPos = getWorld()->getPlayer()->getPosition();
+
+    float dx = (playerPos.x - currPos.x) / TILE_SIZE;
+    float dy = (playerPos.y - currPos.y) / TILE_SIZE;
+    float distSq = dx * dx + dy * dy;
+
+    if(distSq <= visionRange * visionRange) {
+        return playerPos;
+    }
+    return {-1, -1};
+}
 
 void Monster::attack(Entity* target) {
     int dame = GetRandomValue(getStats().minDame, getStats().minDame);
@@ -49,8 +69,4 @@ void Monster::attack(Entity* target) {
 void Monster::takeTurn() {
     if(state == ActionState::DEATH) return;
     ai->takeTurn();
-}
-
-void Monster::update(float dt) {
-    Creature::update(dt);
 }

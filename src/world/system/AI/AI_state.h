@@ -1,7 +1,7 @@
 #pragma once
 
 enum class AIState {
-    IDLE,
+    SLEEP,
     WANDER,
     CHASE,
     ATTACK,

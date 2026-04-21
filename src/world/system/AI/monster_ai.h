@@ -9,19 +9,23 @@ class Monster;
 class PathFinder;
 
 struct AIResult {
-    Creature* target;
+    Creature* target = nullptr;
+    Vector2 pos = {-1, -1};
 };
 
 class MonsterAI {
 private:
     Monster* monster;
-    AIState state = AIState::IDLE;
+    AIState state = AIState::SLEEP;
+
+    Vector2 lastSeenPlayerPos = {-1, -1};
 
     PathFinder* pathFinder;
 
     static std::vector<Vector2> directions;
     
     AIState getAIState() const;
+    void setAIState(AIState state);
 
     AIResult decideNextState();
     void moveRandom();
