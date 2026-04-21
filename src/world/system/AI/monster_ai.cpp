@@ -14,18 +14,6 @@ int distance(const Vector2& pos1, const Vector2& pos2) {
 }
 
 //private:
-std::vector<Vector2> MonsterAI::directions = {
-    { 0,  0 }, 
-    { 0, -1 }, // UP
-    { 1, -1 }, // UP-RIGHT
-    { 1,  0 }, // RIGHT
-    { 1,  1 }, // DOWN-RIGHT
-    { 0,  1 }, // DOWN
-    {-1,  1 }, // DOWN-LEFT
-    {-1,  0 }, // LEFT
-    {-1, -1 }  // UP-LEFT
-};
-
 AIState MonsterAI::getAIState() const {
     return state;
 }
@@ -44,7 +32,6 @@ AIResult MonsterAI::decideNextState() {
         return res;
     }
 
-    std::cout << lastSeenPlayerPos.x << std::endl;
     Vector2 playerPos = monster->canSeePlayer();
     if(playerPos.x < 0) {
         if(lastSeenPlayerPos.x < 0) {
@@ -84,16 +71,24 @@ AIResult MonsterAI::decideNextState() {
         (monster->getCurrHP() <= 2) ? AIState::FLEE : AIState::CHASE
     );
 
-    if(distance(monster->getPosition(), lastSeenPlayerPos) <= 1) {
-        setAIState(AIState::ATTACK);
-    }
+    // if(distance(monster->getPosition(), lastSeenPlayerPos) <= 1) {
+    //     setAIState(AIState::ATTACK);
+    // }
 
     return res;
 }
 
 void MonsterAI::moveRandom() {
-    int index = GetRandomValue(0, 7);
-    monster->tryMove((int)directions[index].x, (int)directions[index].y);
+    std::cout << "Player o dau roi" << std::endl;
+    
+    int x = monster->getPosition().x / TILE_SIZE;
+    int y = monster->getPosition().y / TILE_SIZE;
+    int index = pathFinder->randomPath(x, y, monster->getWorld()->getCurrLevel());
+    std::cout << "Toi di bua" << std::endl;
+
+    x = PathFinder::directions[index].x;
+    y = PathFinder::directions[index].y;
+    monster->tryMove(x, y);
 }
 
 void MonsterAI::moveAlongPathTo(const AIResult& res) {
@@ -141,7 +136,7 @@ void MonsterAI::takeTurn() {
             break;
 
         case AIState::ATTACK:
-            monster->attack(res.target);
+            // monster->attack(res.target);
             break;
     }
 }
