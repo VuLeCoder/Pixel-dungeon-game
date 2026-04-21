@@ -70,6 +70,7 @@ Vector2 Monster::canSeePlayer() const {
 }
 
 void Monster::attack(Entity* target) {
+    setState(ActionState::ATTACKING);
     std::cout << "Monster tan cong " << std::endl;
     int dame = GetRandomValue(getStats().minDame, getStats().minDame);
     target->takeDamage(dame);
