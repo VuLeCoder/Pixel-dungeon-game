@@ -128,7 +128,7 @@ bool Creature::tryMove(int dx, int dy) {
     int ny = nextPos.y / TILE_SIZE;
 
     Entity* target = getWorld()->getEntityAtTile(nx, ny);
-    if(target) {
+    if(target && target != this) {
         if(target->isBlocking()) {
             attack(target);
             
