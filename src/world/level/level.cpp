@@ -79,11 +79,6 @@ void Level::update(float dt) {
             tiles[y][x].update();
         }
     }
-
-    removeDeadEntities();
-    for(Monster* m : enemies) {
-        m->update(dt);
-    }
 }
 
 void Level::render() {

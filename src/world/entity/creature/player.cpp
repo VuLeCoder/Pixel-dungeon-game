@@ -101,6 +101,7 @@ void Player::attack(Entity* target) {
 void Player::fall() {}
 
 void Player::takeTurn() {
+    Creature::takeTurn();
     updateFOV();
 }
 

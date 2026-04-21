@@ -26,4 +26,5 @@ public:
     Vector2 canSeePlayer() const;
     void fall() override;
     void takeTurn() override;
+    void takeDamage(int dame) override;
 };

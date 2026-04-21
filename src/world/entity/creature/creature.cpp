@@ -1,6 +1,14 @@
 #include "creature.h"
 #include "../../world.h"
 
+//protected:
+void Creature::updateUse() {
+    endTurn();
+}
+void Creature::updateUseScroll() {
+    endTurn();
+}
+
 //private:
 void Creature::updateMovement(float dt) {
     if(targetPos.x > pos.x) {
@@ -21,28 +29,30 @@ void Creature::updateMovement(float dt) {
 
     if(pos.x == targetPos.x && pos.y == targetPos.y) {
         setState(ActionState::IDLE);
+        endTurn();
     }
 }
 
 void Creature::updateAttack() {
     if(currAnim->isFinished()) {
         setState(ActionState::IDLE);
+        endTurn();
     }
 }
-
-void Creature::updateUse() {}
-void Creature::updateUseScroll() {}
 
 void Creature::updateDeath() {
     if(currAnim->isFinished()) {
         Entity::destroy();
+        endTurn();
     }
 }
 
 // public:
 void Creature::update(float dt) {
     switch(state) {
-        case ActionState::IDLE: break;
+        case ActionState::IDLE:
+            endTurn();
+            break;
 
         case ActionState::MOVING:
             updateMovement(dt);
@@ -139,12 +149,15 @@ bool Creature::tryMove(int dx, int dy) {
     else if (dx < 0) dir = Direction::LEFT;
     return true;
 }
-#include <iostream>
+
 void Creature::takeDamage(int damage) {
     damage -= GetRandomValue(getStats().minDef, getStats().maxDef);
     damage = damage > 0 ? damage : 0;
 
     currHP -= damage;
     if(currHP <= 0) destroy();
-    std::cout << currHP << std::endl;
+}
+
+void Creature::takeTurn() {
+    startTurn();
 }

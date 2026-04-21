@@ -58,8 +58,7 @@ void World::update() {
     if(input) {
         turnSystem->processTurn(action);
     }
-
-    player->update(dt);
+    turnSystem->update(dt);
 
     // camera.handleDrag();
     float wheel = GetMouseWheelMove();

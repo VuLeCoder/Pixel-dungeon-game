@@ -37,11 +37,13 @@ private:
     static constexpr float SPEED = 16.0f / 0.3f;
     Stats stats;
     int currHP;
+    bool processTurn = false;
+
+    void startTurn() { processTurn = true; }
+    void endTurn() { processTurn = false; }
 
     void updateMovement(float dt);
     void updateAttack();
-    void updateUse();
-    void updateUseScroll();
     void updateDeath();
 
 protected:
@@ -52,10 +54,14 @@ protected:
     Direction dir;
     Vector2 targetPos;
 
+    virtual void updateUse();
+    virtual void updateUseScroll();
+
 public:
     Creature(float x, float y, World* world, Direction dir, Stats stats)
         : Entity(x, y, world), dir(dir), stats(stats) {
             currHP = stats.maxHP;
+            setTargetPos(getPosition().x, getPosition().y);
         }
         
     void update(float dt) override;
@@ -67,7 +73,7 @@ public:
     void takeDamage(int damage) override;
     
     bool isBlocking() const override { return true; }
-    Vector2 getTargetPos() { return targetPos; }
+    Vector2 getTargetPos() const override { return targetPos; }
     Stats getStats() const { return stats; }
     int getCurrHP() const { return currHP; }
     
@@ -77,4 +83,6 @@ public:
     void setAnimation(AnimType type);
     
     virtual void takeTurn() = 0;
+    bool hasStartedTurn() const { return processTurn == true; }
+    bool isEndTurn() const { return processTurn == false; }
 };

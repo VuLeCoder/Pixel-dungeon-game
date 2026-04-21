@@ -3,6 +3,9 @@
 #include "../../world.h"
 #include "../../system/turn_system/turn_system.h"
 #include "./../../system/AI/monster_ai.h"
+#include "./../../system/FOV/fov_system.h"
+
+#include <iostream>
 
 //private:
 void Monster::setTypeMonsterAnimation(const std::string& name) {
@@ -55,18 +58,29 @@ Vector2 Monster::canSeePlayer() const {
     float dy = (playerPos.y - currPos.y) / TILE_SIZE;
     float distSq = dx * dx + dy * dy;
 
-    if(distSq <= visionRange * visionRange) {
-        return playerPos;
+    if(distSq > visionRange * visionRange) {
+        return {-1, -1};
     }
-    return {-1, -1};
+    
+    if(!FOVSystem::hasLineOfSight(getWorld()->getCurrLevel(), currPos, playerPos)) {
+        return {-1, -1};
+    }
+
+    return playerPos;
 }
 
 void Monster::attack(Entity* target) {
+    std::cout << "Monster tan cong " << std::endl;
     int dame = GetRandomValue(getStats().minDame, getStats().minDame);
     target->takeDamage(dame);
 }
 
 void Monster::takeTurn() {
-    if(state == ActionState::DEATH) return;
+    Creature::takeTurn();
     ai->takeTurn();
+}
+
+void Monster::takeDamage(int damage) {
+    Creature::takeDamage(damage);
+    std::cout << "Monster bi danh" <<std::endl;
 }

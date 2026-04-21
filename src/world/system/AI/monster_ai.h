@@ -21,8 +21,6 @@ private:
     Vector2 lastSeenPlayerPos = {-1, -1};
 
     PathFinder* pathFinder;
-
-    static std::vector<Vector2> directions;
     
     AIState getAIState() const;
     void setAIState(AIState state);
