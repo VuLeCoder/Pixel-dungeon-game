@@ -32,6 +32,7 @@ public:
     static constexpr std::string_view HERO_SCENE = "hero_select_scene";
     static constexpr std::string_view START_BUTTON = "start_button";
     static constexpr std::string_view TILE = "tiles";
+    static constexpr std::string_view STATUS_PANE = "status_pane";
 
     static constexpr std::string_view LEVEL = "level";
     static constexpr std::string_view TERRAIN = "Terrain";
@@ -50,4 +51,19 @@ public:
 
     static constexpr std::string_view RAT = "rat";
     static constexpr std::string_view GNOLL = "gnoll";
+    
+    static constexpr std::string_view SHORT_SWORD        = "short_sword";
+    static constexpr std::string_view SWORD              = "sword";
+    static constexpr std::string_view FABRIC_ARMOR       = "fabric_armor";
+    static constexpr std::string_view LEATHER_ARMOR      = "leather_armor";
+    static constexpr std::string_view CHAIN_ARMOR        = "chain_armor";
+    static constexpr std::string_view RING_VISION        = "ring_vision";
+    static constexpr std::string_view RING_DEFENSE       = "ring_defense";
+    static constexpr std::string_view BREAD              = "bread";
+    static constexpr std::string_view POTION_STRENGTH    = "potion_strength";
+    static constexpr std::string_view POTION_HEALING     = "potion_healing";
+    static constexpr std::string_view SCROLL_TELEPORT    = "scroll_teleport";
+    static constexpr std::string_view SCROLL_ATTACK      = "scroll_attack";
+    static constexpr std::string_view GOLD_ITEM          = "gold";
+    static constexpr std::string_view KEY                = "key";
 };
