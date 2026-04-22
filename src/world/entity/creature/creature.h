@@ -2,7 +2,7 @@
 
 #include "../entity.h"
 #include "../../../engine/effect/animation.h"
-#include "stats.h"
+#include "./../stats.h"
 
 #include <array>
 

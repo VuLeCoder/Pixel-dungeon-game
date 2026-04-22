@@ -1,5 +1,5 @@
 #pragma once
-#include "stats.h"
+#include "./../stats.h"
 #include <string>
 
 struct MonsterInfo{

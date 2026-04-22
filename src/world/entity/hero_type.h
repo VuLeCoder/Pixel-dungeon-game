@@ -1,5 +1,5 @@
 #pragma once
-#include "./creature/stats.h"
+#include "./stats.h"
 
 enum class HeroType {
     NONE,
