@@ -7,6 +7,6 @@ enum class ItemCategory {
     POTION,
     SCROLL,
     RING,
-    GOLD,
+    GOLD_ITEM,
     KEY
 };
