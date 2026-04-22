@@ -22,8 +22,30 @@ void AssetManager::LoadAllTexture() {
         {START_BUTTON, "assets/scenes/start_button.png"},
         {IDLE_SCENE, "assets/scenes/idle_scene.png"},
 
+        {WARRIOR, "assets/entity/creature/hero/warrior/warrior_ava.png"},
+
         {TILE, "assets/level/tiles.png"},
-        {STATUS_PANE, "assets/ui/status_pane_tool.png"}
+
+        {STATUS_PANE,       "assets/ui/status_pane_tool.png"},
+        {HP_BAR,            "assets/ui/hp_bar.png"},
+        {WEAPON_NONE,       "assets/entity/item/weapon_none.png"},
+        {ARMOR_NONE,        "assets/entity/item/armor_none.png"},
+        {RING_NONE,         "assets/entity/item/ring_none.png"},
+
+        {SHORT_SWORD,     "assets/entity/item/short_sword.png"},
+        {SWORD,           "assets/entity/item/sword.png"},
+        {FABRIC_ARMOR,    "assets/entity/item/fabric_armor.png"},
+        {LEATHER_ARMOR,   "assets/entity/item/leather_armor.png"},
+        {CHAIN_ARMOR,     "assets/entity/item/chain_armor.png"},
+        {RING_VISION,     "assets/entity/item/ring_vision.png"},
+        {RING_DEFENSE,    "assets/entity/item/ring_defense.png"},
+        {BREAD,           "assets/entity/item/bread.png"},
+        {POTION_STRENGTH, "assets/entity/item/potion_strength.png"},
+        {POTION_HEALING,  "assets/entity/item/potion_healing.png"},
+        {SCROLL_TELEPORT, "assets/entity/item/scroll_teleport.png"},
+        {SCROLL_ATTACK,   "assets/entity/item/scroll_attack.png"},
+        {GOLD_ITEM,       "assets/entity/item/gold.png"},
+        {KEY,             "assets/entity/item/key.png"}
     };
 
     for (auto& e : entries) {
