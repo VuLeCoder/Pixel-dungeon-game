@@ -33,9 +33,9 @@ Game hoạt động theo cơ chế **turn-based system**:
 
 | Phím | Hành động |
 |------|----------|
-| W / A / S / D | Di chuyển |
+| Q / W / E / A / D / Z / X / C | Di chuyển |
 | (1 hành động) | Tương ứng 1 lượt |
-| (Wait / Skip turn) | Bỏ lượt |
+| S - (Wait / Skip turn) | Bỏ lượt |
 
 
 ## 🧠 Hệ thống gameplay
