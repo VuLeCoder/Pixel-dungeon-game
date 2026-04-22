@@ -10,11 +10,9 @@
 
 //item_instance.h
 ItemInstance::ItemInstance(const ItemType& type) 
-    : type(type) 
+    : type(type)
 {
-    std::cout << type.name << std::endl;
     png = AssetManager::GetTexture(type.name);
-    std::cout << png.id << std::endl;
 }
 // =========== =========== ===========
 
@@ -41,6 +39,10 @@ bool Item::isBlocking() const {
 }
 
 void Item::takeDamage(int damage) {}
+
+void Item::add() {
+    
+}
 
 void Item::use() {
     if (!instance) return;

@@ -1,5 +1,6 @@
 #include "turn_system.h"
 #include "../../world.h"
+#include "../../level/level.h"
 #include "../../entity/entity.h"
 #include "../../entity/creature/player.h"
 #include "../../entity/creature/monster.h"
@@ -12,7 +13,16 @@ bool TurnSystem::handleMove(Player* player, const Action& action) {
     return player->tryMove(action.dx, action.dy);
 }
 
-bool TurnSystem::handleWait(Player* player) {
+bool TurnSystem::handlePickupItem(Player* player) {
+    std::cout << " Toi dang nhat do " << std::endl;
+
+    int x = player->getPosition().x / TILE_SIZE;
+    int y = player->getPosition().y / TILE_SIZE;
+    Item* item = getWorld()->getCurrLevel()->getItemAtTile(x, y);
+
+    if(!item) return false;
+    player->pickup(item);
+    std::cout << " Nhat duoc roi " << std::endl;
     return true;
 }
 
@@ -40,8 +50,11 @@ void TurnSystem::processTurn(const Action& action) {
             break;
     
         case ActionType::WAIT:
-            success = handleWait(player);
-            break;
+            phase = TurnPhase::ENEMY;
+            return;
+
+        case ActionType::PICKUP_ITEM:
+            success = handlePickupItem(player);
     
         case ActionType::USE_ITEM:
             success = handleUseItem(player, action);

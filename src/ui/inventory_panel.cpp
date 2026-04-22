@@ -1,5 +1,8 @@
 #include "./inventory_panel.h"
 #include "./../engine/asset_manager.h"
+#include "./../world/entity/creature/player.h"
+#include "./../world/entity/item/item.h"
+#include "./../world/entity/item/item_instance.h"
 
 //private:
 Vector2 InventoryPanel::equipItem[3] = {
@@ -31,6 +34,25 @@ void InventoryPanel::renderNone(float scale) {
     );
 }
 
+void InventoryPanel::renderEquipedItem(float scale) {
+}
+
+void InventoryPanel::renderInventoryItem(float scale) {
+    std::vector<Item*> items = player->getInventory();
+    float pngScale = scale * 9 / 14;
+
+    int index = 0;
+    for(Item* i : items) {
+        DrawTextureEx(
+            i->getItemInstance()->getTexture(),
+            { 1210 + inventoryItem[index].x * scale, inventoryItem[index].y * scale},
+            0.0f, pngScale, WHITE
+        );
+        ++index;
+    }
+}
+
+
 //public:
 InventoryPanel::InventoryPanel(Player* p) : player(p) {
     weaponNone = AssetManager::GetTexture(AssetManager::WEAPON_NONE);
@@ -43,4 +65,7 @@ void InventoryPanel::update() {}
 void InventoryPanel::render(float scale) {
     renderNone(scale);
     if(!player) return;
+
+    renderEquipedItem(scale);
+    renderInventoryItem(scale);
 }

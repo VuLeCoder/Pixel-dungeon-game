@@ -21,7 +21,7 @@ private:
     bool isProcessing() const { return phase != TurnPhase::IDLE; }
 
     bool handleMove(Player* player, const Action& action);
-    bool handleWait(Player* player);
+    bool handlePickupItem(Player* player);
     bool handleUseItem(Player* player, const Action& action);
 
 public:

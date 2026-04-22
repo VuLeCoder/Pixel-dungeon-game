@@ -16,6 +16,8 @@ private:
     static constexpr int textPos = 3;
 
     void renderNone(float scale);
+    void renderEquipedItem(float scale);
+    void renderInventoryItem(float scale);
 
 public:
     InventoryPanel(Player* p);

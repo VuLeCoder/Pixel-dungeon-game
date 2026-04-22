@@ -177,8 +177,19 @@ Entity* Level::getEntityAtTile(int x, int y) {
 
     for(Entity* e : enemies)
         if(auto r = check(e)) return r;
+    
+    return nullptr;
+}
 
-    for(Entity* i : items)
+Item* Level::getItemAtTile(int x, int y) {
+    auto check = [&](Item* e) -> Item* {
+        Vector2 p = e->getPosition();
+        int ex = (int)p.x / TILE_SIZE;
+        int ey = (int)p.y / TILE_SIZE;
+        return (ex == x && ey == y) ? e : nullptr;
+    };
+
+    for(Item* i : items)
         if(auto r = check(i)) return r;
 
     return nullptr;
@@ -209,6 +220,16 @@ void Level::removeDeadEntities() {
         });
 
     enemies.erase(it, enemies.end());
+}
+
+void Level::removeItemLevel(Item* item) {
+    for(size_t i = 0; i < items.size(); ++i) {
+        if (items[i] == item) {
+            std::swap(items[i], items.back());
+            items.pop_back();
+            return;
+        }
+    }
 }
 
 void Level::wakeUpAllMonsters(Vector2 pos, int alarmRange) {

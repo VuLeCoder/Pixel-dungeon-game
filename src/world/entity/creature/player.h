@@ -1,13 +1,17 @@
 #pragma once
-
 #include "creature.h"
 #include "../hero_type.h"
 #include "../../system/action.h"
+#include <vector>
+
+class Item;
+class InventorySystem;
 
 class Player : public Creature{
 private:
     static constexpr int PLAYER_WIDTH = 10, PLAYER_HEIGHT = 14;
 
+    InventorySystem* inventorySystem;
     std::vector<std::vector<bool>> playerVisible;
 
     HeroStats heroStats;
@@ -29,6 +33,10 @@ public:
     void fall() override;
     void attack(Entity* target) override;
     void takeTurn(bool isPlayerSeen) override;
+
+    const std::vector<Item*>& getInventory() const;
+    const std::vector<Item*>& getEquipedItem() const;
+    bool pickup(Item* item);
 
     void addStats(Stats statsAdd, HeroStats heroAdd);
     void removeStats(Stats statsRemove, HeroStats heroRemove);

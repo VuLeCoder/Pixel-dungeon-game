@@ -47,6 +47,7 @@ add_executable(PIXEL_DUNGEON
     src/world/system/FOV/fov_system.cpp
     src/world/system/AI/path_finder.cpp
     src/world/system/AI/monster_ai.cpp
+    src/world/system/inventory/inventory_system.cpp
 )
 # link raylib
 target_link_libraries(PIXEL_DUNGEON raylib)

@@ -51,9 +51,11 @@ public:
     void onLeft(int x, int y);
 
     void removeDeadEntities();
+    void removeItemLevel(Item* item);
     // void addEntity(Entity* e);
     // void removeEntity(Entity* e);
     Entity* getEntityAtTile(int x, int y);
+    Item* getItemAtTile(int x, int y);
 
     void wakeUpAllMonsters(Vector2 pos, int alarmRange);
     void spawnMonsterNear(Vector2 pos);

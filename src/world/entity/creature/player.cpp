@@ -4,6 +4,7 @@
 #include "../../world.h"
 #include "../../system/turn_system/turn_system.h"
 #include "../../system/FOV/fov_system.h"
+#include "../../system/inventory/inventory_system.h"
 
 #include <string>
 #include <cmath>
@@ -87,8 +88,18 @@ bool Player::getAction(Action& action) {
         return true;
     }
 
+    // pickup
+    keyCount = 0;
+    if (IsKeyPressed(KEY_F)) { ++keyCount;}
+    if(keyCount == 1) {
+        action.type = ActionType::PICKUP_ITEM;
+        return true;
+    }
+
     // 👉 WAIT (rất quan trọng cho roguelike)
-    if (IsKeyPressed(KEY_SPACE)) {
+    keyCount = 0;
+    if (IsKeyPressed(KEY_S)) { ++keyCount; }
+    if(keyCount == 1) {
         action.type = ActionType::WAIT;
         return true;
     }
@@ -119,6 +130,19 @@ void Player::updateFOV() {
     FOVSystem::computeInto(getWorld()->getCurrLevel(), x, y, getVisionRange(), playerVisible);
 }
 
+
+const std::vector<Item*>& Player::getInventory() const {
+    return inventorySystem->getInventory();
+}
+
+const std::vector<Item*>& Player::getEquipedItem() const {
+    return inventorySystem->getEquipedItem();
+}
+
+bool Player::pickup(Item* item) {
+    if(!item) return false;
+    return inventorySystem->add(item);
+}
 
 void Player::addStats(Stats statsAdd, HeroStats heroAdd) {
     Creature::addStats(statsAdd);

@@ -3,6 +3,7 @@
 enum class ActionType {
     MOVE,
     WAIT,
+    PICKUP_ITEM,
     USE_ITEM
 };
 
