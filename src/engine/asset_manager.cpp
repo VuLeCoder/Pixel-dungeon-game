@@ -20,7 +20,9 @@ void AssetManager::LoadAllTexture() {
         {START_SCENE, "assets/scenes/start_scene.png"},
         {HERO_SCENE, "assets/scenes/hero_select_scene.png"},
         {START_BUTTON, "assets/scenes/start_button.png"},
-        {TILE, "assets/level/tiles.png"}
+
+        {TILE, "assets/level/tiles.png"},
+        {STATUS_PANE, "assets/ui/status_pane_tool.png"}
     };
 
     for (auto& e : entries) {
