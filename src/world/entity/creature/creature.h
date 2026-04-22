@@ -82,7 +82,6 @@ public:
     Stats getStats() const { return stats; }
     int getCurrHP() const { return currHP; }
     
-    void setStats(Stats newStats) { stats = newStats; currHP = stats.maxHP; }
     void setTargetPos(float nx, float ny) { targetPos = {nx, ny}; }
     void setState(ActionState state);
     void setAnimation(AnimType type);
@@ -90,4 +89,9 @@ public:
     virtual void takeTurn(bool isPlayerSeen) = 0;
     bool hasStartedTurn() const { return processTurn == true; }
     bool isEndTurn() const { return processTurn == false; }
+
+    void setStats(Stats newStats) { stats = newStats; currHP = currHP <= getStats().maxHP ? currHP : getStats().maxHP; }
+    void heal(int hp);
+    void addStats(Stats statsAdd);
+    void removeStats(Stats statsRemove);
 };

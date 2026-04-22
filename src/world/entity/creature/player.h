@@ -30,4 +30,8 @@ public:
     void attack(Entity* target) override;
     void takeTurn(bool isPlayerSeen) override;
 
+    void addStats(Stats statsAdd, HeroStats heroAdd);
+    void removeStats(Stats statsRemove, HeroStats heroRemove);
+    void addKey();
+    void useKey();
 };

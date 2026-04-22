@@ -3,7 +3,7 @@
 #include "item_type.h"
 
 // === === weapon === ===
-static constexpr itemType shortSword = {
+static constexpr ItemType shortSword = {
     AssetManager::SHORT_SWORD,
     ItemCategory::WEAPON,
     { {0, 2, 4, 0, 0, 0}, 5 },
@@ -12,7 +12,7 @@ static constexpr itemType shortSword = {
     false
 };
 
-static constexpr itemType sword = {
+static constexpr ItemType sword = {
     AssetManager::SWORD,
     ItemCategory::WEAPON,
     { {0, 4, 7, 0, 0, 0}, 7 },
@@ -23,7 +23,7 @@ static constexpr itemType sword = {
 
 
 // === === armor === ===
-static constexpr itemType fabricArmor = {
+static constexpr ItemType fabricArmor = {
     AssetManager::FABRIC_ARMOR,
     ItemCategory::ARMOR,
     { {0, 0, 0, 1, 2, 0}, 5 },
@@ -32,7 +32,7 @@ static constexpr itemType fabricArmor = {
     false
 };
 
-static constexpr itemType leatherArmor = {
+static constexpr ItemType leatherArmor = {
     AssetManager::LEATHER_ARMOR,
     ItemCategory::ARMOR,
     { {10, 0, 0, 2, 4, 0}, 6 },
@@ -41,7 +41,7 @@ static constexpr itemType leatherArmor = {
     false
 };
 
-static constexpr itemType chainArmor = {
+static constexpr ItemType chainArmor = {
     AssetManager::CHAIN_ARMOR,
     ItemCategory::ARMOR,
     { {15, 0, 0, 4, 6, -1}, 8 },
@@ -52,7 +52,7 @@ static constexpr itemType chainArmor = {
 
 
 // === === ring === ===
-static constexpr itemType ringOfVision = {
+static constexpr ItemType ringOfVision = {
     AssetManager::RING_VISION,
     ItemCategory::RING,
     { {0, 0, 0, 0, 0, 2}, 0 },
@@ -61,7 +61,7 @@ static constexpr itemType ringOfVision = {
     false
 };
 
-static constexpr itemType ringOfDefense = {
+static constexpr ItemType ringOfDefense = {
     AssetManager::RING_DEFENSE,
     ItemCategory::RING,
     { {0, 0, 0, 1, 3, 0}, 0 }, // buff def trực tiếp
@@ -72,16 +72,16 @@ static constexpr itemType ringOfDefense = {
 
 
 // === === consumable === ===
-static constexpr itemType bread = {
+static constexpr ItemType bread = {
     AssetManager::BREAD,
     ItemCategory::FOOD,
     { {0, 0, 0, 0, 0, 0}, 0 }, 
-    { EffectType::HEAL, 450, 0 },
+    { EffectType::ATE, 450, 0 },
     5,
     true
 };
 
-static constexpr itemType potionOfStrength = {
+static constexpr ItemType potionOfStrength = {
     AssetManager::POTION_STRENGTH,
     ItemCategory::POTION,
     { {0, 0, 0, 0, 0, 0}, 0},
@@ -90,7 +90,7 @@ static constexpr itemType potionOfStrength = {
     true
 };
 
-static constexpr itemType healingPotion = {
+static constexpr ItemType healingPotion = {
     AssetManager::POTION_HEALING,
     ItemCategory::POTION,
     { {0, 0, 0, 0, 0, 0}, 0 },
@@ -99,7 +99,7 @@ static constexpr itemType healingPotion = {
     true
 };
 
-static constexpr itemType scrollOfTeleport = {
+static constexpr ItemType scrollOfTeleport = {
     AssetManager::SCROLL_TELEPORT,
     ItemCategory::SCROLL,
     { {0, 0, 0, 0, 0, 0}, 0 },
@@ -108,7 +108,7 @@ static constexpr itemType scrollOfTeleport = {
     true
 };
 
-static constexpr itemType scrollOfAttack = {
+static constexpr ItemType scrollOfAttack = {
     AssetManager::SCROLL_ATTACK,
     ItemCategory::SCROLL,
     { {0, 0, 0, 0, 0, 0}, 0 },
@@ -119,7 +119,7 @@ static constexpr itemType scrollOfAttack = {
 
 
 // === === special === ===
-static constexpr itemType gold = {
+static constexpr ItemType gold = {
     AssetManager::GOLD_ITEM,
     ItemCategory::GOLD_ITEM,
     { {0, 0, 0, 0, 0, 0}, 0 },
@@ -128,7 +128,7 @@ static constexpr itemType gold = {
     true
 };
 
-static constexpr itemType key = {
+static constexpr ItemType key = {
     AssetManager::KEY,
     ItemCategory::KEY,
     { {0, 0, 0, 0, 0, 0}, 0 },

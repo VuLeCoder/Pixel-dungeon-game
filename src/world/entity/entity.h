@@ -21,7 +21,7 @@ public:
     World* getWorld() const { return world; }
 
     virtual bool isBlocking() const = 0;
-    virtual bool isPlayer() const = 0;
+    virtual bool isPlayer() const { return false; };
     
     virtual void takeDamage(int damage) = 0;
     virtual void fall() = 0;

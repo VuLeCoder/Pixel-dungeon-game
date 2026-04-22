@@ -63,6 +63,8 @@ World::World(HeroType heroType) : camera(1200, 700, 33 * 16, 33 * 16) {
     turnSystem = new TurnSystem(this);
     fovSystem = new FOVSystem();
     std::cout << "hello World ";
+
+    spawnMonsterNear({0, 0});
 }
 
 void World::update() {

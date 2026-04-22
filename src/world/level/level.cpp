@@ -2,6 +2,8 @@
 #include "tile_rule.h"
 #include "../../engine/asset_manager.h"
 #include "../entity/creature/monster.h"
+#include "../entity/item/item.h"
+#include "../entity/item/item_info.h"
 
 #include <iostream>
 #include <string>
@@ -79,6 +81,10 @@ void Level::update(float dt) {
             tiles[y][x].update();
         }
     }
+
+    for(Item* i : items) {
+        i->update(dt);
+    }
 }
 
 void Level::render() {
@@ -86,6 +92,10 @@ void Level::render() {
         for(int y=0; y<MAP_SIZE; ++y) {
             tiles[y][x].render(x, y);
         }
+    }
+
+    for(Item* i : items) {
+        i->render();
     }
 
     for(Monster* m : enemies) {
@@ -181,8 +191,11 @@ void Level::spawnMonsterNear(Vector2 pos) {
     //     return;
     // }
 
-    Monster* m = new Monster(getStairUpPos().x, getStairUpPos().y + 16, getWorld(), Direction::LEFT, GNOLL);
-    enemies.push_back(m);
+    // Monster* m = new Monster(getStairUpPos().x, getStairUpPos().y + 16, getWorld(), Direction::LEFT, GNOLL);
+    // enemies.push_back(m);
+
+    Item* item = new Item(getStairUpPos().x, getStairUpPos().y + 16, getWorld(), fabricArmor);
+    items.push_back(item);
 }
 
 void Level::removeDeadEntities() {

@@ -6,6 +6,7 @@
 
 enum class EffectType {
     NONE,
+    ATE,
     HEAL,
     BUFF_STRENGTH,
     BUFF_ATTACK,
@@ -27,7 +28,7 @@ struct ItemStats : public Stats {
     int strength_required;
 };
 
-struct itemType {
+struct ItemType {
     std::string_view name;
 
     ItemCategory category;

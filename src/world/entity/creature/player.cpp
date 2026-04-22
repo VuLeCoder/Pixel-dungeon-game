@@ -12,7 +12,7 @@
 
 //public:
 Player::Player(float x, float y, World* world, HeroType hero, Direction dir)
-    : Creature(x, y, world, dir, heroStats)
+    : Creature(x, y, world, Direction::LEFT, heroBaseStats)
 {
     setTargetPos(getPosition().x, getPosition().y);
     int size = world->getCurrLevel()->MAP_SIZE;
@@ -47,6 +47,16 @@ Player::Player(float x, float y, World* world, HeroType hero, Direction dir)
     anims[static_cast<int>(AnimType::DEATH)].setRepeated(false);
 
     setAnimation(AnimType::IDLE);
+
+    switch(hero) {
+    case HeroType::WARRIOR:
+        heroStats = warriorStats;
+        break;
+    
+    default:
+        heroStats = warriorStats;
+        break;
+    }
 }
 
 bool Player::getAction(Action& action) {
@@ -108,3 +118,30 @@ void Player::updateFOV() {
     int y = getTargetPos().y / TILE_SIZE;
     FOVSystem::computeInto(getWorld()->getCurrLevel(), x, y, getVisionRange(), playerVisible);
 }
+
+
+void Player::addStats(Stats statsAdd, HeroStats heroAdd) {
+    Creature::addStats(statsAdd);
+
+    heroStats.satietyTurns += heroAdd.satietyTurns;
+    heroStats.satietyTurns = heroStats.satietyTurns < 600 ? heroStats.satietyTurns : 600;
+
+    heroStats.strength += heroAdd.strength;
+}
+
+void Player::removeStats(Stats statsRemove, HeroStats heroRemove) {
+    Creature::removeStats(statsRemove);
+
+    heroStats.strength -= heroRemove.strength;
+}
+
+void Player::addKey() {
+    ++numberKey;
+}
+
+void Player::useKey() {
+    --numberKey;
+}
+
+
+

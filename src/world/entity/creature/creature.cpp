@@ -196,3 +196,40 @@ void Creature::takeTurn(bool isPlayerSeen) {
     setPlayerSeen(isPlayerSeen);
     startTurn();
 }
+
+
+void Creature::heal(int hp) {
+    currHP += hp; 
+    currHP = currHP <= getStats().maxHP ? currHP : getStats().maxHP;
+}
+
+void Creature::addStats(Stats add) {
+    Stats currStats = getStats();
+
+    currStats.maxHP     += add.maxHP;
+    currStats.minDame   += add.minDame;
+    currStats.maxDame   += add.maxDame;
+    currStats.minDef    += add.minDef;
+    currStats.maxDef    += add.maxDef;
+
+    currStats.visionRange += add.visionRange;
+
+    setStats(currStats);
+}
+
+void Creature::removeStats(Stats remove) {
+    Stats currStats = getStats();
+
+    currStats.maxHP = (currStats.maxHP - remove.maxHP) > 0 ? (currStats.maxHP - remove.maxHP) : 0;
+
+    currStats.minDame = (currStats.minDame - remove.minDame) > 0 ? (currStats.minDame - remove.minDame) : 0;
+    currStats.maxDame = (currStats.maxDame - remove.maxDame) > 1 ? (currStats.maxDame - remove.maxDame) : 1;
+    currStats.minDame = (currStats.minDame < currStats.maxDame) ? currStats.minDame : currStats.maxDame - 1;
+
+    currStats.minDef  = (currStats.minDef - remove.minDef) > 0 ? (currStats.minDef - remove.minDef) : 0;
+    currStats.maxDef  = (currStats.maxDef - remove.maxDef) > 0 ? (currStats.maxDef - remove.maxDef) : 0;
+    currStats.minDef  = (currStats.minDef < currStats.maxDef) ? currStats.minDef : currStats.maxDef - 1;
+
+    currStats.visionRange = (currStats.visionRange - remove.visionRange) > 0 ? (currStats.visionRange - remove.visionRange) : 0;
+    setStats(currStats);
+}
