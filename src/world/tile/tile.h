@@ -31,6 +31,7 @@ private:
 public:
     Tile();
 
+    bool isDoor() const { return door != nullptr; }
     bool isStairUp();
     bool isStairDown();
 

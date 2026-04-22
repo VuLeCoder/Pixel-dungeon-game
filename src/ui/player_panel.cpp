@@ -86,7 +86,19 @@ PlayerPanel::PlayerPanel(Player * p) : player(p) {
     hpBarPng = AssetManager::GetTexture(AssetManager::HP_BAR);
 }
 
-void PlayerPanel::update() {}
+bool PlayerPanel::update() {
+    
+
+    Vector2 mouse = GetMousePosition();
+    if(!IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+        return false;
+    }
+
+    if(CheckCollisionPointRec(mouse, menuButton)) {
+        return true;
+    }
+    return false;
+}
 
 void PlayerPanel::render(float scale) {
     renderMainPanel(scale);

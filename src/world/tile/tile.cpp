@@ -61,6 +61,8 @@ void Tile::setDoorTile(bool isLocked, bool isHidden) {
 
 void Tile::setTrapTile(int trapId, bool isHidden) {
     trap = createTrap(trapId);
+    if(!trap) return;
+
     if(!isHidden) {
         trap->reveal();
     }
@@ -95,6 +97,14 @@ bool Tile::isDanger() const {
 void Tile::onEnter(Entity* entity, World* world) {
     if(door && !door->isHidden()) {
         door->open();
+    }
+
+    if(door && door->isLocked()) {
+        if(!entity) return;
+        if(!entity->isPlayer()) return;
+        
+        Player* p = static_cast<Player*>(entity);
+        if(p->hasKey()) door->unlock();
     }
 
     if(trap && trap->isArmed()) {

@@ -1,10 +1,13 @@
+#include "../engine/scene_manager.h"
+#include "./start_scene.h"
 #include "game_scene.h"
+
 #include "raylib.h"
 #include "../world/world.h"
 #include "../ui/ui_manager.h"
 #include "idle_scene.h"
 
-GameScene::GameScene(HeroType type) : hero(hero) {
+GameScene::GameScene(HeroType type) : hero(type) {
     world = new World(hero);
     ui = new UIManager(world->getPlayer(), world);
     idleScene = new IdleScene();
@@ -32,8 +35,14 @@ void GameScene::Update() {
         return;
     }
 
+    if(ui->isReturn()) {
+        StartScene* sc = new StartScene();
+        SceneManager::ChangeScene(sc);
+        return;
+    }
+
     world->update();
-    // ui.update();
+    ui->update();
 }
 
 void GameScene::Draw() {

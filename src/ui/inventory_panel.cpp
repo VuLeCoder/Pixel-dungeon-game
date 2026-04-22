@@ -5,7 +5,7 @@
 #include "./../world/entity/item/item_instance.h"
 
 //private:
-Vector2 InventoryPanel::equipItem[3] = {
+Vector2 InventoryPanel::EQUIP_ITEM_POS[3] = {
     {8, 42}, {20, 42}, {32, 42}
 };
 Vector2 InventoryPanel::INVENTORY_ITEM_POS[15] = {
@@ -16,38 +16,74 @@ Vector2 InventoryPanel::INVENTORY_ITEM_POS[15] = {
 
 void InventoryPanel::renderNone(float scale) {
     float pngScale = scale * 9 / 14;
+    const std::vector<Item*>& items = player->getEquipedItem();
 
-    DrawTextureEx(
-        weaponNone,
-        { 1210 + equipItem[0].x * scale, equipItem[0].y * scale},
-        0.0f, pngScale, WHITE
-    );
-    DrawTextureEx(
-        armorNone,
-        { 1210 + equipItem[1].x * scale, equipItem[1].y * scale},
-        0.0f, pngScale, WHITE
-    );
-    DrawTextureEx(
-        ringNone,
-        { 1210 + equipItem[2].x * scale, equipItem[2].y * scale},
-        0.0f, pngScale, WHITE
-    );
+    if(!items[0])
+        DrawTextureEx(
+            weaponNone,
+            { 1210 + EQUIP_ITEM_POS[0].x * scale, EQUIP_ITEM_POS[0].y * scale},
+            0.0f, pngScale, WHITE
+        );
+    
+    if(!items[1])
+        DrawTextureEx(
+            armorNone,
+            { 1210 + EQUIP_ITEM_POS[1].x * scale, EQUIP_ITEM_POS[1].y * scale},
+            0.0f, pngScale, WHITE
+        );
+
+    if(!items[2])
+        DrawTextureEx(
+            ringNone,
+            { 1210 + EQUIP_ITEM_POS[2].x * scale, EQUIP_ITEM_POS[2].y * scale},
+            0.0f, pngScale, WHITE
+        );
 }
 
 void InventoryPanel::renderEquipedItem(float scale) {
+    float pngScale = scale * 9 / 14;
+    const std::vector<Item*>& items = player->getEquipedItem();
+    
+    for(int index=0; index<3; ++index) {
+        if(!items[index]) continue;
+
+        float x = 1210 + EQUIP_ITEM_POS[index].x * scale;
+        float y = EQUIP_ITEM_POS[index].y * scale;
+
+        DrawTextureEx(
+            items[index]->getItemInstance()->getTexture(),
+            { x, y },
+            0.0f, pngScale, BLACK
+        );
+        DrawTextureEx(
+            items[index]->getItemInstance()->getTexture(),
+            { x, y },
+            0.0f, pngScale, WHITE
+        );
+
+        Rectangle rect = { x, y, 11 * scale, 14 * scale };
+        itemSlots.push_back({ rect, items[index] });
+    }
 }
 
 void InventoryPanel::renderInventoryItem(float scale) {
     float pngScale = scale * 9 / 14;
     const std::vector<Item*>& items = player->getInventory();
-    
+
     int index = 0;
     for(Item* i : items) {
+        float x = 1210 + INVENTORY_ITEM_POS[index].x * scale;
+        float y = INVENTORY_ITEM_POS[index].y * scale;
+
         DrawTextureEx(
             i->getItemInstance()->getTexture(),
-            { 1210 + INVENTORY_ITEM_POS[index].x * scale, INVENTORY_ITEM_POS[index].y * scale},
+            { x, y },
             0.0f, pngScale, WHITE
         );
+
+        Rectangle rect = { x, y, 11 * scale, 14 * scale };
+        itemSlots.push_back({ rect, i });
+
         ++index;
     }
 }
@@ -60,9 +96,31 @@ InventoryPanel::InventoryPanel(Player* p) : player(p) {
     ringNone = AssetManager::GetTexture(AssetManager::RING_NONE);
 }
 
-void InventoryPanel::update() {}
+#include <iostream>
+void InventoryPanel::update() {
+    if(!player) return;
+
+    if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+        Vector2 mouse = GetMousePosition();
+
+        for(auto& slot : itemSlots) {
+            if(CheckCollisionPointRec(mouse, slot.bounds)) {
+                if(slot.item) {
+                    std::cout << "hello" <<std::endl;
+                    player->setPendingUseItem(slot.item);
+                    break;
+                }
+            }
+        }
+    }
+}
 
 void InventoryPanel::render(float scale) {
+    for(UISlot sl : itemSlots) {
+        sl.item = nullptr;
+    }
+    itemSlots.clear();
+
     renderNone(scale);
     if(!player) return;
 

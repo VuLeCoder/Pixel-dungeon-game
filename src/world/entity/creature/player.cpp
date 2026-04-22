@@ -61,9 +61,17 @@ Player::Player(float x, float y, World* world, HeroType hero, Direction dir)
 
     inventorySystem = new InventorySystem();
 }
-
+#include <iostream>
 bool Player::getAction(Action& action) {
     if (state != ActionState::IDLE) return false;
+
+    if (pendingUseItem) {
+        action.type = ActionType::USE_ITEM;
+        action.item = pendingUseItem;
+
+        pendingUseItem = nullptr; // clear sau khi lấy
+        return true;
+    }
 
     int dx = 0;
     int dy = 0;
@@ -115,7 +123,14 @@ void Player::attack(Entity* target) {
     target->takeDamage(dame);
 }
 
-void Player::fall() {}
+void Player::fall() {
+    takeDamage(10);
+    getWorld()->goToNextLevel();
+
+    Vector2 newPos = getWorld()->getRandomFreeTile();
+    setPos(newPos.x, newPos.y);
+    setTargetPos(newPos.x, newPos.y);
+}
 
 void Player::takeTurn(bool isPlayerSeen) {
     Creature::takeTurn(true);
@@ -141,9 +156,30 @@ const std::vector<Item*>& Player::getEquipedItem() const {
     return inventorySystem->getEquipedItem();
 }
 
+void Player::removeItemFromInventory(Item* item) {
+    inventorySystem->remove(item);
+}
+
+void Player::setPendingUseItem(Item* item) { 
+    pendingUseItem = item;
+}
+
 bool Player::pickup(Item* item) {
     if(!item) return false;
     return inventorySystem->add(item);
+}
+
+void Player::useItem(Item* item) {
+    bool consumed = item->use(this);
+
+    if(consumed) {
+        inventorySystem->remove(item);
+        delete item;
+    }
+}
+
+void Player::equipItem(Item* item) {
+    inventorySystem->equip(item);
 }
 
 void Player::addStats(Stats statsAdd, HeroStats heroAdd) {

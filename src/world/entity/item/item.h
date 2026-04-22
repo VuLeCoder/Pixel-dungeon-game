@@ -11,7 +11,7 @@ private:
     ItemInstance* instance;
 
 public:
-    Item(float x, float y, World* world, const ItemType& type);
+    Item(float x, float y, World* world, const ItemType type);
     void update(float dt) override;
     void render() override;
 
@@ -22,6 +22,6 @@ public:
     void takeDamage(int damage) override;
 
     void add();
-    void use();
+    bool use(Player* player);
     void unequip();
 };

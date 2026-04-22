@@ -14,20 +14,18 @@ bool TurnSystem::handleMove(Player* player, const Action& action) {
 }
 
 bool TurnSystem::handlePickupItem(Player* player) {
-    std::cout << " Toi dang nhat do " << std::endl;
-
     int x = player->getPosition().x / TILE_SIZE;
     int y = player->getPosition().y / TILE_SIZE;
     Item* item = getWorld()->getCurrLevel()->getItemAtTile(x, y);
 
     if(!item) return false;
     player->pickup(item);
-    std::cout << " Nhat duoc roi " << std::endl;
     return true;
 }
 
 bool TurnSystem::handleUseItem(Player* player, const Action& action) {
-    // player->useItem(action.itemId);
+    if(!action.item) return false;
+    player->useItem(action.item);
     return true;
 }
 
@@ -55,6 +53,7 @@ void TurnSystem::processTurn(const Action& action) {
 
         case ActionType::PICKUP_ITEM:
             success = handlePickupItem(player);
+            break;
     
         case ActionType::USE_ITEM:
             success = handleUseItem(player, action);

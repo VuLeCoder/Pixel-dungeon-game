@@ -4,8 +4,6 @@
 #include "start_scene.h"
 #include "hero_select_scene.h"
 
-#include "raylib.h"
-
 void StartScene::Init() {
     SetWindowSize(1200, 700);
     startPng = AssetManager::GetTexture(AssetManager::START_SCENE);

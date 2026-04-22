@@ -20,11 +20,11 @@ void World::LoadLevel() {
     levels.push_back(l3);
 
     Level* l4 = new Level(this);
-    l4->generateMap(2);
+    l4->generateMap(4);
     levels.push_back(l4);
 
     Level* l5 = new Level(this);
-    l5->generateMap(2);
+    l5->generateMap(5);
     levels.push_back(l5);
 }
 
@@ -64,7 +64,7 @@ World::World(HeroType heroType) : camera(1200, 700, 33 * 16, 33 * 16) {
     fovSystem = new FOVSystem();
     std::cout << "hello World ";
 
-    spawnMonsterNear({0, 0});
+    // spawnMonsterNear({0, 0});
 }
 
 void World::update() {
@@ -111,6 +111,9 @@ void World::goToNextLevel() {
     player->setTargetPos(stairPos.x, stairPos.y + 1);
     player->updateFOV();
     changeFloor = true;
+
+    getCurrLevel()->spawnRandomItems(5);
+    getCurrLevel()->spawnRandomMonsters(5);
 }
 
 void World::goToPreviousLevel() {
@@ -136,6 +139,10 @@ std::vector<Monster*>& World::getMonsters() {
 
 
 // =========== level function ===========
+bool World::isDoor(int x, int y) const {
+    return getCurrLevel()->isDoor(x, y);
+};
+
 bool World::isPassable(int x, int y) const {
     return getCurrLevel()->isPassable(x, y);
 }

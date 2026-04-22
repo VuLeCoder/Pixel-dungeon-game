@@ -14,7 +14,7 @@ private:
 public:
     const ItemType type;
 
-    ItemInstance(const ItemType& type);
+    ItemInstance(const ItemType type);
 
     const Texture2D& getTexture() const { return png; }
     

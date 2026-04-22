@@ -30,7 +30,10 @@ private:
     MapData loadMapData(int depth);
     Tile buildTile(int x, int y, const MapData& data);
 
+    
 public:
+    void spawnRandomItems(int count);
+    void spawnRandomMonsters(int count);
     Level(World* world);
 
     World* getWorld() { return world; }
@@ -46,12 +49,16 @@ public:
     bool isPassable(int x, int y) const;
     bool isDanger(int x, int y) const;
     void discover(int x, int y);
+    bool isDoor(int x, int y) const;
 
     void onStep(Entity* e, int x, int y);
     void onLeft(int x, int y);
 
     void removeDeadEntities();
     void removeItemLevel(Item* item);
+    void addItemAtPos(Item* item, Vector2 pos);
+    void addMonsterAtPos(Monster* monster, Vector2 pos);
+
     // void addEntity(Entity* e);
     // void removeEntity(Entity* e);
     Entity* getEntityAtTile(int x, int y);

@@ -1,5 +1,7 @@
 #pragma once
 
+class Item;
+
 enum class ActionType {
     MOVE,
     WAIT,
@@ -12,5 +14,6 @@ struct Action {
 
     int dx = 0;
     int dy = 0;
-    int itemId = -1;
+    
+    Item* item;
 };

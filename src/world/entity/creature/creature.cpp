@@ -164,7 +164,9 @@ bool Creature::tryMove(int dx, int dy) {
     Entity* target = getWorld()->getEntityAtTile(nx, ny);
     if(target && target != this) {
         if(target->isBlocking()) {
-            attack(target);
+            if(target->isPlayer() != isPlayer()) {
+                attack(target);
+            }
             
             if (dx > 0) dir = Direction::RIGHT;
             else if (dx < 0) dir = Direction::LEFT;
@@ -172,7 +174,18 @@ bool Creature::tryMove(int dx, int dy) {
         }
     }
 
-    if(!getWorld()->isPassable(nx, ny)) return false;
+    if(!getWorld()->isPassable(nx, ny)) {
+        if(!getWorld()->isDoor(nx, ny)) return false;
+        if(!isPlayer()) return false;
+
+        Player* p = static_cast<Player*>(this);
+        if(p->hasKey()) {
+            p->useKey();
+            getWorld()->onEnter(this, nx, ny);
+            return true;
+        }
+        return false;
+    }
     setTargetPos(nextPos.x, nextPos.y);
     
     setState(ActionState::MOVING);

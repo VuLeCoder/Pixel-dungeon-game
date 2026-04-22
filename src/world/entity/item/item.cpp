@@ -9,7 +9,7 @@
 #include <iostream>
 
 //item_instance.h
-ItemInstance::ItemInstance(const ItemType& type) 
+ItemInstance::ItemInstance(const ItemType type) 
     : type(type)
 {
     png = AssetManager::GetTexture(type.name);
@@ -20,7 +20,7 @@ ItemInstance::ItemInstance(const ItemType& type)
 Item::Item(
     float x, float y,
     World* world,
-    const ItemType& type
+    const ItemType type
 ) : Entity(x, y, world)
 {
     instance = new ItemInstance(type);
@@ -44,13 +44,11 @@ void Item::add() {
     
 }
 
-void Item::use() {
-    if (!instance) return;
+bool Item::use(Player* player) {
+    if(!instance || !player) return false;
     
     const ItemType& type = instance->type;
     const Effect& effect = type.effect;
-    
-    Player* player = getWorld()->getPlayer();
 
     switch(effect.type) {
         case EffectType::NONE: {
@@ -84,15 +82,23 @@ void Item::use() {
             break;
     }
 
-    if (type.stackable) {
+    if(type.stackable) {
         instance->use();
         if(instance->getQuantity() <= 0) {
-            delete this; 
+            return true;
         }
-    } else {
-        delete this;
+        return false;
     }
+
+    if(effect.type == EffectType::NONE) {
+        player->equipItem(this);
+        return false;
+    }
+    return true;
+
 }
+
+
 
 void Item::unequip() {
     if (!instance) return;

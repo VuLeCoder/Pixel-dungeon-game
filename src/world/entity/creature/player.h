@@ -11,11 +11,12 @@ class Player : public Creature{
 private:
     static constexpr int PLAYER_WIDTH = 10, PLAYER_HEIGHT = 14;
 
+    Item* pendingUseItem = nullptr;
     InventorySystem* inventorySystem;
     std::vector<std::vector<bool>> playerVisible;
 
     HeroStats heroStats;
-    int numberKey = 0;
+    int numberKey = 1;
     
 public:
     Player(float x, float y, World* world, HeroType hero, Direction dir);
@@ -36,7 +37,11 @@ public:
 
     const std::vector<Item*>& getInventory() const;
     const std::vector<Item*>& getEquipedItem() const;
+    void removeItemFromInventory(Item* item);
+    void setPendingUseItem(Item* item);
     bool pickup(Item* item);
+    void useItem(Item* item);
+    void equipItem(Item* item);
 
     void addStats(Stats statsAdd, HeroStats heroAdd);
     void removeStats(Stats statsRemove, HeroStats heroRemove);

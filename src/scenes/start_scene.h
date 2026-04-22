@@ -2,6 +2,7 @@
 #define START_SCENE_H
 
 #include "scene.h"
+#include "raylib.h"
 #include <string>
 
 class StartScene : public Scene {

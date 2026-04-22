@@ -16,6 +16,7 @@ private:
 
     float scale = 5.0f;
     bool pauseGame = false;
+    bool returnStart = false;
 
 public:
     UIManager(Player* p, World* w)
@@ -26,8 +27,10 @@ public:
           menuPanel() {}
 
     bool isPauseGame() const { return pauseGame == true; }
+    bool isReturn() const { return returnStart == true; }
 
     void update() {
+        returnStart = playerPanel.update();
         inventoryPanel.update();
         menuPanel.update();
     }

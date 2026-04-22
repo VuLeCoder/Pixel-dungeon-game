@@ -6,7 +6,7 @@ class World;
 class Entity {
 protected:
     World* world;
-    Vector2 pos;
+    Vector2 pos = {0, 0};
     bool alive = true;
 
 public:

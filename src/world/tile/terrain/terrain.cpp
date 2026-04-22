@@ -27,7 +27,7 @@ void Terrain::onEnter(Entity* entity, World* world) {
 
     switch(type) {
         case TerrainType::CHASM:
-            // entity->fall();
+            entity->fall();
             break;
 
         case TerrainType::GRASS:

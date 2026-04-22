@@ -15,18 +15,18 @@ private:
     std::vector<Item*> inventoryItems;
 
 public:
-    InventorySystem() {
-        inventoryItems.clear();
-        equipItems.clear();
-    }
+    InventorySystem();
 
     const std::vector<Item*>& getInventory() const;
 
     const std::vector<Item*>& getEquipedItem() const;
 
     bool add(Item* item);
+    void remove(Item* item);
+    void drop(Item* item);
+    void equip(Item* item);
+    void unequip(Item* item);
 };
-// void remove(int index);
 // void use(int index);
 // Item* get(int index);
 // int size() const;

@@ -48,6 +48,7 @@ public:
     void wakeUpAllMonsters(Vector2 pos, int alarmRange);
     Vector2 getRandomFreeTile();
 
+    bool isDoor(int x, int y) const;
     bool isPassable(int x, int y) const;
     void onEnter(Entity* e, int x, int y);
     void onLeft(int x, int y);

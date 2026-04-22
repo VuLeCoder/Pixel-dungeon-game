@@ -17,6 +17,6 @@ private:
 
 public:
     PlayerPanel(Player* p);
-    void update();
+    bool update();
     void render(float scale);
 };
