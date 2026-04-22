@@ -20,6 +20,38 @@ Một phiên bản nhỏ của [*Pixel Dungeon*](https://store.steampowered.com/
 ```
 ---
 
+## 🎮 Gameplay
+
+Game hoạt động theo cơ chế **turn-based system**:
+
+- Người chơi thực hiện 1 hành động → hệ thống xử lý lượt
+- Sau đó quái sẽ hành động
+- Mọi thứ đều diễn ra theo lượt, không có real-time combat
+
+
+## 🎹 Điều khiển
+
+| Phím | Hành động |
+|------|----------|
+| W / A / S / D | Di chuyển |
+| (1 hành động) | Tương ứng 1 lượt |
+| (Wait / Skip turn) | Bỏ lượt |
+
+
+## 🧠 Hệ thống gameplay
+
+### 👁️ Field of View (FOV)
+- Người chơi chỉ nhìn thấy khu vực trong tầm nhìn
+- Vùng ngoài FOV sẽ bị che khuất / ẩn đi
+- Tạo cảm giác khám phá dungeon
+
+### 🤖 AI quái vật
+- Quái có thể phát hiện người chơi trong phạm vi nhất định
+- Khi phát hiện → chuyển sang trạng thái truy đuổi
+- Có logic hành vi theo lượt
+
+---
+
 ## ⚙️ Yêu cầu
 Trước khi build project, bạn cần cài:
 - C++ compiler hỗ trợ C++17 (GCC / Clang / MSVC)
