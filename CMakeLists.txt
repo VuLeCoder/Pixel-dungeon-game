@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(SHATTERED_PIXEL_DUNGEON)
+project(PIXEL_DUNGEON)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -10,7 +10,7 @@ add_subdirectory(external/raylib)
 file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
 
 # game source
-add_executable(SHATTERED_PIXEL_DUNGEON
+add_executable(PIXEL_DUNGEON
     src/main.cpp
     src/utils/helper.cpp
 
@@ -46,4 +46,4 @@ add_executable(SHATTERED_PIXEL_DUNGEON
     src/world/system/AI/monster_ai.cpp
 )
 # link raylib
-target_link_libraries(SHATTERED_PIXEL_DUNGEON raylib)
+target_link_libraries(PIXEL_DUNGEON raylib)
