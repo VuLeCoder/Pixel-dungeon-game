@@ -15,21 +15,26 @@ private:
     int currLevel;
     std::vector<Level*> levels;
 
+    bool changeFloor = true;
+
     TurnSystem* turnSystem;
     Player* player;
     FOVSystem* fovSystem;
     MyCamera camera;
 
     void LoadLevel();
+    void initPlayer(HeroType heroType);
     void updateLevel(float dt);
 
 public:
     World(HeroType heroType);
-    void init();
     void update();
     void render();
+    
     void goToNextLevel();
     void goToPreviousLevel();
+    bool isChangeFloor() const { return changeFloor; };
+    void changeFloorDone() { changeFloor = false; };
 
     Level* getCurrLevel() const { return levels[currLevel]; }
     TurnSystem* getTurnSystem() const  { return turnSystem; }

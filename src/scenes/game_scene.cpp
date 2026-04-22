@@ -2,10 +2,12 @@
 #include "raylib.h"
 #include "../world/world.h"
 #include "../ui/ui_manager.h"
+#include "idle_scene.h"
 
 GameScene::GameScene(HeroType type) : hero(hero) {
     world = new World(hero);
     ui = new UIManager(world->getPlayer(), world);
+    idleScene = new IdleScene();
 }
 
 void GameScene::Init() {
@@ -21,11 +23,25 @@ void GameScene::Init() {
 }
 
 void GameScene::Update() {
+    if(world->isChangeFloor()) {
+        idleScene->update(GetFrameTime());
+        if(idleScene->isEndIdle()) {
+            world->changeFloorDone();
+            idleScene->resetScnene();
+        }
+        return;
+    }
+
     world->update();
     // ui.update();
 }
 
 void GameScene::Draw() {
+    if(world->isChangeFloor()) {
+        idleScene->render();
+        return;
+    }
+
     world->render();
     ui->render();
 }

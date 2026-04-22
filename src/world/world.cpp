@@ -6,6 +6,36 @@
 #include <iostream>
 
 //private:
+void World::LoadLevel() {
+    Level* l1 = new Level(this);
+    l1->generateMap(1);
+    levels.push_back(l1);
+
+    Level* l2 = new Level(this);
+    l2->generateMap(2);
+    levels.push_back(l2);
+
+    Level* l3 = new Level(this);
+    l3->generateMap(3);
+    levels.push_back(l3);
+
+    Level* l4 = new Level(this);
+    l4->generateMap(2);
+    levels.push_back(l4);
+
+    Level* l5 = new Level(this);
+    l5->generateMap(2);
+    levels.push_back(l5);
+}
+
+void World::initPlayer(HeroType heroType) {
+    currLevel = 0;
+    player = new Player(0, 0, this, heroType, Direction::LEFT);
+
+    currLevel = -1;
+    goToNextLevel();
+}
+
 void World::updateLevel(float dt) {
     getCurrLevel()->update(dt);
     
@@ -22,30 +52,17 @@ void World::updateLevel(float dt) {
     }
 }
 
-
 //public:
 World::World(HeroType heroType) : camera(1200, 700, 33 * 16, 33 * 16) {
-    init();
+    LoadLevel();
+    std::cout << "hello Levels ";
 
-    Vector2 stairUpPos = getCurrLevel()->getStairUpPos();
-    player = new Player(stairUpPos.x, stairUpPos.y + 1, this, heroType, Direction::LEFT);
+    initPlayer(heroType);
+    std::cout << "hello Player ";
+
     turnSystem = new TurnSystem(this);
     fovSystem = new FOVSystem();
     std::cout << "hello World ";
-}
-
-void World::init() {
-    std::cout << "hello init 1 ";
-    currLevel = 0;
-    
-    Level* l1 = new Level(this);
-    l1->generateMap(1);
-    levels.push_back(l1);
-    std::cout << "hello init 2 ";
-    
-    spawnMonsterNear({0, 0});
-    // spawnMonsterNear({0, 0});
-    std::cout << "hello init 3 ";
 }
 
 void World::update() {
@@ -78,6 +95,37 @@ void World::render() {
     camera.end();
     EndScissorMode();
 }
+
+void World::goToNextLevel() {
+    ++currLevel;
+    if(currLevel >= levels.size()) {
+        currLevel = levels.size() - 1;
+        std::cout << "Khong xuong duoc" <<std::endl;
+        return;
+    }
+
+    Vector2 stairPos = getCurrLevel()->getStairUpPos();
+    player->setPos(stairPos.x, stairPos.y + 1);
+    player->setTargetPos(stairPos.x, stairPos.y + 1);
+    player->updateFOV();
+    changeFloor = true;
+}
+
+void World::goToPreviousLevel() {
+    --currLevel;
+    if(currLevel < 0) {
+        currLevel = 0;
+        std::cout << "Khong len duoc" <<std::endl;
+        return;
+    }
+
+    Vector2 stairPos = getCurrLevel()->getStairDownPos();
+    player->setPos(stairPos.x, stairPos.y + 1);
+    player->setTargetPos(stairPos.x, stairPos.y + 1);
+    player->updateFOV();
+    changeFloor = true;
+}
+
 
 // =========== getter ===========
 std::vector<Monster*>& World::getMonsters() {

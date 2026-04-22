@@ -31,6 +31,7 @@ public:
     static constexpr std::string_view START_SCENE = "start_scene";
     static constexpr std::string_view HERO_SCENE = "hero_select_scene";
     static constexpr std::string_view START_BUTTON = "start_button";
+    static constexpr std::string_view IDLE_SCENE = "idle_scene";
     static constexpr std::string_view TILE = "tiles";
     static constexpr std::string_view STATUS_PANE = "status_pane";
 

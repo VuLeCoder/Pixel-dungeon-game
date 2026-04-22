@@ -9,11 +9,6 @@
 #include <cmath>
 
 //private:
-void Player::updateFOV() {
-    int x = getTargetPos().x / TILE_SIZE;
-    int y = getTargetPos().y / TILE_SIZE;
-    FOVSystem::computeInto(getWorld()->getCurrLevel(), x, y, getVisionRange(), playerVisible);
-}
 
 //public:
 Player::Player(float x, float y, World* world, HeroType hero, Direction dir)
@@ -22,7 +17,6 @@ Player::Player(float x, float y, World* world, HeroType hero, Direction dir)
     setTargetPos(getPosition().x, getPosition().y);
     int size = world->getCurrLevel()->MAP_SIZE;
     playerVisible.resize(size, std::vector<bool>(size, false));
-    updateFOV();
 
     anims[static_cast<int>(AnimType::IDLE)] = AssetManager::GetAnimation(
         std::string(AssetManager::WARRIOR) + "_" + std::string(AssetManager::IDLE)
@@ -107,4 +101,10 @@ void Player::takeTurn(bool isPlayerSeen) {
 
 void Player::update(float dt) {
     Creature::update(dt);
+}
+
+void Player::updateFOV() {
+    int x = getTargetPos().x / TILE_SIZE;
+    int y = getTargetPos().y / TILE_SIZE;
+    FOVSystem::computeInto(getWorld()->getCurrLevel(), x, y, getVisionRange(), playerVisible);
 }

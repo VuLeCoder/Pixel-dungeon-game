@@ -1,4 +1,6 @@
 #include "terrain.h"
+#include "./../../world.h"
+#include "./../../entity/entity.h"
 
 void Terrain::setTerrainType(TerrainType type) {
     this->type = type;
@@ -33,15 +35,15 @@ void Terrain::onEnter(Entity* entity, World* world) {
             break;
 
         case TerrainType::STAIR_DOWN:
-            // if(entity->isPlayer()) {
-            //     world.goToNextLevel();
-            // }
+            if(entity->isPlayer()) {
+                world->goToNextLevel();
+            }
             break;
 
         case TerrainType::STAIR_UP:
-            // if(entity->isPlayer()) {
-            //     world.goToPreviousLevel();
-            // }
+            if(entity->isPlayer()) {
+                world->goToPreviousLevel();
+            }
             break;
 
         case TerrainType::WATER:

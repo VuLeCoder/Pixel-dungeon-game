@@ -11,8 +11,6 @@ private:
     int numberKey = 0;
     int satietyTurns = 500;
     std::vector<std::vector<bool>> playerVisible;
-
-    void updateFOV();
     
 public:
     Player(float x, float y, World* world, HeroType hero, Direction dir);
@@ -22,6 +20,7 @@ public:
     bool visible(int x, int y) const { return playerVisible[x][y]; }
     
     void update(float dt) override;
+    void updateFOV();
     
     bool getAction(Action& action);
     int getVisionRange() const { return heroStats.visionRange; }

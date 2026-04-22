@@ -36,7 +36,7 @@ public:
     World* getWorld() { return world; }
     std::vector<Monster*>& getMonsters() { return enemies; }
     Vector2 getStairUpPos() { return stairUpPos; }
-    Vector2 getStairDownPos() { return stairUpPos; }
+    Vector2 getStairDownPos() { return stairDownPos; }
 
     void generateMap(int depth);
     void update(float dt);
