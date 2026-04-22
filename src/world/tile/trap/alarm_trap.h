@@ -6,7 +6,7 @@ private:
     static constexpr int alarmRange = 15;
 
 public:
-    TrapType getTrapType() {
+    TrapType getTrapType() override {
         return TrapType::TRAP_ALARM;
     }
 

@@ -8,7 +8,7 @@
 
 class TeleportTrap : public Trap {
 public:
-    TrapType getTrapType() {
+    TrapType getTrapType() override {
         return TrapType::TRAP_TELEPORT;
     }
 

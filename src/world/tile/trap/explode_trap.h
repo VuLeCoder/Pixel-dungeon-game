@@ -5,7 +5,7 @@ class ExplosionTrap : public Trap {
     int damage = 20;
 
 public:
-    TrapType getTrapType() {
+    TrapType getTrapType() override {
         return TrapType::TRAP_EXPLODE;
     }
 

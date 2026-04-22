@@ -1,5 +1,6 @@
 #include "helper.h"
 #include <cmath>
+#include <algorithm>
 const int TILE_SIZE = 16;
 
 int distance(const Vector2& pos1, const Vector2& pos2) {

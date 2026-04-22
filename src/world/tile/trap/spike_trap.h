@@ -6,7 +6,7 @@ private:
     int damage = 10;
 
 public:
-    TrapType getTrapType() {
+    TrapType getTrapType() override {
         return TrapType::TRAP_SPIKE;
     }
 

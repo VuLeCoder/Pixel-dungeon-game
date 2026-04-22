@@ -7,7 +7,7 @@ private:
     DoorState state;
 
 public:
-    Door(bool locked, bool hidden);
+    Door(bool locked = false, bool hidden = false);
     DoorState getState() const;
     
     bool isPassable() const;

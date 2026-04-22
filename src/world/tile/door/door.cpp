@@ -1,6 +1,6 @@
 #include "door.h"
 
-Door::Door(bool locked = false, bool hidden = false) {
+Door::Door(bool locked, bool hidden) {
     if(hidden) state = DoorState::HIDDEN;
     else if(locked) state = DoorState::LOCKED;
     else state = DoorState::CLOSED;
