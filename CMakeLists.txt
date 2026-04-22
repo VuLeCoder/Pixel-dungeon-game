@@ -25,6 +25,8 @@ add_executable(PIXEL_DUNGEON
     src/scenes/idle_scene.cpp
 
     src/ui/ui.cpp
+    src/ui/player_panel.cpp
+    src/ui/inventory_panel.cpp
 
     src/world/world.cpp
     src/world/level/level.cpp
@@ -37,6 +39,7 @@ add_executable(PIXEL_DUNGEON
     src/world/entity/creature/creature.cpp
     src/world/entity/creature/player.cpp
     src/world/entity/creature/monster.cpp
+    src/world/entity/item/item.cpp
 
     src/world/camera/camera.cpp
 
