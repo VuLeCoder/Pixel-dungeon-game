@@ -1,5 +1,6 @@
 #pragma once
 #include "raylib.h"
+#include <array>
 
 class Player;
 
@@ -8,8 +9,16 @@ private:
     Player* player;
     bool visible = false;
 
+    Texture2D weaponNone, armorNone, ringNone;
+
+    static Vector2 equipItem[3];
+    static Vector2 inventoryItem[15];
+    static constexpr int textPos = 3;
+
+    void renderNone(float scale);
+
 public:
-    InventoryPanel(Player* p) : player(p) {}
+    InventoryPanel(Player* p);
     void update();
-    void render();
+    void render(float scale);
 };
