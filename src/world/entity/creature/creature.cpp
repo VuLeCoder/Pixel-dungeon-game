@@ -181,7 +181,7 @@ bool Creature::tryMove(int dx, int dy) {
         Player* p = static_cast<Player*>(this);
         if(p->hasKey()) {
             p->useKey();
-            getWorld()->onEnter(this, nx, ny);
+            getWorld()->openDoor(nx, ny);
             return true;
         }
         return false;

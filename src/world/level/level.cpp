@@ -119,6 +119,10 @@ bool Level::isBlockVision(int x, int y) const {
     return tiles[y][x].isBlockVision();
 }
 
+void Level::openDoor(int x, int y) {
+    tiles[y][x].openDoor();
+}
+
 bool Level::isDoor(int x, int y) const {
     return tiles[y][x].isDoor();
 }

@@ -50,6 +50,7 @@ public:
     bool isDanger(int x, int y) const;
     void discover(int x, int y);
     bool isDoor(int x, int y) const;
+    void openDoor(int x, int y);
 
     void onStep(Entity* e, int x, int y);
     void onLeft(int x, int y);

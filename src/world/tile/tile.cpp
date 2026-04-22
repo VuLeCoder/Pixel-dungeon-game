@@ -94,17 +94,14 @@ bool Tile::isDanger() const {
     return terrain.isDanger();
 }
 
+void Tile::openDoor() {
+    if(!door) return;
+    door->unlock();
+}
+
 void Tile::onEnter(Entity* entity, World* world) {
     if(door && !door->isHidden()) {
         door->open();
-    }
-
-    if(door && door->isLocked()) {
-        if(!entity) return;
-        if(!entity->isPlayer()) return;
-        
-        Player* p = static_cast<Player*>(entity);
-        if(p->hasKey()) door->unlock();
     }
 
     if(trap && trap->isArmed()) {

@@ -45,6 +45,7 @@ public:
     bool isBlockVision() const;
     bool isDanger() const;
 
+    void openDoor();
     void onEnter(Entity* entity, World* world);
     void onLeft();
 

@@ -139,6 +139,10 @@ std::vector<Monster*>& World::getMonsters() {
 
 
 // =========== level function ===========
+void World::openDoor(int x, int y) {
+    getCurrLevel()->openDoor(x, y);
+}
+
 bool World::isDoor(int x, int y) const {
     return getCurrLevel()->isDoor(x, y);
 };
