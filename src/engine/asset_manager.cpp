@@ -20,6 +20,7 @@ void AssetManager::LoadAllTexture() {
         {START_SCENE, "assets/scenes/start_scene.png"},
         {HERO_SCENE, "assets/scenes/hero_select_scene.png"},
         {START_BUTTON, "assets/scenes/start_button.png"},
+        {IDLE_SCENE, "assets/scenes/idle_scene.png"},
 
         {TILE, "assets/level/tiles.png"},
         {STATUS_PANE, "assets/ui/status_pane_tool.png"}
@@ -63,7 +64,23 @@ void AssetManager::LoadAllLevelMap() {
     MapEntry entries[] = {
         {"level1_Terrain", "assets/level/level1_Terrain.csv"},
         {"level1_Door",    "assets/level/level1_Door.csv"},
-        {"level1_Trap",    "assets/level/level1_Trap.csv"}
+        {"level1_Trap",    "assets/level/level1_Trap.csv"},
+
+        {"level2_Terrain", "assets/level/level2_Terrain.csv"},
+        {"level2_Door",    "assets/level/level2_Door.csv"},
+        {"level2_Trap",    "assets/level/level2_Trap.csv"},
+
+        {"level3_Terrain", "assets/level/level3_Terrain.csv"},
+        {"level3_Door",    "assets/level/level3_Door.csv"},
+        {"level3_Trap",    "assets/level/level3_Trap.csv"},
+
+        {"level4_Terrain", "assets/level/level4_Terrain.csv"},
+        {"level4_Door",    "assets/level/level4_Door.csv"},
+        {"level4_Trap",    "assets/level/level4_Trap.csv"},
+
+        {"level5_Terrain", "assets/level/level5_Terrain.csv"},
+        {"level5_Door",    "assets/level/level5_Door.csv"},
+        {"level5_Trap",    "assets/level/level5_Trap.csv"}
     };
 
     for (auto& e : entries) {
@@ -153,4 +170,7 @@ void AssetManager::Unload() {
     for(auto &t : textures) {
         UnloadTexture(t.second);
     }
+    textures.clear();
+    dataMap.clear();
+    dataAnim.clear();
 }
