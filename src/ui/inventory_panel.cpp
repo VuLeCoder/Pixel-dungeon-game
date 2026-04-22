@@ -8,7 +8,7 @@
 Vector2 InventoryPanel::equipItem[3] = {
     {8, 42}, {20, 42}, {32, 42}
 };
-Vector2 InventoryPanel::inventoryItem[15] = {
+Vector2 InventoryPanel::INVENTORY_ITEM_POS[15] = {
     {44, 42}, {56, 42}, {68, 42},
     {8, 57}, {20, 57}, {32, 57}, {44, 57}, {56, 57}, {68, 57},
     {8, 72}, {20, 72}, {32, 72}, {44, 72}, {56, 72}, {68, 72}
@@ -38,14 +38,14 @@ void InventoryPanel::renderEquipedItem(float scale) {
 }
 
 void InventoryPanel::renderInventoryItem(float scale) {
-    std::vector<Item*> items = player->getInventory();
     float pngScale = scale * 9 / 14;
-
+    const std::vector<Item*>& items = player->getInventory();
+    
     int index = 0;
     for(Item* i : items) {
         DrawTextureEx(
             i->getItemInstance()->getTexture(),
-            { 1210 + inventoryItem[index].x * scale, inventoryItem[index].y * scale},
+            { 1210 + INVENTORY_ITEM_POS[index].x * scale, INVENTORY_ITEM_POS[index].y * scale},
             0.0f, pngScale, WHITE
         );
         ++index;

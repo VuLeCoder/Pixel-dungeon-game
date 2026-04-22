@@ -12,7 +12,7 @@ private:
     Texture2D weaponNone, armorNone, ringNone;
 
     static Vector2 equipItem[3];
-    static Vector2 inventoryItem[15];
+    static Vector2 INVENTORY_ITEM_POS[15];
     static constexpr int textPos = 3;
 
     void renderNone(float scale);

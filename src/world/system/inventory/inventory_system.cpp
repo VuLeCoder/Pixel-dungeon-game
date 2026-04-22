@@ -8,7 +8,7 @@
 #include <iostream>
 
 const std::vector<Item*>& InventorySystem::getInventory() const {
-    return items;
+    return inventoryItems;
 }
 
 const std::vector<Item*>& InventorySystem::getEquipedItem() const {
@@ -19,7 +19,7 @@ bool InventorySystem::add(Item* item) {
     if(!item) return false;
 
     if(item->getItemInstance()->type.stackable) {
-        for(auto& it : items) {
+        for(auto& it : inventoryItems) {
             if(it->getItemInstance()->type.name == item->getItemInstance()->type.name) {
                 it->add();
                 item->getWorld()->getCurrLevel()->removeItemLevel(item);
@@ -28,12 +28,8 @@ bool InventorySystem::add(Item* item) {
         }
     }
 
-    if((int)items.size() > capacity) return false;
-
-    std::cout << "Nhat nngol luon 1" <<std::endl;
-    items.push_back(item);
-    std::cout << "Nhat nngol luon 2" <<std::endl;
+    if((int)inventoryItems.size() >= capacity) return false;
+    inventoryItems.push_back(item);
     item->getWorld()->getCurrLevel()->removeItemLevel(item);
-    std::cout << "Nhat nngol luon 3" <<std::endl;
     return true;
 }

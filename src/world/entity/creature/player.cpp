@@ -58,6 +58,8 @@ Player::Player(float x, float y, World* world, HeroType hero, Direction dir)
         heroStats = warriorStats;
         break;
     }
+
+    inventorySystem = new InventorySystem();
 }
 
 bool Player::getAction(Action& action) {
