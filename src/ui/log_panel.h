@@ -10,5 +10,5 @@ private:
 public:
     LogPanel(World* w) : world(w) {}
     void update();
-    void render();
+    void render(float scale);
 };

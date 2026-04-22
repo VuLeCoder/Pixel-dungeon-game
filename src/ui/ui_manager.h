@@ -14,6 +14,9 @@ private:
     LogPanel logPanel;
     MenuPanel menuPanel;
 
+    float scale = 5.0f;
+    bool pauseGame = false;
+
 public:
     UIManager(Player* p, World* w)
         : player(p), world(w),
@@ -22,15 +25,17 @@ public:
           logPanel(w),
           menuPanel() {}
 
+    bool isPauseGame() const { return pauseGame == true; }
+
     void update() {
         inventoryPanel.update();
         menuPanel.update();
     }
 
     void render() {
-        playerPanel.render();
-        inventoryPanel.render();
-        logPanel.render();
+        playerPanel.render(scale);
+        inventoryPanel.render(scale);
+        logPanel.render(scale);
         menuPanel.render();
     }
 };

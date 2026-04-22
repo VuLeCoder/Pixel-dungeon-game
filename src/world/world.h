@@ -37,6 +37,8 @@ public:
     void changeFloorDone() { changeFloor = false; };
 
     Level* getCurrLevel() const { return levels[currLevel]; }
+    int getCurrFloor() const { return currLevel + 1; }
+
     TurnSystem* getTurnSystem() const  { return turnSystem; }
     Player* getPlayer() const  { return player; }
     std::vector<Monster*>& getMonsters();
