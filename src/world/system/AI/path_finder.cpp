@@ -48,7 +48,6 @@ int PathFinder::findPath (
     int gx = goal.x / TILE_SIZE, gy = goal.y / TILE_SIZE;
     Vector2 tmp;
 
-    std::cout << "Dang duoi" << std::endl;
     int bestMove = 0;
     int bestScore = distance(start, goal);
 
@@ -80,7 +79,6 @@ int PathFinder::runAway (
     int gx = threat.x / TILE_SIZE, gy = threat.y / TILE_SIZE;
     Vector2 tmp;
 
-    std::cout << "Dang chay" << std::endl;
     int bestMove = 0;
     int bestScore = distance(start, threat);
 

@@ -52,7 +52,6 @@ AIResult MonsterAI::decideNextState() {
         res.pos = lastSeenPlayerPos;
 
         float d = distance(monster->getPosition(), lastSeenPlayerPos);
-        std::cout << "last seen:" << d << std::endl;
 
         if(d == 0) {
             lastSeenPlayerPos = {-1, -1};
@@ -67,12 +66,9 @@ AIResult MonsterAI::decideNextState() {
 }
 
 void MonsterAI::moveRandom() {
-    std::cout << "Player o dau roi" << std::endl;
-    
     int x = monster->getPosition().x / TILE_SIZE;
     int y = monster->getPosition().y / TILE_SIZE;
     int index = pathFinder->randomPath(x, y, monster->getWorld()->getCurrLevel());
-    std::cout << "Toi di bua" << std::endl;
 
     x = PathFinder::directions[index].x;
     y = PathFinder::directions[index].y;
@@ -107,9 +103,7 @@ MonsterAI::MonsterAI(Monster* m) : monster(m) {
 }
 
 void MonsterAI::takeTurn() {
-    std::cout << "Suy nghi ";
     AIResult res = decideNextState();
-    std::cout << "Toi nghi xong r " << std::endl;
 
     switch(state) {
         case AIState::SLEEP: break;
@@ -121,7 +115,6 @@ void MonsterAI::takeTurn() {
         case AIState::INVESTIGATE:
         case AIState::CHASE:
             moveAlongPathTo(res);
-            std::cout << "Met vcl " << std::endl;
             break;
 
         case AIState::FLEE:

@@ -148,8 +148,6 @@ void Level::onLeft(int x, int y) {
 }
 
 Vector2 Level::getRandomFreeTile() {
-    std::cout << "random ... " << std::endl;
-
     std::vector<Vector2> freeTiles;
     for (int y = 0; y < MAP_SIZE; ++y) {
         for (int x = 0; x < MAP_SIZE; ++x) {

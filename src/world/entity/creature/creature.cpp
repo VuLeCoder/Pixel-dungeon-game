@@ -202,7 +202,7 @@ void Creature::takeDamage(int damage) {
     damage = damage > 0 ? damage : 0;
 
     currHP -= damage;
-    if(currHP <= 0) destroy();
+    if(currHP <= 0) {currHP = 0; destroy();}
 }
 
 void Creature::takeTurn(bool isPlayerSeen) {

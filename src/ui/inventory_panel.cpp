@@ -106,7 +106,6 @@ void InventoryPanel::update() {
         for(auto& slot : itemSlots) {
             if(CheckCollisionPointRec(mouse, slot.bounds)) {
                 if(slot.item) {
-                    std::cout << "hello" <<std::endl;
                     player->setPendingUseItem(slot.item);
                     break;
                 }

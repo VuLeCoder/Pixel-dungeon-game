@@ -37,7 +37,6 @@ void TurnSystem::processTurn(const Action& action) {
 
     Player* player = getWorld()->getPlayer();
     if (!player || !player->isAlive()) {
-        std::cout << "ban da thua " << std::endl;
         return;
     }
 
@@ -49,6 +48,7 @@ void TurnSystem::processTurn(const Action& action) {
     
         case ActionType::WAIT:
             phase = TurnPhase::ENEMY;
+            monsterIndex = 0;
             return;
 
         case ActionType::PICKUP_ITEM:
