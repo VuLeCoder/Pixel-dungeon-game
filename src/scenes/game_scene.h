@@ -2,18 +2,19 @@
 #define GAME_SCENE_H
 
 #include "scene.h"
-#include "../world/world.h"
-#include "../ui/player_ui.h"
 #include "../world/entity/hero_type.h"
+
+class World;
+class UIManager;
 
 class GameScene : public Scene {
 private:
     HeroType hero;
-    World world;
-    PLayerUI ui;
+    World* world;
+    UIManager* ui;
 
 public:
-    GameScene(HeroType hero) : hero(hero), world(hero) {}
+    GameScene(HeroType hero);
     void Init();
     void Update();
     void Draw();

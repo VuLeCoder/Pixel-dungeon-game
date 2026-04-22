@@ -23,6 +23,8 @@ add_executable(SHATTERED_PIXEL_DUNGEON
     src/scenes/hero_select_scene.cpp
     src/scenes/game_scene.cpp
 
+    src/ui/ui.cpp
+
     src/world/world.cpp
     src/world/level/level.cpp
     src/world/tile/tile.cpp
