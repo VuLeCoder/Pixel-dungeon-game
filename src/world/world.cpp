@@ -2,7 +2,7 @@
 #include "./level/level.h"
 #include "./system/turn_system/turn_system.h"
 #include "./system/FOV/fov_system.h"
-
+#include "./entity/item/item_info.h"
 #include <iostream>
 
 //private:
@@ -111,6 +111,18 @@ void World::goToNextLevel() {
     player->setTargetPos(stairPos.x, stairPos.y + 1);
     player->updateFOV();
     changeFloor = true;
+
+    if(getCurrFloor() == 1) {
+        Vector2 pos = getCurrLevel()->getStairUpPos();
+        Item* item1 = new Item(0, 0, this, fabricArmor);
+        getCurrLevel()->addItemAtPos(item1, {pos.x + TILE_SIZE, pos.y});
+
+        Item* item2 = new Item(0, 0, this, shortSword);
+        getCurrLevel()->addItemAtPos(item2, {pos.x, pos.y + TILE_SIZE});
+
+        Item* item3 = new Item(0, 0, this, healingPotion);
+        getCurrLevel()->addItemAtPos(item3, {pos.x+ TILE_SIZE, pos.y + TILE_SIZE});
+    }
 
     getCurrLevel()->spawnRandomItems(5);
     getCurrLevel()->spawnRandomMonsters(5);

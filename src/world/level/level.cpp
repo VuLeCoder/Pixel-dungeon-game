@@ -205,7 +205,8 @@ Item* Level::getItemAtTile(int x, int y) {
 }
 
 void Level::addItemAtPos(Item* item, Vector2 pos) {
-    
+    item->setPos(pos.x, pos.y);
+    items.push_back(item);
 }
 
 void Level::addMonsterAtPos(Monster* monster, Vector2 pos) {

@@ -1,0 +1,10 @@
+2
+assets/entity/creature/monster/gnoll/gnoll.png
+
+idle_0_Gnoll
+0 0 16 16
+2.5
+
+idle_1_Gnoll
+16 0 16 16
+2

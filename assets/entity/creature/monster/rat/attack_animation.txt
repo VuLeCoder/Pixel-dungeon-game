@@ -1,0 +1,14 @@
+2
+assets/entity/creature/monster/rat/rat.png
+
+atk_0_Rat
+32 0 16 16
+0.05
+
+atk_1_Rat
+48 0 16 16
+0.06
+
+atk_2_Rat
+64 0 16 16
+0.05

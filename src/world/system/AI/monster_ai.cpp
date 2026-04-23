@@ -27,6 +27,14 @@ AIResult MonsterAI::decideNextState() {
 
     Vector2 playerPos = monster->canSeePlayer();
     if(playerPos.x >= 0) {
+        int d = distance(monster->getPosition(), playerPos);
+        if(d <= 1) {
+            lastSeenPlayerPos = playerPos;
+            res.target = monster->getWorld()->getPlayer();
+            setAIState(AIState::ATTACK);
+            return res;
+        }
+
         if(lastSeenPlayerPos.x >= 0) {
             res.pos = lastSeenPlayerPos;
         } else {
@@ -122,7 +130,7 @@ void MonsterAI::takeTurn() {
             break;
 
         case AIState::ATTACK:
-            // monster->attack(res.target);
+            monster->attack(res.target);
             break;
     }
 }

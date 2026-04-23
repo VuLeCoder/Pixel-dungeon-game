@@ -1,0 +1,26 @@
+4
+assets/entity/creature/monster/rat/rat.png
+
+walk_0_Gnoll
+96 0 16 16
+0.05
+
+walk_1_Gnoll
+112 0 16 16
+0.05
+
+walk_2_Gnoll
+128 0 16 16
+0.05
+
+walk_3_Gnoll
+144 0 16 16
+0.05
+
+walk_4_Gnoll
+144 0 16 16
+0.05
+
+walk_4_Gnoll
+144 0 16 16
+0.05
